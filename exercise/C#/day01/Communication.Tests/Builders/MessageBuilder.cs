@@ -34,11 +34,7 @@ public class MessageBuilder
         _numberOfDaysBeforeChristmas = numberOfDaysBeforeChristmas;
         return this;
     }
-
-    public MessageBuilder Overdue()
-        => WithNumbersOfDaysForComingBack(NumberOfDayBeforeChristmas)
-            .WithNumberOfDaysBeforeChristmas(NumberOfDayBeforeChristmas);
-
+    
     public static implicit operator Message(MessageBuilder builder) => builder.Build();
 
     public Message Build()
