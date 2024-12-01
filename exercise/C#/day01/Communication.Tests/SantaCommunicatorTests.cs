@@ -15,7 +15,7 @@ public class SantaCommunicatorTests
 
     [Fact]
     public void ComposeMessage()
-        => _communicator.ComposeMessage(Dasher, NorthPole, 5, NumberOfDayBeforeChristmas)
+        => _communicator.ComposeMessage(new Message(Dasher, NorthPole, 5, NumberOfDayBeforeChristmas))
             .Should()
             .Be("Dear Dasher, please return from North Pole in 17 day(s) to be ready and rest before Christmas.");
 
