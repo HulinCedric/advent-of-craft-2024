@@ -11,9 +11,7 @@ public class SantaCommunicator(int numberOfDaysToRest)
             $"Dear {message.ReindeerName}, please return from {message.CurrentLocation} in {daysBeforeReturn} day(s) to be ready and rest before Christmas.";
     }
 
-    public bool IsOverdue(
-        Message message,
-        ILogger logger)
+    public bool IsOverdue(Message message, ILogger logger)
     {
         if (DaysBeforeReturn(message.NumbersOfDaysForComingBack, message.NumberOfDaysBeforeChristmas) <= 0)
         {
@@ -24,6 +22,8 @@ public class SantaCommunicator(int numberOfDaysToRest)
         return false;
     }
 
-    private int DaysBeforeReturn(NumbersOfDaysForComingBack numbersOfDaysForComingBack, NumberOfDaysBeforeChristmas numberOfDaysBeforeChristmas)
+    private int DaysBeforeReturn(
+        NumbersOfDaysForComingBack numbersOfDaysForComingBack,
+        NumberOfDaysBeforeChristmas numberOfDaysBeforeChristmas)
         => numberOfDaysBeforeChristmas - numbersOfDaysForComingBack - numberOfDaysToRest;
 }
