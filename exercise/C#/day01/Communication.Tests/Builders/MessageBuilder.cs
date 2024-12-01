@@ -1,11 +1,13 @@
+using static Communication.Tests.Builders.MessageDefaults;
+
 namespace Communication.Tests.Builders;
 
 public class MessageBuilder
 {
-    private string _currentLocation = MessageDefaults.NorthPole;
-    private int _numberOfDaysBeforeChristmas = MessageDefaults.NumberOfDayBeforeChristmas;
-    private int _numbersOfDaysForComingBack = MessageDefaults.NumberOfDaysToRest;
-    private string _reindeerName = MessageDefaults.Dasher;
+    private string _currentLocation = NorthPole;
+    private int _numberOfDaysBeforeChristmas = NumberOfDayBeforeChristmas;
+    private int _numbersOfDaysForComingBack = NumberOfDaysToRest;
+    private string _reindeerName = Dasher;
 
     public static MessageBuilder AMessage() => new();
 
@@ -32,6 +34,10 @@ public class MessageBuilder
         _numberOfDaysBeforeChristmas = numberOfDaysBeforeChristmas;
         return this;
     }
+
+    public MessageBuilder Overdue()
+        => WithNumbersOfDaysForComingBack(NumberOfDayBeforeChristmas)
+            .WithNumberOfDaysBeforeChristmas(NumberOfDayBeforeChristmas);
 
     public static implicit operator Message(MessageBuilder builder) => builder.Build();
 
