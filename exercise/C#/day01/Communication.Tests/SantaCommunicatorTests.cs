@@ -44,8 +44,6 @@ public class SantaCommunicatorTests
     public void ShouldReturnFalseWhenNoOverdue()
         => _communicator.IsOverdue(
                 AMessage()
-                    .WithReindeerName(Dasher)
-                    .WithCurrentLocation(NorthPole)
                     .WithNumbersOfDaysForComingBack(NumberOfDayBeforeChristmas - NumberOfDaysToRest - 1)
                     .WithNumberOfDaysBeforeChristmas(NumberOfDayBeforeChristmas),
                 _logger)
