@@ -1,7 +1,7 @@
 namespace Communication;
 
 public record Message(
-    string ReindeerName,
+    ReindeerName ReindeerName,
     string CurrentLocation,
     int NumbersOfDaysForComingBack,
     int NumberOfDaysBeforeChristmas);
