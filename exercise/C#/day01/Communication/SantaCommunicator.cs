@@ -4,23 +4,23 @@ public class SantaCommunicator(NumberOfDaysToRest numberOfDaysToRest)
 {
     public string ComposeMessage(
         Reindeer reindeer,
-        NumbersOfDaysForComingBack numbersOfDaysForComingBack,
-        NumberOfDaysBeforeChristmas numberOfDaysBeforeChristmas)
+        DaysBeforeReturn daysBeforeReturn_New)
     {
         var daysBeforeReturn = DaysBeforeReturn(
-            numbersOfDaysForComingBack,
-            numberOfDaysBeforeChristmas);
+            daysBeforeReturn_New.NumbersOfDaysForComingBack,
+            daysBeforeReturn_New.NumberOfDaysBeforeChristmas);
         return
             $"Dear {reindeer.Name}, please return from {reindeer.CurrentLocation} in {daysBeforeReturn} day(s) to be ready and rest before Christmas.";
     }
 
     public bool IsOverdue(
         Reindeer reindeer,
-        NumbersOfDaysForComingBack numbersOfDaysForComingBack,
-        NumberOfDaysBeforeChristmas numberOfDaysBeforeChristmas,
+        DaysBeforeReturn daysBeforeReturn,
         ILogger logger)
     {
-        if (DaysBeforeReturn(numbersOfDaysForComingBack, numberOfDaysBeforeChristmas) <= 0)
+        if (DaysBeforeReturn(
+                daysBeforeReturn.NumbersOfDaysForComingBack,
+                daysBeforeReturn.NumberOfDaysBeforeChristmas) <= 0)
         {
             logger.Log($"Overdue for {reindeer.Name} located {reindeer.CurrentLocation}.");
             return true;
