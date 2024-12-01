@@ -1,16 +1,15 @@
 namespace Communication;
 
-public record DaysBeforeReturn(
-    NumbersOfDaysForComingBack NumbersOfDaysForComingBack,
-    NumberOfDaysBeforeChristmas NumberOfDaysBeforeChristmas,
-    NumberOfDaysToRest NumberOfDaysToRest)
+public record DaysBeforeReturn(int Value)
 {
-    public static implicit operator int(DaysBeforeReturn daysBeforeReturn) => Compute(daysBeforeReturn);
+    public static DaysBeforeReturn Compute(
+        NumberOfDaysForComingBack numberOfDaysForComingBack,
+        NumberOfDaysBeforeChristmas numberOfDaysBeforeChristmas,
+        NumberOfDaysToRest numberOfDaysToRest)
+        => new(numberOfDaysBeforeChristmas - numberOfDaysForComingBack - numberOfDaysToRest);
 
-    private static int Compute(DaysBeforeReturn daysBeforeReturn)
-        => daysBeforeReturn.NumberOfDaysBeforeChristmas -
-           daysBeforeReturn.NumbersOfDaysForComingBack -
-           daysBeforeReturn.NumberOfDaysToRest;
+    public static implicit operator int(DaysBeforeReturn daysBeforeReturn)
+        => daysBeforeReturn.Value;
 
-    public override string ToString() => $"{Compute(this)}";
+    public override string ToString() => $"{Value}";
 }

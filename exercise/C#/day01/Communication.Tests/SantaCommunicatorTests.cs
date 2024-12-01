@@ -2,7 +2,8 @@ using Communication.Tests.Doubles;
 using FluentAssertions;
 using Xunit;
 using static Communication.Tests.Builders.ReindeerBuilder;
-using static Communication.Tests.Builders.MessageDefaults;
+using static Communication.Tests.Builders.ReindeerDefaults;
+using static Communication.Tests.Builders.DaysBeforeReturnBuilder;
 
 namespace Communication.Tests;
 
@@ -17,10 +18,7 @@ public class SantaCommunicatorTests
                 AReindeer()
                     .Named(Dasher)
                     .LocatedAt(NorthPole),
-                new DaysBeforeReturn(
-                    new NumbersOfDaysForComingBack(5),
-                    new NumberOfDaysBeforeChristmas(24),
-                    new NumberOfDaysToRest(2)))
+                DaysBeforeReturn(17))
             .Should()
             .Be("Dear Dasher, please return from North Pole in 17 day(s) to be ready and rest before Christmas.");
 
@@ -31,10 +29,7 @@ public class SantaCommunicatorTests
             AReindeer()
                 .Named(Dasher)
                 .LocatedAt(NorthPole),
-            new DaysBeforeReturn(
-                new NumbersOfDaysForComingBack(22),
-                new NumberOfDaysBeforeChristmas(24),
-                new NumberOfDaysToRest(2)),
+            Overdue(),
             _logger);
 
         overdue.Should().BeTrue();
@@ -45,10 +40,7 @@ public class SantaCommunicatorTests
     public void ShouldReturnFalseWhenNoOverdue()
         => _communicator.IsOverdue(
                 AReindeer(),
-                new DaysBeforeReturn(
-                    new NumbersOfDaysForComingBack(5),
-                    new NumberOfDaysBeforeChristmas(24),
-                    new NumberOfDaysToRest(2)),
+                OnTime(),
                 _logger)
             .Should()
             .BeFalse();
