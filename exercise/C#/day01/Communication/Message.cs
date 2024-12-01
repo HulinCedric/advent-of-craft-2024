@@ -4,4 +4,4 @@ public record Message(
     ReindeerName ReindeerName,
     CurrentLocation CurrentLocation,
     NumbersOfDaysForComingBack NumbersOfDaysForComingBack,
-    int NumberOfDaysBeforeChristmas);
+    NumberOfDaysBeforeChristmas NumberOfDaysBeforeChristmas);
