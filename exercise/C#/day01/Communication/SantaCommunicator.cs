@@ -1,6 +1,6 @@
 namespace Communication;
 
-public class SantaCommunicator(int numberOfDaysToRest)
+public class SantaCommunicator(NumberOfDaysToRest numberOfDaysToRest)
 {
     public string ComposeMessage(Message message)
     {
