@@ -3,5 +3,5 @@ namespace Communication;
 public record Message(
     ReindeerName ReindeerName,
     CurrentLocation CurrentLocation,
-    int NumbersOfDaysForComingBack,
+    NumbersOfDaysForComingBack NumbersOfDaysForComingBack,
     int NumberOfDaysBeforeChristmas);
