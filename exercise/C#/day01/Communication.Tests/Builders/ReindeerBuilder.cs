@@ -1,4 +1,4 @@
-using static Communication.Tests.Builders.MessageDefaults;
+using static Communication.Tests.Builders.ReindeerDefaults;
 
 namespace Communication.Tests.Builders;
 
