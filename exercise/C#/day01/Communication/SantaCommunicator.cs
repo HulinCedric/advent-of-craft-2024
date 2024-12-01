@@ -24,6 +24,6 @@ public class SantaCommunicator(int numberOfDaysToRest)
         return false;
     }
 
-    private int DaysBeforeReturn(NumbersOfDaysForComingBack numbersOfDaysForComingBack, int numberOfDaysBeforeChristmas)
+    private int DaysBeforeReturn(NumbersOfDaysForComingBack numbersOfDaysForComingBack, NumberOfDaysBeforeChristmas numberOfDaysBeforeChristmas)
         => numberOfDaysBeforeChristmas - numbersOfDaysForComingBack - numberOfDaysToRest;
 }
