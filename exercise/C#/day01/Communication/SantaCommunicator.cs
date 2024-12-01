@@ -2,7 +2,10 @@ namespace Communication;
 
 public class SantaCommunicator(int numberOfDaysToRest)
 {
-    public string ComposeMessage(string reindeerName, string currentLocation, int numbersOfDaysForComingBack,
+    public string ComposeMessage(
+        string reindeerName,
+        string currentLocation,
+        int numbersOfDaysForComingBack,
         int numberOfDaysBeforeChristmas)
     {
         var daysBeforeReturn = DaysBeforeReturn(numbersOfDaysForComingBack, numberOfDaysBeforeChristmas);
@@ -10,8 +13,12 @@ public class SantaCommunicator(int numberOfDaysToRest)
             $"Dear {reindeerName}, please return from {currentLocation} in {daysBeforeReturn} day(s) to be ready and rest before Christmas.";
     }
 
-    public bool IsOverdue(string reindeerName, string currentLocation, int numbersOfDaysForComingBack,
-        int numberOfDaysBeforeChristmas, ILogger logger)
+    public bool IsOverdue(
+        string reindeerName,
+        string currentLocation,
+        int numbersOfDaysForComingBack,
+        int numberOfDaysBeforeChristmas,
+        ILogger logger)
     {
         if (DaysBeforeReturn(numbersOfDaysForComingBack, numberOfDaysBeforeChristmas) <= 0)
         {
@@ -22,6 +29,6 @@ public class SantaCommunicator(int numberOfDaysToRest)
         return false;
     }
 
-    private int DaysBeforeReturn(int numbersOfDaysForComingBack, int numberOfDaysBeforeChristmas) =>
-        numberOfDaysBeforeChristmas - numbersOfDaysForComingBack - numberOfDaysToRest;
+    private int DaysBeforeReturn(int numbersOfDaysForComingBack, int numberOfDaysBeforeChristmas)
+        => numberOfDaysBeforeChristmas - numbersOfDaysForComingBack - numberOfDaysToRest;
 }
