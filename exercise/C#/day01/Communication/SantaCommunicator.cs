@@ -12,15 +12,12 @@ public class SantaCommunicator(int numberOfDaysToRest)
     }
 
     public bool IsOverdue(
-        string reindeerName,
-        string currentLocation,
-        int numbersOfDaysForComingBack,
-        int numberOfDaysBeforeChristmas,
+        Message message,
         ILogger logger)
     {
-        if (DaysBeforeReturn(numbersOfDaysForComingBack, numberOfDaysBeforeChristmas) <= 0)
+        if (DaysBeforeReturn(message.NumbersOfDaysForComingBack, message.NumberOfDaysBeforeChristmas) <= 0)
         {
-            logger.Log($"Overdue for {reindeerName} located {currentLocation}.");
+            logger.Log($"Overdue for {message.ReindeerName} located {message.CurrentLocation}.");
             return true;
         }
 
