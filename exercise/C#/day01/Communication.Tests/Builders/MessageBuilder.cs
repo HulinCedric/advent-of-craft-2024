@@ -6,7 +6,7 @@ public class MessageBuilder
 {
     private string _currentLocation = NorthPole;
     private int _numberOfDaysBeforeChristmas = NumberOfDayBeforeChristmas;
-    private int _numbersOfDaysForComingBack = NumberOfDaysToRest;
+    private int _numbersOfDaysForComingBack = MessageDefaults.NumberOfDaysToRest;
     private string _reindeerName = Dasher;
 
     public static MessageBuilder AMessage() => new();

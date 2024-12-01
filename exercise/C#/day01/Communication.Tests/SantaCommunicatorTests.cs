@@ -8,7 +8,7 @@ namespace Communication.Tests;
 
 public class SantaCommunicatorTests
 {
-    private readonly SantaCommunicator _communicator = new(numberOfDaysToRest: 2);
+    private readonly SantaCommunicator _communicator = new(new NumberOfDaysToRest(2));
     private readonly TestLogger _logger = new();
 
     [Fact]
