@@ -17,8 +17,9 @@ public class SantaCommunicatorTests
                 AReindeer()
                     .Named(Dasher)
                     .LocatedAt(NorthPole),
-                new NumbersOfDaysForComingBack(5),
-                new NumberOfDaysBeforeChristmas(24))
+                new DaysBeforeReturn(
+                    new NumbersOfDaysForComingBack(5),
+                    new NumberOfDaysBeforeChristmas(24)))
             .Should()
             .Be("Dear Dasher, please return from North Pole in 17 day(s) to be ready and rest before Christmas.");
 
@@ -29,8 +30,9 @@ public class SantaCommunicatorTests
             AReindeer()
                 .Named(Dasher)
                 .LocatedAt(NorthPole),
-            new NumbersOfDaysForComingBack(22),
-            new NumberOfDaysBeforeChristmas(24),
+            new DaysBeforeReturn(
+                new NumbersOfDaysForComingBack(22),
+                new NumberOfDaysBeforeChristmas(24)),
             _logger);
 
         overdue.Should().BeTrue();
@@ -41,8 +43,9 @@ public class SantaCommunicatorTests
     public void ShouldReturnFalseWhenNoOverdue()
         => _communicator.IsOverdue(
                 AReindeer(),
-                new NumbersOfDaysForComingBack(5),
-                new NumberOfDaysBeforeChristmas(24),
+                new DaysBeforeReturn(
+                    new NumbersOfDaysForComingBack(5),
+                    new NumberOfDaysBeforeChristmas(24)),
                 _logger)
             .Should()
             .BeFalse();
