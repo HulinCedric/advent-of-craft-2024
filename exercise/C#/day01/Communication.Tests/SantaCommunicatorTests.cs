@@ -1,6 +1,7 @@
 using Communication.Tests.Doubles;
 using FluentAssertions;
 using Xunit;
+using static Communication.Tests.Builders.MessageBuilder;
 
 namespace Communication.Tests;
 
@@ -16,11 +17,11 @@ public class SantaCommunicatorTests
     [Fact]
     public void ComposeMessage()
         => _communicator.ComposeMessage(
-                new Message(
-                    new ReindeerName(Dasher),
-                    new CurrentLocation(NorthPole),
-                    new NumbersOfDaysForComingBack(5),
-                    new NumberOfDaysBeforeChristmas(NumberOfDayBeforeChristmas)))
+                AMessage()
+                    .WithReindeerName(Dasher)
+                    .WithCurrentLocation(NorthPole)
+                    .WithNumbersOfDaysForComingBack(5)
+                    .WithNumberOfDaysBeforeChristmas(NumberOfDayBeforeChristmas))
             .Should()
             .Be("Dear Dasher, please return from North Pole in 17 day(s) to be ready and rest before Christmas.");
 
@@ -28,11 +29,11 @@ public class SantaCommunicatorTests
     public void ShouldDetectOverdueReindeer()
     {
         var overdue = _communicator.IsOverdue(
-            new Message(
-                new ReindeerName(Dasher),
-                new CurrentLocation(NorthPole),
-                new NumbersOfDaysForComingBack(NumberOfDayBeforeChristmas),
-                new NumberOfDaysBeforeChristmas(NumberOfDayBeforeChristmas)),
+            AMessage()
+                .WithReindeerName(Dasher)
+                .WithCurrentLocation(NorthPole)
+                .WithNumbersOfDaysForComingBack(NumberOfDayBeforeChristmas)
+                .WithNumberOfDaysBeforeChristmas(NumberOfDayBeforeChristmas),
             _logger);
 
         overdue.Should().BeTrue();
@@ -42,11 +43,11 @@ public class SantaCommunicatorTests
     [Fact]
     public void ShouldReturnFalseWhenNoOverdue()
         => _communicator.IsOverdue(
-                new Message(
-                    new ReindeerName(Dasher),
-                    new CurrentLocation(NorthPole),
-                    new NumbersOfDaysForComingBack(NumberOfDayBeforeChristmas - NumberOfDaysToRest - 1),
-                    new NumberOfDaysBeforeChristmas(NumberOfDayBeforeChristmas)),
+                AMessage()
+                    .WithReindeerName(Dasher)
+                    .WithCurrentLocation(NorthPole)
+                    .WithNumbersOfDaysForComingBack(NumberOfDayBeforeChristmas - NumberOfDaysToRest - 1)
+                    .WithNumberOfDaysBeforeChristmas(NumberOfDayBeforeChristmas),
                 _logger)
             .Should()
             .BeFalse();
