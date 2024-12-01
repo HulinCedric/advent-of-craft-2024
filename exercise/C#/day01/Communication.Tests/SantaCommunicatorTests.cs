@@ -8,7 +8,7 @@ namespace Communication.Tests;
 
 public class SantaCommunicatorTests
 {
-    private readonly SantaCommunicator _communicator = new(NumberOfDaysToRest);
+    private readonly SantaCommunicator _communicator = new(numberOfDaysToRest: 2);
     private readonly TestLogger _logger = new();
 
     [Fact]
@@ -18,7 +18,7 @@ public class SantaCommunicatorTests
                     .WithReindeerName(Dasher)
                     .WithCurrentLocation(NorthPole)
                     .WithNumbersOfDaysForComingBack(5)
-                    .WithNumberOfDaysBeforeChristmas(NumberOfDayBeforeChristmas))
+                    .WithNumberOfDaysBeforeChristmas(24))
             .Should()
             .Be("Dear Dasher, please return from North Pole in 17 day(s) to be ready and rest before Christmas.");
 
