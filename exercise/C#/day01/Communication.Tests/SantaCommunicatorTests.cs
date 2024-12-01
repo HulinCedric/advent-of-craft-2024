@@ -23,10 +23,7 @@ public class SantaCommunicatorTests
     public void ShouldDetectOverdueReindeer()
     {
         var overdue = _communicator.IsOverdue(
-            Dasher,
-            NorthPole,
-            NumberOfDayBeforeChristmas,
-            NumberOfDayBeforeChristmas,
+            new Message(Dasher, NorthPole, NumberOfDayBeforeChristmas, NumberOfDayBeforeChristmas),
             _logger);
 
         overdue.Should().BeTrue();
@@ -36,10 +33,11 @@ public class SantaCommunicatorTests
     [Fact]
     public void ShouldReturnFalseWhenNoOverdue()
         => _communicator.IsOverdue(
-                Dasher,
-                NorthPole,
-                NumberOfDayBeforeChristmas - NumberOfDaysToRest - 1,
-                NumberOfDayBeforeChristmas,
+                new Message(
+                    Dasher,
+                    NorthPole,
+                    NumberOfDayBeforeChristmas - NumberOfDaysToRest - 1,
+                    NumberOfDayBeforeChristmas),
                 _logger)
             .Should()
             .BeFalse();
