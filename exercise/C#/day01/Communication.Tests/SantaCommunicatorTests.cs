@@ -27,9 +27,10 @@ public class SantaCommunicatorTests
     {
         var overdue = _communicator.IsOverdue(
             AMessage()
-                .Overdue()
                 .WithReindeerName(Dasher)
-                .WithCurrentLocation(NorthPole),
+                .WithCurrentLocation(NorthPole)
+                .WithNumbersOfDaysForComingBack(22)
+                .WithNumberOfDaysBeforeChristmas(24),
             _logger);
 
         overdue.Should().BeTrue();
