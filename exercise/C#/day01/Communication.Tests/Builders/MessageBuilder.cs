@@ -2,10 +2,10 @@ namespace Communication.Tests.Builders;
 
 public class MessageBuilder
 {
-    private string _currentLocation = "North Pole";
-    private int _numberOfDaysBeforeChristmas = 24;
-    private int _numbersOfDaysForComingBack = 2;
-    private string _reindeerName = "Dasher";
+    private string _currentLocation = MessageDefaults.NorthPole;
+    private int _numberOfDaysBeforeChristmas = MessageDefaults.NumberOfDayBeforeChristmas;
+    private int _numbersOfDaysForComingBack = MessageDefaults.NumberOfDaysToRest;
+    private string _reindeerName = MessageDefaults.Dasher;
 
     public static MessageBuilder AMessage() => new();
 

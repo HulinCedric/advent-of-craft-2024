@@ -2,15 +2,12 @@ using Communication.Tests.Doubles;
 using FluentAssertions;
 using Xunit;
 using static Communication.Tests.Builders.MessageBuilder;
+using static Communication.Tests.Builders.MessageDefaults;
 
 namespace Communication.Tests;
 
 public class SantaCommunicatorTests
 {
-    private const string Dasher = "Dasher";
-    private const string NorthPole = "North Pole";
-    private const int NumberOfDaysToRest = 2;
-    private const int NumberOfDayBeforeChristmas = 24;
     private readonly SantaCommunicator _communicator = new(NumberOfDaysToRest);
     private readonly TestLogger _logger = new();
 
