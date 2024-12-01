@@ -8,7 +8,7 @@ namespace Communication.Tests;
 
 public class SantaCommunicatorTests
 {
-    private readonly SantaCommunicator _communicator = new(new NumberOfDaysToRest(2));
+    private readonly SantaCommunicator _communicator = new();
     private readonly TestLogger _logger = new();
 
     [Fact]
@@ -19,7 +19,8 @@ public class SantaCommunicatorTests
                     .LocatedAt(NorthPole),
                 new DaysBeforeReturn(
                     new NumbersOfDaysForComingBack(5),
-                    new NumberOfDaysBeforeChristmas(24)))
+                    new NumberOfDaysBeforeChristmas(24),
+                    new NumberOfDaysToRest(2)))
             .Should()
             .Be("Dear Dasher, please return from North Pole in 17 day(s) to be ready and rest before Christmas.");
 
@@ -32,7 +33,8 @@ public class SantaCommunicatorTests
                 .LocatedAt(NorthPole),
             new DaysBeforeReturn(
                 new NumbersOfDaysForComingBack(22),
-                new NumberOfDaysBeforeChristmas(24)),
+                new NumberOfDaysBeforeChristmas(24),
+                new NumberOfDaysToRest(2)),
             _logger);
 
         overdue.Should().BeTrue();
@@ -45,7 +47,8 @@ public class SantaCommunicatorTests
                 AReindeer(),
                 new DaysBeforeReturn(
                     new NumbersOfDaysForComingBack(5),
-                    new NumberOfDaysBeforeChristmas(24)),
+                    new NumberOfDaysBeforeChristmas(24),
+                    new NumberOfDaysToRest(2)),
                 _logger)
             .Should()
             .BeFalse();
