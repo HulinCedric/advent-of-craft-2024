@@ -1,4 +1,3 @@
-using FluentAssertions;
 using FluentAssertions.LanguageExt;
 using FsCheck;
 using FsCheck.Xunit;
@@ -78,7 +77,7 @@ public class FizzBuzzTests
     public void Returns_Number_Representation(int input, string expectedResult)
         => _fizzBuzz.Convert(input)
             .Should()
-            .BeSome(x => x.Should().Be(expectedResult));
+            .Be(expectedResult);
 
     [Property]
     public Property Parse_Return_Valid_String_For_Numbers_Between_1_And_2000()
