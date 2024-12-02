@@ -9,7 +9,14 @@ namespace Games.Tests;
 public class FizzBuzzTests
 {
     private static readonly string[] FizzBuzzStrings = ["Fizz", "Buzz", "FizzBuzz"];
-    private readonly FizzBuzz _fizzBuzz = new();
+
+    private readonly FizzBuzz _fizzBuzz = new(
+        new Dictionary<int, string>
+        {
+            { 15, "FizzBuzz" },
+            { 3, "Fizz" },
+            { 5, "Buzz" }
+        });
 
     [Theory]
     [InlineData(1, "1")]
