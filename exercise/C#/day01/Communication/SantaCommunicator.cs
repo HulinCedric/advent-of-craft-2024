@@ -1,29 +1,21 @@
 namespace Communication;
 
-public class SantaCommunicator(NumberOfDaysToRest numberOfDaysToRest)
+public class SantaCommunicator(Configuration configuration)
 {
-    public string ComposeMessage(Message message)
-    {
-        var daysBeforeReturn = DaysBeforeReturn(
-            message.NumbersOfDaysForComingBack,
-            message.NumberOfDaysBeforeChristmas);
-        return
-            $"Dear {message.ReindeerName}, please return from {message.CurrentLocation} in {daysBeforeReturn} day(s) to be ready and rest before Christmas.";
-    }
+    public string ComposeMessage(Reindeer reindeer)
+        => $"Dear {reindeer.Name}, please return from {reindeer.CurrentLocation} in {DaysBeforeReturn(reindeer)} day(s) to be ready and rest before Christmas.";
 
-    public bool IsOverdue(Message message, ILogger logger)
+    public bool IsOverdue(Reindeer reindeer, ILogger logger)
     {
-        if (DaysBeforeReturn(message.NumbersOfDaysForComingBack, message.NumberOfDaysBeforeChristmas) <= 0)
+        if (DaysBeforeReturn(reindeer) <= 0)
         {
-            logger.Log($"Overdue for {message.ReindeerName} located {message.CurrentLocation}.");
+            logger.Log($"Overdue for {reindeer.Name} located {reindeer.CurrentLocation}.");
             return true;
         }
 
         return false;
     }
 
-    private int DaysBeforeReturn(
-        NumbersOfDaysForComingBack numbersOfDaysForComingBack,
-        NumberOfDaysBeforeChristmas numberOfDaysBeforeChristmas)
-        => numberOfDaysBeforeChristmas - numbersOfDaysForComingBack - numberOfDaysToRest;
+    private int DaysBeforeReturn(Reindeer reindeer)
+        => configuration.DaysBeforeChristmas - reindeer.DaysForComingBack - configuration.DaysToRest;
 }
