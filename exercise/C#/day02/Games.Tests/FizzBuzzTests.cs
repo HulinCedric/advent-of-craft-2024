@@ -8,13 +8,15 @@ namespace Games.Tests;
 
 public class FizzBuzzTests
 {
-    private static readonly string[] FizzBuzzStrings = ["Fizz", "Buzz", "FizzBuzz"];
+    private static readonly string[] FizzBuzzStrings =
+        ["Fizz", "Buzz", "Whizz", "FizzBuzz", "FizzWhizz", "BuzzWhizz", "FizzBuzzWhizz"];
 
     private readonly FizzBuzz _fizzBuzz = new(
         new Dictionary<int, string>
         {
             { 3, "Fizz" },
-            { 5, "Buzz" }
+            { 5, "Buzz" },
+            { 7, "Whizz" }
         });
 
     [Theory]
@@ -27,9 +29,21 @@ public class FizzBuzzTests
     [InlineData(5, "Buzz")]
     [InlineData(50, "Buzz")]
     [InlineData(85, "Buzz")]
+    [InlineData(7, "Whizz")]
+    [InlineData(14, "Whizz")]
+    [InlineData(28, "Whizz")]
     [InlineData(15, "FizzBuzz")]
     [InlineData(30, "FizzBuzz")]
     [InlineData(45, "FizzBuzz")]
+    [InlineData(21, "FizzWhizz")]
+    [InlineData(42, "FizzWhizz")]
+    [InlineData(63, "FizzWhizz")]
+    [InlineData(35, "BuzzWhizz")]
+    [InlineData(70, "BuzzWhizz")]
+    [InlineData(140, "BuzzWhizz", Skip = "Over the limit")]
+    [InlineData(105, "FizzBuzzWhizz", Skip = "Over the limit")]
+    [InlineData(210, "FizzBuzzWhizz", Skip = "Over the limit")]
+    [InlineData(420, "FizzBuzzWhizz", Skip = "Over the limit")]
     public void Returns_Number_Representation(int input, string expectedResult)
         => _fizzBuzz.Convert(input)
             .Should()
