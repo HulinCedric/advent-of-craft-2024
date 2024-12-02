@@ -8,6 +8,17 @@ namespace Games.Tests;
 
 public class FizzBuzzTests
 {
+    private const int Min = 1;
+    private const int Max = 2000;
+
+    private static readonly Dictionary<int, string> Rules = new()
+    {
+        { 3, "Fizz" },
+        { 5, "Buzz" },
+        { 7, "Whizz" },
+        { 11, "Bang" }
+    };
+
     private static readonly string[] FizzBuzzStrings =
     [
         "Fizz", "Buzz", "Whizz", "Bang",
@@ -24,13 +35,9 @@ public class FizzBuzzTests
     ];
 
     private readonly FizzBuzz _fizzBuzz = new(
-        new Dictionary<int, string>
-        {
-            { 3, "Fizz" },
-            { 5, "Buzz" },
-            { 7, "Whizz" },
-            { 11, "Bang" }
-        });
+        Rules,
+        Min,
+        Max);
 
     [Theory]
     [InlineData(1, "1")]
@@ -56,21 +63,21 @@ public class FizzBuzzTests
     [InlineData(63, "FizzWhizz")]
     [InlineData(35, "BuzzWhizz")]
     [InlineData(70, "BuzzWhizz")]
-    [InlineData(140, "BuzzWhizz", Skip = "Over the limit")]
+    [InlineData(140, "BuzzWhizz")]
     [InlineData(33, "FizzBang")]
     [InlineData(66, "FizzBang")]
     [InlineData(99, "FizzBang")]
     [InlineData(55, "BuzzBang")]
-    [InlineData(110, "BuzzBang", Skip = "Over the limit")]
+    [InlineData(110, "BuzzBang")]
     [InlineData(77, "WhizzBang")]
-    [InlineData(154, "WhizzBang", Skip = "Over the limit")]
-    [InlineData(105, "FizzBuzzWhizz", Skip = "Over the limit")]
-    [InlineData(210, "FizzBuzzWhizz", Skip = "Over the limit")]
-    [InlineData(420, "FizzBuzzWhizz", Skip = "Over the limit")]
-    [InlineData(115, "FizzBuzzBang", Skip = "Over the limit")]
-    [InlineData(230, "FizzBuzzBang", Skip = "Over the limit")]
-    [InlineData(231, "FizzWhizzBang", Skip = "Over the limit")]
-    [InlineData(1155, "FizzBuzzWhizzBang", Skip = "Over the limit")]
+    [InlineData(154, "WhizzBang")]
+    [InlineData(105, "FizzBuzzWhizz")]
+    [InlineData(210, "FizzBuzzWhizz")]
+    [InlineData(420, "FizzBuzzWhizz")]
+    [InlineData(165, "FizzBuzzBang")]
+    [InlineData(231, "FizzWhizzBang")]
+    [InlineData(385, "BuzzWhizzBang")]
+    [InlineData(1155, "FizzBuzzWhizzBang")]
     public void Returns_Number_Representation(int input, string expectedResult)
         => _fizzBuzz.Convert(input)
             .Should()
@@ -82,7 +89,7 @@ public class FizzBuzzTests
             ValidInput(),
             IsConvertValid);
 
-    private static Arbitrary<int> ValidInput() => Gen.Choose(FizzBuzz.Min, FizzBuzz.Max).ToArbitrary();
+    private static Arbitrary<int> ValidInput() => Gen.Choose(Min, Max).ToArbitrary();
 
     private bool IsConvertValid(int x) => _fizzBuzz.Convert(x).Exists(s => ValidStringsFor(x).Contains(s));
 
@@ -97,5 +104,5 @@ public class FizzBuzzTests
     private static Arbitrary<int> InvalidInput()
         => Gen.Choose(-10_000, 10_000)
             .ToArbitrary()
-            .Filter(x => x is < FizzBuzz.Min or > FizzBuzz.Max);
+            .Filter(x => x is < Min or > Max);
 }
