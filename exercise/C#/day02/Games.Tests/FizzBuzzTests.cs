@@ -81,7 +81,7 @@ public class FizzBuzzTests
             .BeSome(x => x.Should().Be(expectedResult));
 
     [Property]
-    public Property Parse_Return_Valid_String_For_Numbers_Between_1_And_100()
+    public Property Parse_Return_Valid_String_For_Numbers_Between_1_And_2000()
         => Prop.ForAll(
             ValidInput(),
             IsConvertValid);
