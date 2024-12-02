@@ -34,10 +34,7 @@ public class FizzBuzzTests
         "FizzBuzzWhizzBang"
     ];
 
-    private readonly FizzBuzz _fizzBuzz = new(
-        Rules,
-        Min,
-        Max);
+    private readonly FizzBuzz _fizzBuzz = new(new Configuration(Rules, Min, Max));
 
     [Theory]
     [InlineData(1, "1")]
