@@ -14,7 +14,7 @@ public class FizzBuzz(Configuration configuration)
             .Where(p => Is(p.Key, input))
             .Map(kvp => kvp.Value)
             .DefaultIfEmpty(input.ToString())
-            .Aggregate((accumulator, match) => accumulator + match);
+            .Aggregate((acc, representation) => acc + representation);
 
     private static bool Is(int divisor, int input) => input % divisor == 0;
 
