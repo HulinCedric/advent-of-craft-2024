@@ -13,7 +13,6 @@ public class FizzBuzzTests
     private readonly FizzBuzz _fizzBuzz = new(
         new Dictionary<int, string>
         {
-            { 15, "FizzBuzz" },
             { 3, "Fizz" },
             { 5, "Buzz" }
         });
