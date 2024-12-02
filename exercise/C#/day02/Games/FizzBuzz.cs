@@ -2,25 +2,25 @@ using LanguageExt;
 
 namespace Games;
 
-public static class FizzBuzz
+public class FizzBuzz
 {
     public const int Min = 1;
     public const int Max = 100;
 
-    private static readonly Dictionary<int, string> Mapping = new()
+    private readonly Dictionary<int, string> _mapping = new()
     {
         { 15, "FizzBuzz" },
         { 3, "Fizz" },
         { 5, "Buzz" }
     };
 
-    public static Option<string> Convert(int input)
+    public Option<string> Convert(int input)
         => IsOutOfRange(input)
             ? Option<string>.None
             : ConvertSafely(input);
 
-    private static string ConvertSafely(int input)
-        => Mapping
+    private string ConvertSafely(int input)
+        => _mapping
             .Find(p => Is(p.Key, input))
             .Map(kvp => kvp.Value)
             .FirstOrDefault(input.ToString());

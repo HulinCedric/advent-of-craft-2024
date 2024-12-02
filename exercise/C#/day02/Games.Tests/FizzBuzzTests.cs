@@ -9,6 +9,7 @@ namespace Games.Tests;
 public class FizzBuzzTests
 {
     private static readonly string[] FizzBuzzStrings = ["Fizz", "Buzz", "FizzBuzz"];
+    private readonly FizzBuzz _fizzBuzz = new();
 
     [Theory]
     [InlineData(1, "1")]
@@ -24,7 +25,7 @@ public class FizzBuzzTests
     [InlineData(30, "FizzBuzz")]
     [InlineData(45, "FizzBuzz")]
     public void Returns_Number_Representation(int input, string expectedResult)
-        => FizzBuzz.Convert(input)
+        => _fizzBuzz.Convert(input)
             .Should()
             .BeSome(x => x.Should().Be(expectedResult));
 
@@ -36,7 +37,7 @@ public class FizzBuzzTests
 
     private static Arbitrary<int> ValidInput() => Gen.Choose(FizzBuzz.Min, FizzBuzz.Max).ToArbitrary();
 
-    private static bool IsConvertValid(int x) => FizzBuzz.Convert(x).Exists(s => ValidStringsFor(x).Contains(s));
+    private bool IsConvertValid(int x) => _fizzBuzz.Convert(x).Exists(s => ValidStringsFor(x).Contains(s));
 
     private static IEnumerable<string> ValidStringsFor(int x) => FizzBuzzStrings.Append(x.ToString());
 
@@ -44,7 +45,7 @@ public class FizzBuzzTests
     public Property ParseFailForNumbersOutOfRange()
         => Prop.ForAll(
             InvalidInput(),
-            x => FizzBuzz.Convert(x).IsNone);
+            x => _fizzBuzz.Convert(x).IsNone);
 
     private static Arbitrary<int> InvalidInput()
         => Gen.Choose(-10_000, 10_000)
