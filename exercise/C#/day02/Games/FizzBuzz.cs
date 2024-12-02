@@ -2,22 +2,15 @@ using LanguageExt;
 
 namespace Games;
 
-public class FizzBuzz
+public class FizzBuzz(Dictionary<int, string> mapping, int min, int max)
 {
-    public const int Min = 1;
-    public const int Max = 100;
-
-    private readonly Dictionary<int, string> _mapping;
-
-    public FizzBuzz(Dictionary<int, string> mapping) => _mapping = mapping;
-
     public Option<string> Convert(int input)
         => IsOutOfRange(input)
             ? Option<string>.None
             : ConvertSafely(input);
 
     private string ConvertSafely(int input)
-        => _mapping
+        => mapping
             .Where(p => Is(p.Key, input))
             .Map(kvp => kvp.Value)
             .DefaultIfEmpty(input.ToString())
@@ -25,5 +18,5 @@ public class FizzBuzz
 
     private static bool Is(int divisor, int input) => input % divisor == 0;
 
-    private static bool IsOutOfRange(int input) => input is < Min or > Max;
+    private bool IsOutOfRange(int input) => input < min || input > max;
 }
