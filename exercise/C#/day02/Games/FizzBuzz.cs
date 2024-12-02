@@ -18,9 +18,10 @@ public class FizzBuzz
 
     private string ConvertSafely(int input)
         => _mapping
-            .Find(p => Is(p.Key, input))
+            .Where(p => Is(p.Key, input))
             .Map(kvp => kvp.Value)
-            .FirstOrDefault(input.ToString());
+            .DefaultIfEmpty(input.ToString())
+            .Aggregate((accumulator, match) => accumulator + match);
 
     private static bool Is(int divisor, int input) => input % divisor == 0;
 
