@@ -1,6 +1,6 @@
 namespace Communication;
 
-public record CurrentLocation(string Value)
+public record Location(string Value)
 {
     public override string ToString() => Value;
 }
