@@ -7,12 +7,9 @@ public class FizzBuzz
     public const int Min = 1;
     public const int Max = 100;
 
-    private readonly Dictionary<int, string> _mapping = new()
-    {
-        { 15, "FizzBuzz" },
-        { 3, "Fizz" },
-        { 5, "Buzz" }
-    };
+    private readonly Dictionary<int, string> _mapping;
+
+    public FizzBuzz(Dictionary<int, string> mapping) => _mapping = mapping;
 
     public Option<string> Convert(int input)
         => IsOutOfRange(input)
