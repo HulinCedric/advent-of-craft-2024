@@ -1,3 +1,4 @@
+using Bogus;
 using FluentAssertions;
 using Xunit;
 
@@ -6,15 +7,16 @@ namespace Preparation.Tests;
 public class SantaWorkshopServiceTests
 {
     private const string RecommendedAge = "recommendedAge";
+    private readonly Faker _faker = new();
     private readonly SantaWorkshopService _service = new();
 
     [Fact]
     public void PrepareGift_WithValidToy_ShouldInstantiateIt()
     {
-        const string giftName = "Bitzee";
-        const double weight = 3;
-        const string color = "Purple";
-        const string material = "Plastic";
+        var giftName = _faker.Commerce.ProductName();
+        var weight = _faker.Random.Double(0, 5);
+        var color = _faker.Commerce.Color();
+        var material = _faker.Commerce.ProductMaterial();
 
         _service.PrepareGift(giftName, weight, color, material)
             .Should()
@@ -24,10 +26,10 @@ public class SantaWorkshopServiceTests
     [Fact]
     public void RetrieveAttributeOnGift()
     {
-        const string giftName = "Furby";
-        const double weight = 1;
-        const string color = "Multi";
-        const string material = "Cotton";
+        var giftName = _faker.Commerce.ProductName();
+        var weight = _faker.Random.Double(0, 5);
+        var color = _faker.Commerce.Color();
+        var material = _faker.Commerce.ProductMaterial();
 
         var gift = _service.PrepareGift(giftName, weight, color, material);
         gift.AddAttribute(RecommendedAge, "3");
@@ -40,10 +42,10 @@ public class SantaWorkshopServiceTests
     [Fact]
     public void FailsForATooHeavyGift()
     {
-        const string giftName = "Dog-E";
-        const double weight = 6;
-        const string color = "White";
-        const string material = "Metal";
+        var giftName = _faker.Commerce.ProductName();
+        var weight = _faker.Random.Double(5, 10);
+        var color = _faker.Commerce.Color();
+        var material = _faker.Commerce.ProductMaterial();
 
         var prepareGift = () => _service.PrepareGift(giftName, weight, color, material);
 
