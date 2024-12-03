@@ -27,14 +27,28 @@ public class SantaWorkshopServiceTests
     public void RetrieveAttributeOnGift()
     {
         var toy = _toy.Generate();
-        var expectedRecommendedAge = _faker.Random.Number(int.MinValue, int.MaxValue);
+        var recommendedAge = _faker.Random.Number(int.MinValue, int.MaxValue);
 
         var gift = _service.PrepareGift(toy.Name, toy.Weight, toy.Color, toy.Material);
-        gift.AddAttribute(RecommendedAge, $"{expectedRecommendedAge}");
+        gift.AddAttribute(RecommendedAge, $"{recommendedAge}");
 
         gift.RecommendedAge()
             .Should()
-            .Be(expectedRecommendedAge);
+            .Be(recommendedAge);
+    }
+
+    [Fact]
+    public void RetrieveZeroRecommendedAge_WhenAddInvalidRecommendedAgeAttributeOnGift()
+    {
+        var toy = _toy.Generate();
+        var invalidRecommendedAge = _faker.Random.String();
+
+        var gift = _service.PrepareGift(toy.Name, toy.Weight, toy.Color, toy.Material);
+        gift.AddAttribute(RecommendedAge, invalidRecommendedAge);
+
+        gift.RecommendedAge()
+            .Should()
+            .Be(0);
     }
 
     [Fact]
