@@ -1,3 +1,4 @@
+using Bogus;
 using FluentAssertions;
 using Preparation.Tests.Generators;
 using Xunit;
@@ -7,9 +8,10 @@ namespace Preparation.Tests;
 public class SantaWorkshopServiceTests
 {
     private const string RecommendedAge = "recommendedAge";
-    private readonly ToyGenerator _toy = new();
-    private readonly TooHeavyToyGenerator _tooHeavyToy = new();
+    private readonly Faker _faker = new();
     private readonly SantaWorkshopService _service = new();
+    private readonly TooHeavyToyGenerator _tooHeavyToy = new();
+    private readonly ToyGenerator _toy = new();
 
     [Fact]
     public void PrepareGift_WithValidToy_ShouldInstantiateIt()
@@ -25,13 +27,14 @@ public class SantaWorkshopServiceTests
     public void RetrieveAttributeOnGift()
     {
         var toy = _toy.Generate();
+        var expectedRecommendedAge = _faker.Random.Number(int.MinValue, int.MaxValue);
 
         var gift = _service.PrepareGift(toy.Name, toy.Weight, toy.Color, toy.Material);
-        gift.AddAttribute(RecommendedAge, "3");
+        gift.AddAttribute(RecommendedAge, $"{expectedRecommendedAge}");
 
         gift.RecommendedAge()
             .Should()
-            .Be(3);
+            .Be(expectedRecommendedAge);
     }
 
     [Fact]
