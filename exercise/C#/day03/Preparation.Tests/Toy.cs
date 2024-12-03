@@ -1,8 +1,8 @@
 namespace Preparation.Tests;
 
-internal class PrepareGiftRequest
+internal class Toy
 {
-    public required string GiftName { get; init; }
+    public required string Name { get; init; }
     public required double Weight { get; init; }
     public required string Color { get; init; }
     public required string Material { get; init; }

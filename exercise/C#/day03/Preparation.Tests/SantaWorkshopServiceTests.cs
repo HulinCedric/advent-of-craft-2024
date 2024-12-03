@@ -7,16 +7,16 @@ namespace Preparation.Tests;
 public class SantaWorkshopServiceTests
 {
     private const string RecommendedAge = "recommendedAge";
-    private readonly PrepareGiftRequestGenerator _prepareGiftRequest = new();
-    private readonly PrepareTooHeavyGiftRequestGenerator _prepareTooHeavyGiftRequest = new();
+    private readonly ToyGenerator _toy = new();
+    private readonly TooHeavyToyGenerator _tooHeavyToy = new();
     private readonly SantaWorkshopService _service = new();
 
     [Fact]
     public void PrepareGift_WithValidToy_ShouldInstantiateIt()
     {
-        var request = _prepareGiftRequest.Generate();
+        var toy = _toy.Generate();
 
-        _service.PrepareGift(request.GiftName, request.Weight, request.Color, request.Material)
+        _service.PrepareGift(toy.Name, toy.Weight, toy.Color, toy.Material)
             .Should()
             .NotBeNull();
     }
@@ -24,9 +24,9 @@ public class SantaWorkshopServiceTests
     [Fact]
     public void RetrieveAttributeOnGift()
     {
-        var request = _prepareGiftRequest.Generate();
+        var toy = _toy.Generate();
 
-        var gift = _service.PrepareGift(request.GiftName, request.Weight, request.Color, request.Material);
+        var gift = _service.PrepareGift(toy.Name, toy.Weight, toy.Color, toy.Material);
         gift.AddAttribute(RecommendedAge, "3");
 
         gift.RecommendedAge()
@@ -37,9 +37,9 @@ public class SantaWorkshopServiceTests
     [Fact]
     public void FailsForATooHeavyGift()
     {
-        var request = _prepareTooHeavyGiftRequest.Generate();
+        var toy = _tooHeavyToy.Generate();
 
-        var prepareGift = () => _service.PrepareGift(request.GiftName, request.Weight, request.Color, request.Material);
+        var prepareGift = () => _service.PrepareGift(toy.Name, toy.Weight, toy.Color, toy.Material);
 
         prepareGift.Should()
             .Throw<ArgumentException>()
