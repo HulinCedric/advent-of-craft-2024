@@ -5,30 +5,37 @@ namespace Routine.Tests;
 
 public class RoutineWithFakeItEasyTests
 {
+    private readonly IEmailService _emailService;
+    private readonly IReindeerFeeder _reindeerFeeder;
+    private readonly Routine _routine;
+    private readonly IScheduleService _scheduleService;
+
+    public RoutineWithFakeItEasyTests()
+    {
+        _emailService = A.Fake<IEmailService>();
+        _reindeerFeeder = A.Fake<IReindeerFeeder>();
+        _scheduleService = A.Fake<IScheduleService>();
+        _routine = new Routine(_emailService, _scheduleService, _reindeerFeeder);
+    }
+
     [Fact]
     public void StartRoutine_With_FakeItEasy()
     {
         // Given
-        var emailService = A.Fake<IEmailService>();
-        var scheduleService = A.Fake<IScheduleService>();
-        var reindeerFeeder = A.Fake<IReindeerFeeder>();
-
         var schedule = new Schedule
         {
             Tasks = ["Task 1", "Task 2"]
         };
 
-        A.CallTo(() => scheduleService.TodaySchedule()).Returns(schedule);
-
-        var routine = new Routine(emailService, scheduleService, reindeerFeeder);
+        A.CallTo(() => _scheduleService.TodaySchedule()).Returns(schedule);
 
         // When
-        routine.Start();
+        _routine.Start();
 
         // Then
-        A.CallTo(() => scheduleService.OrganizeMyDay(schedule)).MustHaveHappened();
-        A.CallTo(() => reindeerFeeder.FeedReindeers()).MustHaveHappened();
-        A.CallTo(() => emailService.ReadNewEmails()).MustHaveHappened();
-        A.CallTo(() => scheduleService.Continue()).MustHaveHappened();
+        A.CallTo(() => _scheduleService.OrganizeMyDay(schedule)).MustHaveHappened();
+        A.CallTo(() => _reindeerFeeder.FeedReindeers()).MustHaveHappened();
+        A.CallTo(() => _emailService.ReadNewEmails()).MustHaveHappened();
+        A.CallTo(() => _scheduleService.Continue()).MustHaveHappened();
     }
 }
