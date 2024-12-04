@@ -6,4 +6,5 @@ internal class Toy
     public required double Weight { get; init; }
     public required string Color { get; init; }
     public required string Material { get; init; }
+    public required string RecommendedAge { get; init; }
 }

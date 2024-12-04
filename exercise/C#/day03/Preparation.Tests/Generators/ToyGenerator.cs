@@ -10,5 +10,6 @@ internal class ToyGenerator : Faker<Toy>
         RuleFor(x => x.Weight, f => f.Random.Double(0, 5));
         RuleFor(x => x.Color, f => f.Commerce.Color());
         RuleFor(x => x.Material, f => f.Commerce.ProductMaterial());
+        RuleFor(x => x.RecommendedAge, f => f.Random.Int(0, 18).ToString());
     }
 }

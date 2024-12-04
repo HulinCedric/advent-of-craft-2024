@@ -1,4 +1,3 @@
-using Bogus;
 using FluentAssertions;
 using Preparation.Tests.Generators;
 using Xunit;
@@ -8,12 +7,12 @@ namespace Preparation.Tests;
 public class SantaWorkshopServiceTests
 {
     private const string RecommendedAge = "recommendedAge";
-    private static readonly Faker Faker = new();
-    private readonly int _recommendedAge = Faker.Random.Int();
+
     private readonly SantaWorkshopService _service = new();
+
+    private readonly ToyWithInvalidRecommendedAgeGenerator _invalidRecommendedAgeToy = new();
     private readonly TooHeavyToyGenerator _tooHeavyToy = new();
     private readonly ToyGenerator _toy = new();
-    private readonly string _invalidRecommendedAge = Faker.Random.String();
 
     [Fact]
     public void PrepareGift_WithValidToy_ShouldInstantiateIt()
@@ -31,20 +30,21 @@ public class SantaWorkshopServiceTests
         var toy = _toy.Generate();
 
         var gift = _service.PrepareGift(toy.Name, toy.Weight, toy.Color, toy.Material);
-        gift.AddAttribute(RecommendedAge, $"{_recommendedAge}");
+        gift.AddAttribute(RecommendedAge, toy.RecommendedAge);
 
         gift.RecommendedAge()
+            .ToString()
             .Should()
-            .Be(_recommendedAge);
+            .Be(toy.RecommendedAge);
     }
 
     [Fact]
     public void RetrieveZeroRecommendedAge_WhenAddInvalidRecommendedAgeAttributeOnGift()
     {
-        var toy = _toy.Generate();
+        var toy = _invalidRecommendedAgeToy.Generate();
 
         var gift = _service.PrepareGift(toy.Name, toy.Weight, toy.Color, toy.Material);
-        gift.AddAttribute(RecommendedAge, _invalidRecommendedAge);
+        gift.AddAttribute(RecommendedAge, toy.RecommendedAge);
 
         gift.RecommendedAge()
             .Should()

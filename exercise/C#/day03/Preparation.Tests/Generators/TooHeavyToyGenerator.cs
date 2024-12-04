@@ -1,5 +1,3 @@
-using Bogus;
-
 namespace Preparation.Tests.Generators;
 
 internal class TooHeavyToyGenerator : ToyGenerator
