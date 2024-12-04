@@ -14,9 +14,9 @@ public class FakeScheduleService : IScheduleService
 
     public void Continue() => _scheduleHaveBeenContinued = true;
 
-    public void ScheduledWith(Schedule schedule) => _todaySchedule = schedule;
+    public void AlreadyScheduled(Schedule schedule) => _todaySchedule = schedule;
 
-    public void ScheduleHaveBeenOrganized(Schedule schedule) => _organizedSchedule.Should().BeEquivalentTo(schedule);
+    public void DayHaveBeenOrganizedWith(Schedule schedule) => _organizedSchedule.Should().BeEquivalentTo(schedule);
 
     public void ScheduleHaveBeenContinued() => _scheduleHaveBeenContinued.Should().BeTrue();
 }

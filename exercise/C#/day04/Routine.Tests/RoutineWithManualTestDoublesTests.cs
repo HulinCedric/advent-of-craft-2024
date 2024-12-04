@@ -5,30 +5,37 @@ namespace Routine.Tests;
 
 public class RoutineWithManualTestDoublesTests
 {
+    private readonly SpyEmailService _emailService;
+    private readonly SpyReindeerFeeder _reindeerFeeder;
+    private readonly Routine _routine;
+    private readonly FakeScheduleService _scheduleService;
+
+    public RoutineWithManualTestDoublesTests()
+    {
+        _emailService = new SpyEmailService();
+        _scheduleService = new FakeScheduleService();
+        _reindeerFeeder = new SpyReindeerFeeder();
+        _routine = new Routine(_emailService, _scheduleService, _reindeerFeeder);
+    }
+
     [Fact]
     public void StartRoutine_With_Manual_Test_Doubles()
     {
         // Given
-        var emailService = new SpyEmailService();
-        var scheduleService = new FakeScheduleService();
-        var reindeerFeeder = new SpyReindeerFeeder();
-
         var schedule = new Schedule
         {
             Tasks = ["Task 1", "Task 2"]
         };
 
-        scheduleService.ScheduledWith(schedule);
-
-        var routine = new Routine(emailService, scheduleService, reindeerFeeder);
+        _scheduleService.AlreadyScheduled(schedule);
 
         // When
-        routine.Start();
+        _routine.Start();
 
         // Then
-        scheduleService.ScheduleHaveBeenOrganized(schedule);
-        reindeerFeeder.ReindeerHaveBeenFed();
-        emailService.NewEmailsHaveBeenRead();
-        scheduleService.ScheduleHaveBeenContinued();
+        _scheduleService.DayHaveBeenOrganizedWith(schedule);
+        _reindeerFeeder.ReindeerHaveBeenFed();
+        _emailService.NewEmailsHaveBeenRead();
+        _scheduleService.ScheduleHaveBeenContinued();
     }
 }
