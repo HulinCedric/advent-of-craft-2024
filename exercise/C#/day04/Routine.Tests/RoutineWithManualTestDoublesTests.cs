@@ -22,18 +22,18 @@ public class RoutineWithManualTestDoublesTests
     public void StartRoutine_With_Manual_Test_Doubles()
     {
         // Given
-        var schedule = new Schedule
+        var todaySchedule = new Schedule
         {
             Tasks = ["Task 1", "Task 2"]
         };
 
-        _scheduleService.AlreadyScheduled(schedule);
+        _scheduleService.AlreadyScheduled(todaySchedule);
 
         // When
         _routine.Start();
 
         // Then
-        _scheduleService.DayHaveBeenOrganizedWith(schedule);
+        _scheduleService.DayHaveBeenOrganizedWith(todaySchedule);
         _reindeerFeeder.ReindeerHaveBeenFed();
         _emailService.NewEmailsHaveBeenRead();
         _scheduleService.ScheduleHaveBeenContinued();

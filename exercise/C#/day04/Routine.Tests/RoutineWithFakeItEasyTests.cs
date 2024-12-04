@@ -22,18 +22,18 @@ public class RoutineWithFakeItEasyTests
     public void StartRoutine_With_FakeItEasy()
     {
         // Given
-        var schedule = new Schedule
+        var todaySchedule = new Schedule
         {
             Tasks = ["Task 1", "Task 2"]
         };
 
-        A.CallTo(() => _scheduleService.TodaySchedule()).Returns(schedule);
+        A.CallTo(() => _scheduleService.TodaySchedule()).Returns(todaySchedule);
 
         // When
         _routine.Start();
 
         // Then
-        A.CallTo(() => _scheduleService.OrganizeMyDay(schedule)).MustHaveHappened();
+        A.CallTo(() => _scheduleService.OrganizeMyDay(todaySchedule)).MustHaveHappened();
         A.CallTo(() => _reindeerFeeder.FeedReindeers()).MustHaveHappened();
         A.CallTo(() => _emailService.ReadNewEmails()).MustHaveHappened();
         A.CallTo(() => _scheduleService.Continue()).MustHaveHappened();
