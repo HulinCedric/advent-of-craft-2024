@@ -3,6 +3,10 @@ namespace EID;
 // ReSharper disable once InconsistentNaming
 public static class EIDValidator
 {
+    private const char Sloubi = '1';
+    private const char Gagna = '2';
+    private const char Catact = '3';
+
     public static bool Validate(string input)
         => ValidateLength(input)
            && ValidateSex(input[0])
@@ -11,7 +15,7 @@ public static class EIDValidator
            && ValidateControlKey(input[..6], input[6..8]);
 
     private static bool ValidateLength(string input) => input.Length == 8;
-    private static bool ValidateSex(char sex) => sex is '1' or '2' or '3';
+    private static bool ValidateSex(char sex) => sex is Sloubi or Gagna or Catact;
     private static bool ValidateYear(string year) => year.IsANumber();
 
     private static bool ValidateSerialNumber(string serialNumber)
