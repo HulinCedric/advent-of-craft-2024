@@ -13,7 +13,7 @@ public class EIDShould
     [InlineData("49800767", "incorrect sex")]
     [InlineData("1xx00767", "incorrect year")]
     [InlineData("198xxx67", "incorrect serial number")]
-    [InlineData("19800067", "incorrect serial number")]
+    [InlineData("19800074", "incorrect serial number")]
     [InlineData("198007xx", "incorrect control key")]
     [InlineData("19800799", "incorrect control key")]
     [InlineData("19800701", "incorrect control key")]
