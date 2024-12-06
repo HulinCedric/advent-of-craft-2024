@@ -11,11 +11,17 @@ namespace EID.Tests
     // EID serial number should be between 001 and 999
     // EID control key should be between 01 and 99
     // EID control key should be valid (complement to 97 of the number formed by the first 6 digits of the EID modulo 97)
-    public class EIDTests
+    // ReSharper disable once InconsistentNaming
+    public class EIDShould
     {
         [Fact]
-        public void A_First_Test() 
-            => 43.Should()
-                .Be(42, "it is universal answer");
+        public void Be_valid_when_8_characters_long()
+            => Validate("19800767").Should()
+                .BeTrue();
+
+        private static bool Validate(string input)
+        {
+            return true;
+        }
     }
 }
