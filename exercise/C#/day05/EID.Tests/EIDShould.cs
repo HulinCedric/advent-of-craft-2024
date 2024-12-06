@@ -21,11 +21,18 @@ public class EIDShould
             .Should()
             .BeFalse(reason);
 
-    [Fact]
-    public void Be_valid()
-        => Validate("19800767")
+    [Theory]
+    [InlineData("19800767", "Sloubi sex")]
+    [InlineData("29800774", "Gagna sex")]
+    [InlineData("39800781", "Catact sex")]
+    [InlineData("10000797", "Minimum year")]
+    [InlineData("19900737", "Maximal year")]
+    [InlineData("19800173", "Minimal serial number")]
+    [InlineData("19899945", "Maximal serial number")]
+    public void Be_valid(string input, string reason)
+        => Validate(input)
             .Should()
-            .BeTrue();
+            .BeTrue(reason);
 
     private static bool Validate(string input)
         => ValidateLength(input)
