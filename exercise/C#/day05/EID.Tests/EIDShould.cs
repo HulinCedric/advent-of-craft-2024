@@ -16,6 +16,7 @@ public class EIDShould
     [InlineData("1xx00767", "incorrect year")]
     [InlineData("198xxx67", "incorrect serial number")]
     [InlineData("19800067", "incorrect serial number")]
+    [InlineData("198007xx", "incorrect control key")]
     public void Be_invalid(string input, string reason)
         => Validate(input)
             .Should()
@@ -31,7 +32,8 @@ public class EIDShould
         => ValidateLength(input)
            && ValidateSex(input[0])
            && ValidateYear(input[1..3])
-           && ValidateSerialNumber(input[3..6]);
+           && ValidateSerialNumber(input[3..6])
+           && ValidateControlKey(input[6..8]);
 
     private static bool ValidateLength(string input) => input.Length == 8;
 
@@ -41,6 +43,8 @@ public class EIDShould
 
     private static bool ValidateSerialNumber(string serialNumber)
         => IsANumber(serialNumber) && int.Parse(serialNumber) is >= 1 and <= 999;
+
+    private static bool ValidateControlKey(string controlKey) => IsANumber(controlKey);
 
     private static bool IsANumber(string input) => input.All(char.IsDigit);
 }
