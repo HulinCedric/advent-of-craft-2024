@@ -4,8 +4,6 @@ using Xunit;
 namespace EID.Tests
 {
     // Following Canon TDD here is the list of tests that should be implemented:
-    // EID should be 8 characters long
-    // EID should contain only digits
     // EID sex should be 1, 2 or 3
     // EID year should be between 00 and 99
     // EID serial number should be between 001 and 999
@@ -20,13 +18,23 @@ namespace EID.Tests
                 .BeFalse();
         
         [Fact]
+        public void Be_invalid_when_contains_letters()
+            => Validate("a9800767").Should()
+                .BeFalse();
+        
+        [Fact]
         public void Be_valid_when_8_characters_long()
+            => Validate("19800767").Should()
+                .BeTrue();
+        
+        [Fact]
+        public void Be_valid_when_contains_only_digits()
             => Validate("19800767").Should()
                 .BeTrue();
 
         private static bool Validate(string input)
         {
-            return input.Length == 8;
+            return input.Length == 8 && input.All(char.IsDigit);
         }
     }
 }
