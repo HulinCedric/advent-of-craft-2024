@@ -4,7 +4,6 @@ using Xunit;
 namespace EID.Tests;
 
 // Following Canon TDD here is the list of tests that should be implemented:
-// EID serial number should be between 001 and 999
 // EID control key should be between 01 and 99
 // EID control key should be valid (complement to 97 of the number formed by the first 6 digits of the EID modulo 97)
 // ReSharper disable once InconsistentNaming
@@ -16,6 +15,7 @@ public class EIDShould
     [InlineData("49800767", "incorrect sex")]
     [InlineData("1xx00767", "incorrect year")]
     [InlineData("198xxx67", "incorrect serial number")]
+    [InlineData("19800067", "incorrect serial number")]
     public void Be_invalid(string input, string reason)
         => Validate(input)
             .Should()
@@ -33,14 +33,17 @@ public class EIDShould
            && ValidateYear(input)
            && ValidateSerialNumber(input);
 
-
     private static bool ValidateLength(string input) => input.Length == 8;
 
     private static bool ValidateSex(string input) => input[0] is '1' or '2' or '3';
 
     private static bool ValidateYear(string input) => IsANumber(input[1..3]);
-    
-    private static bool ValidateSerialNumber(string input) => IsANumber(input[3..6]);
+
+    private static bool ValidateSerialNumber(string input)
+    {
+        var serialNumber = input[3..6];
+        return IsANumber(serialNumber) && int.Parse(serialNumber) is >= 1 and <= 999;
+    }
 
     private static bool IsANumber(string input) => input.All(char.IsDigit);
 }
