@@ -4,7 +4,6 @@ using Xunit;
 namespace EID.Tests;
 
 // Following Canon TDD here is the list of tests that should be implemented:
-// EID sex should be 1, 2 or 3
 // EID year should be between 00 and 99
 // EID serial number should be between 001 and 999
 // EID control key should be between 01 and 99
@@ -16,6 +15,7 @@ public class EIDShould
     [InlineData("1", "too short")]
     [InlineData("198007671", "too long")]
     [InlineData("a9800767", "contains letters")]
+    [InlineData("49800767", "incorrect sex")]
     public void Be_invalid(string input, string reason)
         => Validate(input)
             .Should()
@@ -27,5 +27,6 @@ public class EIDShould
             .Should()
             .BeTrue();
 
-    private static bool Validate(string input) => input.Length == 8 && input.All(char.IsDigit);
+    private static bool Validate(string input)
+        => input.Length == 8 && input.All(char.IsDigit) && input[0] is '1' or '2' or '3';
 }
