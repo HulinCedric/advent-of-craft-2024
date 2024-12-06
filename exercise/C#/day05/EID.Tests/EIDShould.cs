@@ -15,13 +15,18 @@ namespace EID.Tests
     public class EIDShould
     {
         [Fact]
+        public void Be_invalid_when_too_short()
+            => Validate("1").Should()
+                .BeFalse();
+        
+        [Fact]
         public void Be_valid_when_8_characters_long()
             => Validate("19800767").Should()
                 .BeTrue();
 
         private static bool Validate(string input)
         {
-            return true;
+            return input.Length == 8;
         }
     }
 }
