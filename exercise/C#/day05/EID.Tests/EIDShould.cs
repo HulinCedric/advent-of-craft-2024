@@ -15,6 +15,7 @@ public class EIDShould
     [InlineData("198007671", "too long")]
     [InlineData("49800767", "incorrect sex")]
     [InlineData("1xx00767", "incorrect year")]
+    [InlineData("198xxx67", "incorrect serial number")]
     public void Be_invalid(string input, string reason)
         => Validate(input)
             .Should()
@@ -29,11 +30,19 @@ public class EIDShould
     private static bool Validate(string input)
         => ValidateLength(input)
            && ValidateSex(input)
-           && ValidateYear(input);
+           && ValidateYear(input)
+           && ValidateSerialNumber(input);
+
 
     private static bool ValidateLength(string input) => input.Length == 8;
 
     private static bool ValidateSex(string input) => input[0] is '1' or '2' or '3';
 
     private static bool ValidateYear(string input) => input[1..3].All(char.IsDigit);
+
+    private static bool ValidateSerialNumber(string input)
+    {
+        var serialNumber = input[3..6];
+        return serialNumber != "xxx";
+    }
 }
