@@ -12,14 +12,14 @@ public static class EIDValidator
 
     private static bool ValidateLength(string input) => input.Length == 8;
     private static bool ValidateSex(char sex) => sex is '1' or '2' or '3';
-    private static bool ValidateYear(string year) => IsANumber(year);
+    private static bool ValidateYear(string year) => year.IsANumber();
 
     private static bool ValidateSerialNumber(string serialNumber)
-        => IsANumber(serialNumber) && int.Parse(serialNumber) is >= 1 and <= 999;
+        => serialNumber.IsANumber() && int.Parse(serialNumber) is >= 1 and <= 999;
 
     private static bool ValidateControlKey(string eidWithoutKey, string controlKey)
     {
-        if (!IsANumber(controlKey)) return false;
+        if (!controlKey.IsANumber()) return false;
 
         var key = int.Parse(controlKey);
 
@@ -27,6 +27,4 @@ public static class EIDValidator
 
         return key == checksum;
     }
-
-    private static bool IsANumber(string input) => input.All(char.IsDigit);
 }
