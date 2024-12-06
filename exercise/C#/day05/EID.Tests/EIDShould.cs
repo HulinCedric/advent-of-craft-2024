@@ -39,10 +39,6 @@ public class EIDShould
     private static bool ValidateSex(string input) => input[0] is '1' or '2' or '3';
 
     private static bool ValidateYear(string input) => input[1..3].All(char.IsDigit);
-
-    private static bool ValidateSerialNumber(string input)
-    {
-        var serialNumber = input[3..6];
-        return serialNumber != "xxx";
-    }
+    
+    private static bool ValidateSerialNumber(string input) => input[3..6].All(char.IsDigit);
 }
