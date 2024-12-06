@@ -29,21 +29,18 @@ public class EIDShould
 
     private static bool Validate(string input)
         => ValidateLength(input)
-           && ValidateSex(input)
-           && ValidateYear(input)
-           && ValidateSerialNumber(input);
+           && ValidateSex(input[0])
+           && ValidateYear(input[1..3])
+           && ValidateSerialNumber(input[3..6]);
 
     private static bool ValidateLength(string input) => input.Length == 8;
 
-    private static bool ValidateSex(string input) => input[0] is '1' or '2' or '3';
+    private static bool ValidateSex(char sex) => sex is '1' or '2' or '3';
 
-    private static bool ValidateYear(string input) => IsANumber(input[1..3]);
+    private static bool ValidateYear(string year) => IsANumber(year);
 
-    private static bool ValidateSerialNumber(string input)
-    {
-        var serialNumber = input[3..6];
-        return IsANumber(serialNumber) && int.Parse(serialNumber) is >= 1 and <= 999;
-    }
+    private static bool ValidateSerialNumber(string serialNumber)
+        => IsANumber(serialNumber) && int.Parse(serialNumber) is >= 1 and <= 999;
 
     private static bool IsANumber(string input) => input.All(char.IsDigit);
 }
