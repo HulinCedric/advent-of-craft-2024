@@ -28,5 +28,13 @@ public class EIDShould
             .BeTrue();
 
     private static bool Validate(string input)
-        => input.Length == 8 && input.All(char.IsDigit) && input[0] is '1' or '2' or '3';
+        => ValidateLength(input)
+           && ValidateIsNumber(input)
+           && ValidateSex(input);
+
+    private static bool ValidateSex(string input) => input[0] is '1' or '2' or '3';
+
+    private static bool ValidateIsNumber(string input) => input.All(char.IsDigit);
+
+    private static bool ValidateLength(string input) => input.Length == 8;
 }
