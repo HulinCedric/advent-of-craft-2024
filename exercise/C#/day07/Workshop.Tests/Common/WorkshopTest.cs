@@ -1,6 +1,6 @@
 namespace Workshop.Tests.Common;
 
-public class UseCaseTest
+public class WorkshopTest
 {
     private Gift? _completedGift;
     private Workshop _workshop = null!;

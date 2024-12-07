@@ -26,7 +26,7 @@ public class GiftAssertions(Gift? subject) : ReferenceTypeAssertions<Gift?, Gift
         return new AndConstraint<GiftAssertions>(this);
     }
 
-    public AndConstraint<GiftAssertions> BeNotProduced(string because = "", params object[] becauseArgs)
+    public AndConstraint<GiftAssertions> NotBeProduced(string because = "", params object[] becauseArgs)
     {
         Execute.Assertion
             .ForCondition(Subject is null)

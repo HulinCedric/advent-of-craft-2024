@@ -6,12 +6,12 @@ using static Workshop.Tests.Common.Builders.WorkshopBuilder;
 
 namespace Workshop.Tests;
 
-public class WorkshopShould : UseCaseTest
+public class AWorkshop : WorkshopTest
 {
     private const string ToyName = "1 Super Nintendo";
 
     [Fact]
-    public void Produced_gift_when_completing_an_existing_gift()
+    public void Can_produce_a_well_known_gift()
     {
         Given(AWorkshop().ThatCanProduce(AGift().Called(ToyName)));
 
@@ -21,12 +21,12 @@ public class WorkshopShould : UseCaseTest
     }
 
     [Fact]
-    public void Not_produced_gift_when_completing_a_non_existing_gift()
+    public void Cannot_produce_an_unknown_gift()
     {
         Given(AWorkshop());
 
         When(workshop => workshop.CompleteGift("NonExistingToy"));
 
-        Then(gift => gift.Should().BeNotProduced());
+        Then(gift => gift.Should().NotBeProduced());
     }
 }
