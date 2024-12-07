@@ -7,7 +7,7 @@ public class WorkshopShould
     private const string ToyName = "1 Super Nintendo";
 
     [Fact]
-    public void Mark_a_gift_as_produced_when_it_is_completed()
+    public void Mark_a_gift_as_produced_when_elves_finish_making_it()
     {
         var workshop = new Workshop();
         var gift = new Gift(ToyName);
@@ -20,7 +20,7 @@ public class WorkshopShould
     }
 
     [Fact]
-    public void Return_no_gift_when_asked_to_complete_a_non_existent_gift()
+    public void Return_no_gift_when_elves_never_started_making_it()
     {
         var workshop = new Workshop();
 
