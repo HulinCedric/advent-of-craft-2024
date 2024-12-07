@@ -2,7 +2,7 @@ using FluentAssertions;
 using FluentAssertions.Execution;
 using FluentAssertions.Primitives;
 
-namespace Workshop.Tests;
+namespace Workshop.Tests.Verifications;
 
 public class GiftAssertions(Gift? subject) : ReferenceTypeAssertions<Gift?, GiftAssertions>(subject)
 {

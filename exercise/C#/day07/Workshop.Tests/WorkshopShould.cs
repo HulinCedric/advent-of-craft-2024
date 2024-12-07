@@ -1,6 +1,7 @@
+using Workshop.Tests.Verifications;
 using Xunit;
-using static Workshop.Tests.GiftBuilder;
-using static Workshop.Tests.WorkshopBuilder;
+using static Workshop.Tests.Builders.GiftBuilder;
+using static Workshop.Tests.Builders.WorkshopBuilder;
 
 namespace Workshop.Tests;
 
@@ -12,7 +13,7 @@ public class WorkshopShould
     private Workshop _workshop = null!;
 
     [Fact]
-    public void Mark_a_gift_as_produced_when_elves_finish_making_it()
+    public void Produced_gift_when_completing_an_existing_gift()
     {
         Given(AWorkshop().ThatCanProduce(AGift().Called(ToyName)));
 
@@ -22,7 +23,7 @@ public class WorkshopShould
     }
 
     [Fact]
-    public void Return_no_gift_when_elves_never_started_making_it()
+    public void Not_produced_gift_when_completing_a_non_existing_gift()
     {
         Given(AWorkshop());
 

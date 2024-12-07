@@ -1,8 +1,8 @@
-namespace Workshop.Tests;
+namespace Workshop.Tests.Builders;
 
 public class WorkshopBuilder
 {
-    private readonly List<Gift> _gifts = new();
+    private readonly List<Gift> _gifts = [];
 
     public static WorkshopBuilder AWorkshop() => new();
 

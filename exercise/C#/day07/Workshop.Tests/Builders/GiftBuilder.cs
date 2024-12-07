@@ -1,4 +1,4 @@
-namespace Workshop.Tests;
+namespace Workshop.Tests.Builders;
 
 public class GiftBuilder
 {
