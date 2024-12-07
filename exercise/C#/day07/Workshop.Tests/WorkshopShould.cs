@@ -11,7 +11,7 @@ public class WorkshopShould
     [Fact]
     public void Mark_a_gift_as_produced_when_elves_finish_making_it()
     {
-        var workshop = AWorkshop().WithGifts(AGift().Named(ToyName).Build()).Build();
+        Workshop workshop = AWorkshop().ThatCanProduce(AGift().Called(ToyName));
 
         var completedGift = workshop.CompleteGift(ToyName);
 
@@ -22,7 +22,7 @@ public class WorkshopShould
     [Fact]
     public void Return_no_gift_when_elves_never_started_making_it()
     {
-        var workshop = AWorkshop().Build();
+        Workshop workshop = AWorkshop();
 
         var completedGift = workshop.CompleteGift("NonExistingToy");
 

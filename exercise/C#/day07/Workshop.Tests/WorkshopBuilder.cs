@@ -6,7 +6,7 @@ public class WorkshopBuilder
 
     public static WorkshopBuilder AWorkshop() => new();
 
-    public WorkshopBuilder WithGifts(params Gift[] gifts)
+    public WorkshopBuilder ThatCanProduce(params Gift[] gifts)
     {
         foreach (var gift in gifts)
         {
@@ -15,6 +15,8 @@ public class WorkshopBuilder
 
         return this;
     }
+    
+    public static implicit operator Workshop(WorkshopBuilder builder) => builder.Build();
 
     public Workshop Build()
     {
