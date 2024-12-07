@@ -1,4 +1,6 @@
 using Xunit;
+using static Workshop.Tests.GiftBuilder;
+using static Workshop.Tests.WorkshopBuilder;
 
 namespace Workshop.Tests;
 
@@ -9,9 +11,7 @@ public class WorkshopShould
     [Fact]
     public void Mark_a_gift_as_produced_when_elves_finish_making_it()
     {
-        var workshop = new Workshop();
-        var gift = new Gift(ToyName);
-        workshop.AddGift(gift);
+        var workshop = AWorkshop().WithGifts(AGift().Named(ToyName).Build()).Build();
 
         var completedGift = workshop.CompleteGift(ToyName);
 
@@ -22,7 +22,7 @@ public class WorkshopShould
     [Fact]
     public void Return_no_gift_when_elves_never_started_making_it()
     {
-        var workshop = new Workshop();
+        var workshop = AWorkshop().Build();
 
         var completedGift = workshop.CompleteGift("NonExistingToy");
 
