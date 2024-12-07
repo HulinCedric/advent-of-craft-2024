@@ -1,16 +1,14 @@
-using Workshop.Tests.Verifications;
+using Workshop.Tests.Common;
+using Workshop.Tests.Common.Verifications;
 using Xunit;
-using static Workshop.Tests.Builders.GiftBuilder;
-using static Workshop.Tests.Builders.WorkshopBuilder;
+using static Workshop.Tests.Common.Builders.GiftBuilder;
+using static Workshop.Tests.Common.Builders.WorkshopBuilder;
 
 namespace Workshop.Tests;
 
-public class WorkshopShould
+public class WorkshopShould : UseCaseTest
 {
     private const string ToyName = "1 Super Nintendo";
-
-    private Gift? _completedGift;
-    private Workshop _workshop = null!;
 
     [Fact]
     public void Produced_gift_when_completing_an_existing_gift()
@@ -31,8 +29,4 @@ public class WorkshopShould
 
         Then(gift => gift.Should().BeNotProduced());
     }
-
-    private void Given(Workshop workshop) => _workshop = workshop;
-    private void Then(Action<Gift?> assert) => assert(_completedGift);
-    private void When(Func<Workshop, Gift?> act) => _completedGift = act(_workshop);
 }

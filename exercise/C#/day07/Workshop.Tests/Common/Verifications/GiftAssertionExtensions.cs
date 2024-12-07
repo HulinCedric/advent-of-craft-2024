@@ -1,4 +1,4 @@
-namespace Workshop.Tests.Verifications;
+namespace Workshop.Tests.Common.Verifications;
 
 public static class GiftAssertionExtensions
 {

@@ -1,4 +1,4 @@
-namespace Workshop.Tests.Builders;
+namespace Workshop.Tests.Common.Builders;
 
 public class WorkshopBuilder
 {
