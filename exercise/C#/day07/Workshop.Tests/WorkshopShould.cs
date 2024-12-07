@@ -18,11 +18,7 @@ public class WorkshopShould
 
         When(workshop => workshop.CompleteGift(ToyName));
 
-        Then(completedGift =>
-            {
-                Assert.NotNull(completedGift);
-                Assert.Equal(Status.Produced, completedGift.Status);
-            });
+        Then(gift => gift.Should().BeProduced());
     }
 
     [Fact]
@@ -32,7 +28,7 @@ public class WorkshopShould
 
         When(workshop => workshop.CompleteGift("NonExistingToy"));
 
-        Then(completedGift => Assert.Null(completedGift));
+        Then(gift => gift.Should().BeNotProduced());
     }
 
     private void Given(Workshop workshop) => _workshop = workshop;
