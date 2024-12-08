@@ -4,24 +4,25 @@ using ToyProduction.Services;
 using ToyProduction.Tests.Doubles;
 using Xunit;
 
-namespace ToyProduction.Tests;
-
-public class ToyProductionServiceTest
+namespace ToyProduction.Tests
 {
-    private const string ToyName = "Train";
-
-    [Fact]
-    public void AssignToyToElfShouldPassTheItemInProduction()
+    public class ToyProductionServiceTest
     {
-        var repository = new InMemoryToyRepository();
-        var service = new ToyProductionService(repository);
-        repository.Save(new Toy(ToyName, State.Unassigned));
+        private const string ToyName = "Train";
 
-        service.AssignToyToElf(ToyName);
+        [Fact]
+        public void AssignToyToElfShouldPassTheItemInProduction()
+        {
+            var repository = new InMemoryToyRepository();
+            var service = new ToyProductionService(repository);
+            repository.Save(new Toy(ToyName));
 
-        repository.FindByName(ToyName)!
-            .IsInState(State.InProduction)
-            .Should()
-            .BeTrue();
+            service.AssignToyToElf(ToyName);
+
+            repository.FindByName(ToyName)!
+                .IsInProduction()
+                .Should()
+                .BeTrue();
+        }
     }
 }
