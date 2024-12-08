@@ -1,11 +1,14 @@
 ﻿namespace ToyProduction.Domain;
 
-internal class InProductionState : IState
+public partial class Toy
 {
-    public void AssignToElf(Toy toy)
+    private class InProductionState : IState
     {
-        // Already in production
-    }
+        public void AssignToElf(Toy toy)
+        {
+            // Already in production
+        }
 
-    public void CompleteProduction(Toy toy) => toy.ChangeState(new CompletedState());
+        public void CompleteProduction(Toy toy) => toy.ChangeState(new CompletedState());
+    }
 }

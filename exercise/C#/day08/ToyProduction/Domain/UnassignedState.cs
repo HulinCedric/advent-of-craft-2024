@@ -1,11 +1,15 @@
 ﻿namespace ToyProduction.Domain;
 
-internal class UnassignedState : IState
-{
-    public void AssignToElf(Toy toy) => toy.ChangeState(new InProductionState());
 
-    public void CompleteProduction(Toy toy)
+public partial class Toy
+{
+    private class UnassignedState : IState
     {
-        // Cannot complete production if unassigned
+        public void AssignToElf(Toy toy) => toy.ChangeState(new InProductionState());
+
+        public void CompleteProduction(Toy toy)
+        {
+            // Cannot complete production if unassigned
+        }
     }
 }

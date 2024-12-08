@@ -1,14 +1,17 @@
 ﻿namespace ToyProduction.Domain;
 
-internal class CompletedState : IState
+public partial class Toy
 {
-    public void AssignToElf(Toy toy)
+    private class CompletedState : IState
     {
-        // Cannot assign if completed
-    }
+        public void AssignToElf(Toy toy)
+        {
+            // Cannot assign if completed
+        }
 
-    public void CompleteProduction(Toy toy)
-    {
-        // Already completed
+        public void CompleteProduction(Toy toy)
+        {
+            // Already completed
+        }
     }
 }

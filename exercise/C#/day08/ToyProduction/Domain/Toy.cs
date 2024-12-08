@@ -1,14 +1,20 @@
 namespace ToyProduction.Domain
 {
-    public class Toy(string name)
+    public partial class Toy
     {
-        private IState _state = new UnassignedState();
+        private IState _state;
 
-        public string Name { get; } = name;
+        public Toy(string name)
+        {
+            Name = name;
+            _state = new UnassignedState();
+        }
+
+        public string Name { get; }
 
         public void AssignToElf() => _state.AssignToElf(this);
 
-        internal void ChangeState(IState state) => _state = state;
+        private void ChangeState(IState state) => _state = state;
 
         public bool IsInProduction() => _state is InProductionState;
     }
