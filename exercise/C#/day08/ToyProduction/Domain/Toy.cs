@@ -2,23 +2,14 @@ namespace ToyProduction.Domain
 {
     public class Toy(string name)
     {
-        private State _state = State.Unassigned;
+        private IState _state = new UnassignedState();
+
         public string Name { get; } = name;
 
-        public void AssignToElf()
-        {
-            if (_state is not State.Unassigned) return;
+        public void AssignToElf() => _state.AssignToElf(this);
 
-            _state = State.InProduction;
-        }
+        internal void ChangeState(IState state) => _state = state;
 
-        public bool IsInProduction() => _state == State.InProduction;
-    }
-
-    public enum State
-    {
-        Unassigned,
-        InProduction,
-        Completed
+        public bool IsInProduction() => _state is InProductionState;
     }
 }
