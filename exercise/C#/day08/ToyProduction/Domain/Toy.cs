@@ -7,16 +7,12 @@ namespace ToyProduction.Domain
 
         public void AssignToElf()
         {
-            if (this is { _state: State.Unassigned })
-            {
-                _state = State.InProduction;
-            }
+            if (_state is not State.Unassigned) return;
+
+            _state = State.InProduction;
         }
 
-        public bool IsInProduction()
-        {
-            return _state == State.InProduction;
-        }
+        public bool IsInProduction() => _state == State.InProduction;
     }
 
     public enum State
