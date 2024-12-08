@@ -12,6 +12,11 @@ namespace ToyProduction.Domain
                 State = State.InProduction;
             }
         }
+
+        public bool IsInState(State state)
+        {
+            return State == state;
+        }
     }
 
     public enum State
