@@ -2,6 +2,6 @@
 
 internal interface IState
 {
-    void AssignToElf(Toy toy);
-    void CompleteProduction(Toy toy);
+    Toy AssignToElf(Toy toy);
+    Toy CompleteProduction(Toy toy);
 }

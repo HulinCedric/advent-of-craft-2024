@@ -4,11 +4,9 @@ public partial class Toy
 {
     private class InProductionState : IState
     {
-        public void AssignToElf(Toy toy)
-        {
-            // Already in production
-        }
+        // Already in production
+        public Toy AssignToElf(Toy toy) => toy;
 
-        public void CompleteProduction(Toy toy) => toy.ChangeState(new CompletedState());
+        public Toy CompleteProduction(Toy toy) => toy.ChangeState(new CompletedState());
     }
 }

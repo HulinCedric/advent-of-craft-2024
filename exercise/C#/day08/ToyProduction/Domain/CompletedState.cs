@@ -4,14 +4,10 @@ public partial class Toy
 {
     private class CompletedState : IState
     {
-        public void AssignToElf(Toy toy)
-        {
-            // Cannot assign if completed
-        }
+        // Cannot assign if completed
+        public Toy AssignToElf(Toy toy) => toy;
 
-        public void CompleteProduction(Toy toy)
-        {
-            // Already completed
-        }
+        // Already completed
+        public Toy CompleteProduction(Toy toy) => toy;
     }
 }

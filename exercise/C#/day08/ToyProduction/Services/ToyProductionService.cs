@@ -1,17 +1,12 @@
 using ToyProduction.Domain;
 
-namespace ToyProduction.Services
+namespace ToyProduction.Services;
+
+public class ToyProductionService(IToyRepository repository)
 {
-    public class ToyProductionService(IToyRepository repository)
-    {
-        public void AssignToyToElf(string toyName)
-        {
-            var toy = repository.FindByName(toyName);
-            if (toy is null) return;
-            
-            toy.AssignToElf();
-            
-            repository.Save(toy);
-        }
-    }
+    public void AssignToyToElf(string toyName)
+        => repository.FindByName(toyName)
+            .Match(
+                toy => repository.Save(toy.AssignToElf()),
+                () => { });
 }

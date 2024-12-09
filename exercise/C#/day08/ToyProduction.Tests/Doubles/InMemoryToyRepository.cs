@@ -1,17 +1,21 @@
+using LanguageExt;
 using ToyProduction.Domain;
 
-namespace ToyProduction.Tests.Doubles
+namespace ToyProduction.Tests.Doubles;
+
+public class InMemoryToyRepository : IToyRepository
 {
-    public class InMemoryToyRepository : IToyRepository
+    private readonly List<Toy> _toys = [];
+
+    public Option<Toy> FindByName(string name) => _toys.FirstOrDefault(t => t.Name == name);
+
+    public void Save(Toy toy)
     {
-        private readonly List<Toy> _toys = [];
-
-        public Toy? FindByName(string name) => _toys.FirstOrDefault(t => t.Name == name);
-
-        public void Save(Toy toy)
-        {
-            _toys.Remove(toy);
-            _toys.Add(toy);
-        }
+        FindByName(toy.Name)
+            .Match(
+                previousToy => _toys.Remove(previousToy),
+                () => { });
+        
+        _toys.Add(toy);
     }
 }

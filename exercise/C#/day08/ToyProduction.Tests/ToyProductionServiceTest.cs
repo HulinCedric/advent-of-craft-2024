@@ -1,4 +1,5 @@
 using FluentAssertions;
+using FluentAssertions.LanguageExt;
 using ToyProduction.Domain;
 using ToyProduction.Services;
 using ToyProduction.Tests.Doubles;
@@ -10,18 +11,22 @@ public class ToyProductionServiceTest
 {
     private const string ToyName = "Train";
 
+    private readonly IToyRepository _repository;
+    private readonly ToyProductionService _service;
+
+    public ToyProductionServiceTest()
+    {
+        _repository = new InMemoryToyRepository();
+        _service = new ToyProductionService(_repository);
+    }
+
     [Fact]
     public void AssignToyToElfShouldPassTheItemInProduction()
     {
-        var repository = new InMemoryToyRepository();
-        var service = new ToyProductionService(repository);
-        repository.Save(new Toy(ToyName));
+        _repository.Save(new Toy(ToyName));
 
-        service.AssignToyToElf(ToyName);
+        _service.AssignToyToElf(ToyName);
 
-        repository.FindByName(ToyName)!
-            .IsInProduction()
-            .Should()
-            .BeTrue();
+        _repository.FindByName(ToyName).Should().BeSome(toy => toy.IsInProduction().Should().BeTrue());
     }
 }
