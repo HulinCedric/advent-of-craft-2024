@@ -14,7 +14,8 @@
                 {
                     int j;
                     if (c == ')') j = 3;
-                    else j = -2;
+                    else if (c == '(') j = -2;
+                    else j = 0;
 
                     val.Add(new Tuple<char, int>(c, j));
                 }
