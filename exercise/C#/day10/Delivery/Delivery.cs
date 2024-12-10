@@ -10,23 +10,32 @@
             {
                 var c = instructions[i];
 
-                if (instructions.Contains("🧝"))
-                {
-                    int j;
-                    if (c == ')') j = 3;
-                    else if (c == '(') j = -2;
-                    else j = 0;
-
-                    val.Add(j);
-                }
-                else if (!instructions.Contains("🧝"))
-                {
-                    val.Add(c == '(' ? 1 : -1);
-                }
+                val.Add(Calculate(instructions, c));
             }
 
 
             return val.Sum();
+        }
+
+        private static int Calculate(string instructions, char c)
+        {
+            if (instructions.Contains("🧝"))
+            {
+                int j;
+                if (c == ')') j = 3;
+                else if (c == '(') j = -2;
+                else j = 0;
+
+                return j;
+            }
+            else if (!instructions.Contains("🧝"))
+            {
+                return c == '(' ? 1 : -1;
+            }
+            else
+            {
+                return 0;
+            }
         }
     }
 }
