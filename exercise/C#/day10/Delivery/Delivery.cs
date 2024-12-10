@@ -2,22 +2,22 @@
 
 public static class Building
 {
-    public static int WhichFloor(string instructions) => instructions.Sum(c => Calculate(instructions, c));
+    public static int WhichFloor(string instructions)
+        => instructions.Sum(
+            c =>
+            {
+                if (instructions.Contains("🧝"))
+                {
+                    int j;
+                    if (c == ')') j = 3;
+                    else if (c == '(') j = -2;
+                    else j = 0;
 
-    private static int Calculate(string instructions, char c)
-    {
-        if (instructions.Contains("🧝"))
-        {
-            int j;
-            if (c == ')') j = 3;
-            else if (c == '(') j = -2;
-            else j = 0;
+                    return j;
+                }
 
-            return j;
-        }
+                if (!instructions.Contains("🧝")) return c == '(' ? 1 : -1;
 
-        if (!instructions.Contains("🧝")) return c == '(' ? 1 : -1;
-
-        return 0;
-    }
+                return 0;
+            });
 }
