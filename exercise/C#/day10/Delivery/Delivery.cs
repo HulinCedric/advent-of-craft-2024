@@ -9,16 +9,19 @@ public static class Building
             ? ElfCalculationStrategy()
             : StandardCalculationStrategy();
 
-    private static Func<char, int> StandardCalculationStrategy() => c => c == '(' ? 1 : -1;
+    private static Func<char, int> StandardCalculationStrategy()
+        => instruction => instruction switch
+        {
+            '(' => 1,
+            ')' => -1,
+            _ => 0
+        };
 
     private static Func<char, int> ElfCalculationStrategy()
-        => c =>
+        => instruction => instruction switch
         {
-            int j;
-            if (c == ')') j = 3;
-            else if (c == '(') j = -2;
-            else j = 0;
-
-            return j;
+            '(' => -2,
+            ')' => 3,
+            _ => 0
         };
 }
