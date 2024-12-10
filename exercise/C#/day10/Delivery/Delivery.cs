@@ -4,7 +4,7 @@
     {
         public static int WhichFloor(string instructions)
         {
-            List<Tuple<char, int>> val = [];
+            List<int> val = [];
 
             for (int i = 0; i < instructions.Length; i++)
             {
@@ -17,18 +17,18 @@
                     else if (c == '(') j = -2;
                     else j = 0;
 
-                    val.Add(new Tuple<char, int>(c, j));
+                    val.Add(j);
                 }
                 else if (!instructions.Contains("🧝"))
                 {
-                    val.Add(new Tuple<char, int>(c, c == '(' ? 1 : -1));
+                    val.Add(c == '(' ? 1 : -1);
                 }
             }
 
             int result = 0;
             foreach (var kp in val)
             {
-                result += kp.Item2;
+                result += kp;
             }
 
             return result;
