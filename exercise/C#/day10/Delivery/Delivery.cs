@@ -1,41 +1,23 @@
-﻿namespace Delivery
+﻿namespace Delivery;
+
+public static class Building
 {
-    public static class Building
+    public static int WhichFloor(string instructions) => instructions.Sum(c => Calculate(instructions, c));
+
+    private static int Calculate(string instructions, char c)
     {
-        public static int WhichFloor(string instructions)
+        if (instructions.Contains("🧝"))
         {
-            List<int> val = [];
+            int j;
+            if (c == ')') j = 3;
+            else if (c == '(') j = -2;
+            else j = 0;
 
-            for (int i = 0; i < instructions.Length; i++)
-            {
-                var c = instructions[i];
-
-                val.Add(Calculate(instructions, c));
-            }
-
-
-            return val.Sum();
+            return j;
         }
 
-        private static int Calculate(string instructions, char c)
-        {
-            if (instructions.Contains("🧝"))
-            {
-                int j;
-                if (c == ')') j = 3;
-                else if (c == '(') j = -2;
-                else j = 0;
+        if (!instructions.Contains("🧝")) return c == '(' ? 1 : -1;
 
-                return j;
-            }
-            else if (!instructions.Contains("🧝"))
-            {
-                return c == '(' ? 1 : -1;
-            }
-            else
-            {
-                return 0;
-            }
-        }
+        return 0;
     }
 }
