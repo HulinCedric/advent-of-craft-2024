@@ -4,9 +4,11 @@ public static class Building
 {
     public static int WhichFloor(string instructions)
     {
-        if (instructions.Contains("🧝"))
-            return instructions.Sum(ElfCalculationStrategy());
-        return instructions.Sum(StandardCalculationStrategy());
+        var calculationStrategy = instructions.Contains("🧝")
+            ? ElfCalculationStrategy()
+            : StandardCalculationStrategy();
+
+        return instructions.Sum(calculationStrategy);
     }
 
     private static Func<char, int> StandardCalculationStrategy() => c => c == '(' ? 1 : -1;
