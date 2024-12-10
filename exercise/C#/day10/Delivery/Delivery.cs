@@ -2,14 +2,12 @@
 
 public static class Building
 {
-    public static int WhichFloor(string instructions)
-    {
-        var calculationStrategy = instructions.Contains("🧝")
+    public static int WhichFloor(string instructions) => instructions.Sum(DetermineCalculationStrategy(instructions));
+
+    private static Func<char, int> DetermineCalculationStrategy(string instructions)
+        => instructions.Contains("🧝")
             ? ElfCalculationStrategy()
             : StandardCalculationStrategy();
-
-        return instructions.Sum(calculationStrategy);
-    }
 
     private static Func<char, int> StandardCalculationStrategy() => c => c == '(' ? 1 : -1;
 
