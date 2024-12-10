@@ -1,15 +1,17 @@
 ﻿namespace Delivery;
 
+using CalculationStrategy = Func<char, int>;
+
 public static class Building
 {
     public static int WhichFloor(string instructions) => instructions.Sum(DetermineCalculationStrategy(instructions));
 
-    private static Func<char, int> DetermineCalculationStrategy(string instructions)
+    private static CalculationStrategy DetermineCalculationStrategy(string instructions)
         => instructions.Contains("🧝")
             ? ElfCalculationStrategy()
             : StandardCalculationStrategy();
 
-    private static Func<char, int> StandardCalculationStrategy()
+    private static CalculationStrategy StandardCalculationStrategy()
         => instruction => instruction switch
         {
             '(' => 1,
@@ -17,7 +19,7 @@ public static class Building
             _ => 0
         };
 
-    private static Func<char, int> ElfCalculationStrategy()
+    private static CalculationStrategy ElfCalculationStrategy()
         => instruction => instruction switch
         {
             '(' => -2,
