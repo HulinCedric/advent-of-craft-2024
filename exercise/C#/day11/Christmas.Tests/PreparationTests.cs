@@ -16,9 +16,9 @@ public class PreparationTests
         => Preparation.PrepareGifts(numberOfGifts).Should().Be(expected);
 
     [Theory]
-    [InlineData(1, "Baby")]
-    [InlineData(3, "Toddler")]
-    [InlineData(6, "Child")]
+    [InlineData(2, "Baby")]
+    [InlineData(5, "Toddler")]
+    [InlineData(12, "Child")]
     [InlineData(13, "Teen")]
     public void CategorizeGift(int age, string expectedCategory)
         => Preparation.CategorizeGift(age)
