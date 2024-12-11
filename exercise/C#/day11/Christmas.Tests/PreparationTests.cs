@@ -32,6 +32,7 @@ public class PreparationTests
     [InlineData(Educational, 20, 100, false)]
     [InlineData(Fun, 29, 100, false)]
     [InlineData(Creative, 15, 100, false)]
+    [InlineData((ToyType)4, 1, 1, false)]
     public void EnsureToyBalance(ToyType toyType, int toysCount, int totalToys, bool expected)
         => Preparation.EnsureToyBalance(toyType, toysCount, totalToys)
             .Should()
