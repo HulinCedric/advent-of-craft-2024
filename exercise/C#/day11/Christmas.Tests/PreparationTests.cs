@@ -13,7 +13,7 @@ public class PreparationTests
     [InlineData(49, "Elves will prepare the gifts.")]
     [InlineData(50, "Santa will prepare the gifts.")]
     public void PrepareGifts(int numberOfGifts, string expected)
-        => Preparation.PrepareGifts(numberOfGifts);
+        => Preparation.PrepareGifts(numberOfGifts).Should().Be(expected);
 
     [Theory]
     [InlineData(1, "Baby")]
