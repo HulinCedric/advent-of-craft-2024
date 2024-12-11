@@ -1,6 +1,6 @@
 using FsCheck;
 
-namespace Christmas.Tests.Generators;
+namespace Christmas.Tests.Generators.NumberOfGifts;
 
 public static class SantaGifts
 {
