@@ -2,10 +2,9 @@
 
 namespace Gifts;
 
-public class Child(string name, string behavior)
+public class Child(ChildName name, string behavior)
 {
     private readonly Behavior _behavior = new(behavior);
-    private readonly ChildName _childName = new(name);
     private WishList _wishlist = WishList.Empty();
 
     public void SetWishList(Toy firstChoice, Toy secondChoice, Toy thirdChoice)
@@ -13,5 +12,5 @@ public class Child(string name, string behavior)
 
     internal Option<Toy> GetChoice() => _behavior.GetChoice(_wishlist);
 
-    internal bool IsNamed(ChildName childName) => _childName == childName;
+    internal bool IsNamed(ChildName childName) => name == childName;
 }

@@ -6,8 +6,8 @@ public class Santa
 {
     private Children _children = new();
 
-    public Option<Toy> ChooseToyForChild(string childName)
-        => _children.FindChildByName(new ChildName(childName))
+    public Option<Toy> ChooseToyForChild(ChildName childName)
+        => _children.FindChildByName(childName)
             .Match(
                 child => child.GetChoice(),
                 () => throw new InvalidOperationException("No such child found"));
