@@ -13,5 +13,5 @@ public class Child(string name, string behavior)
 
     internal Option<Toy> GetChoice() => _behavior.GetChoice(_wishlist);
 
-    public bool IsNamed(ChildName childName) => _childName == childName;
+    internal bool IsNamed(ChildName childName) => _childName == childName;
 }

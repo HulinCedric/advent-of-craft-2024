@@ -1,3 +1,3 @@
 namespace Gifts;
 
-public record ChildName(string Name);
+internal record ChildName(string Name);
