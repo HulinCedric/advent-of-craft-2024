@@ -2,7 +2,7 @@ using LanguageExt;
 
 namespace Gifts;
 
-internal class Behavior(string value)
+public class Behavior(string value)
 {
     private const string VeryNice = "very nice";
     private const string Nice = "nice";
@@ -16,4 +16,6 @@ internal class Behavior(string value)
             Naughty => wishList.GetThirdChoice(),
             _ => Option<Toy>.None
         };
+    
+    public static implicit operator Behavior(string value) => new(value);
 }
