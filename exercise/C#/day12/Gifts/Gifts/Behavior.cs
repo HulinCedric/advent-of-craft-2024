@@ -1,9 +1,9 @@
 namespace Gifts;
 
-public record Behavior(string Value)
+internal class Behavior(string value)
 {
     internal Toy? GetChoice(WishList wishList)
-        => Value switch
+        => value switch
         {
             "naughty" => wishList.GetThirdChoice(),
             "nice" => wishList.GetSecondChoice(),
