@@ -1,17 +1,17 @@
 namespace Gifts;
 
-public class WishList
+internal class WishList
 {
     private readonly List<Toy> _wishlist;
 
-    public WishList() => _wishlist = [];
+    internal WishList() => _wishlist = [];
 
-    public WishList(Toy firstChoice, Toy secondChoice, Toy thirdChoice)
+    internal WishList(Toy firstChoice, Toy secondChoice, Toy thirdChoice)
         => _wishlist = [firstChoice, secondChoice, thirdChoice];
 
-    public Toy GetThirdChoice() => _wishlist[^1];
+    internal Toy GetThirdChoice() => _wishlist[^1];
 
-    public Toy GetSecondChoice() => _wishlist[1];
+    internal Toy GetSecondChoice() => _wishlist[1];
 
-    public Toy GetFirstChoice() => _wishlist[0];
+    internal Toy GetFirstChoice() => _wishlist[0];
 }

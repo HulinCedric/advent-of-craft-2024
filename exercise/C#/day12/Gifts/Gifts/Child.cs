@@ -2,9 +2,8 @@
 
 public class Child
 {
-    private WishList _wishlist;
     private readonly Behavior _behavior;
-    public string Name { get; }
+    private WishList _wishlist;
 
     public Child(string name, string behavior)
     {
@@ -13,8 +12,10 @@ public class Child
         _wishlist = new WishList();
     }
 
+    internal string Name { get; }
+
     public void SetWishList(Toy firstChoice, Toy secondChoice, Toy thirdChoice)
         => _wishlist = new WishList(firstChoice, secondChoice, thirdChoice);
 
-    public Toy? GetChoice() => _behavior.GetChoice(_wishlist);
+    internal Toy? GetChoice() => _behavior.GetChoice(_wishlist);
 }
