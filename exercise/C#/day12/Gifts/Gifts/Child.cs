@@ -3,13 +3,13 @@
 public class Child
 {
     private WishList _wishlist;
-    private readonly string _behavior;
+    private readonly Behavior _behavior;
     public string Name { get; }
 
     public Child(string name, string behavior)
     {
         Name = name;
-        _behavior = behavior;
+        _behavior = new Behavior(behavior);
         _wishlist = new WishList();
     }
 

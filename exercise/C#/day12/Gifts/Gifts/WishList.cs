@@ -9,15 +9,15 @@ public class WishList
     public WishList(Toy firstChoice, Toy secondChoice, Toy thirdChoice)
         => _wishlist = [firstChoice, secondChoice, thirdChoice];
 
-    public Toy? GetChoice(string behavior)
+    public Toy? GetChoice(Behavior behavior)
     {
-        if (behavior == "naughty")
+        if (behavior.Value == "naughty")
             return _wishlist[^1];
 
-        if (behavior == "nice")
+        if (behavior.Value == "nice")
             return _wishlist[1];
 
-        if (behavior == "very nice")
+        if (behavior.Value == "very nice")
             return _wishlist[0];
 
         return null;
