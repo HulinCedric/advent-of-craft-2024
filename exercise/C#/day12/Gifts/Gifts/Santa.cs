@@ -6,7 +6,7 @@ public class Santa
 
     public Toy? ChooseToyForChild(string childName)
     {
-        var found = _children.FindChildByName(childName) ?? throw new InvalidOperationException("No such child found");
+        var found = _children.FindChildByName(new ChildName(childName)) ?? throw new InvalidOperationException("No such child found");
 
         return found.GetChoice();
     }
