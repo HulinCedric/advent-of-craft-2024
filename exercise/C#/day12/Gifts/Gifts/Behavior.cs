@@ -1,13 +1,15 @@
+using LanguageExt;
+
 namespace Gifts;
 
 internal class Behavior(string value)
 {
-    internal Toy? GetChoice(WishList wishList)
+    internal Option<Toy> GetChoice(WishList wishList)
         => value switch
         {
             "naughty" => wishList.GetThirdChoice(),
             "nice" => wishList.GetSecondChoice(),
             "very nice" => wishList.GetFirstChoice(),
-            _ => null
+            _ => Option<Toy>.None
         };
 }

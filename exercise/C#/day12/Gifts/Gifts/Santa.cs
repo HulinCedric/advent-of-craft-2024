@@ -1,10 +1,12 @@
-﻿namespace Gifts;
+﻿using LanguageExt;
+
+namespace Gifts;
 
 public class Santa
 {
     private readonly Children _children = new();
 
-    public Toy? ChooseToyForChild(string childName)
+    public Option<Toy> ChooseToyForChild(string childName)
     {
         var found = _children.FindChildByName(new ChildName(childName)) ??
                     throw new InvalidOperationException("No such child found");

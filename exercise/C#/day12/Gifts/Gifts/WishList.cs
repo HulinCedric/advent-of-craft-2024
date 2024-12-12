@@ -1,19 +1,21 @@
+using LanguageExt;
+
 namespace Gifts;
 
 internal class WishList
 {
-    private readonly List<Toy> _wishlist;
+    private readonly Seq<Toy> _wishlist;
 
-    private WishList() => _wishlist = [];
+    private WishList() => _wishlist = Seq<Toy>.Empty;
 
     internal WishList(Toy firstChoice, Toy secondChoice, Toy thirdChoice)
-        => _wishlist = [firstChoice, secondChoice, thirdChoice];
+        => _wishlist = new Seq<Toy>([firstChoice, secondChoice, thirdChoice]);
 
     internal static WishList Empty() => new();
 
-    internal Toy? GetThirdChoice() => _wishlist.Count <= 2 ? null : _wishlist[2];
+    internal Option<Toy> GetThirdChoice() => _wishlist.At(2);
 
-    internal Toy? GetSecondChoice() => _wishlist.Count <= 1 ? null : _wishlist[1];
+    internal Option<Toy> GetSecondChoice() => _wishlist.At(1);
 
-    internal Toy? GetFirstChoice() => _wishlist.Count <= 0 ? null : _wishlist[0];
+    internal Option<Toy> GetFirstChoice() => _wishlist.At(0);
 }
