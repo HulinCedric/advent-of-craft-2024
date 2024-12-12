@@ -2,30 +2,30 @@
 
 public class Child
 {
+    private List<Toy> _wishlist;
+    private readonly string _behavior;
     public string Name { get; }
-    public string Behavior { get; }
-    public List<Toy> Wishlist { get; private set; }
 
     public Child(string name, string behavior)
     {
         Name = name;
-        Behavior = behavior;
-        Wishlist = [];
+        _behavior = behavior;
+        _wishlist = [];
     }
 
     public void SetWishList(Toy firstChoice, Toy secondChoice, Toy thirdChoice)
-        => Wishlist = [firstChoice, secondChoice, thirdChoice];
+        => _wishlist = [firstChoice, secondChoice, thirdChoice];
 
     public Toy? GetChoice()
     {
-        if (Behavior == "naughty")
-            return Wishlist[^1];
+        if (_behavior == "naughty")
+            return _wishlist[^1];
 
-        if (Behavior == "nice")
-            return Wishlist[1];
+        if (_behavior == "nice")
+            return _wishlist[1];
 
-        if (Behavior == "very nice")
-            return Wishlist[0];
+        if (_behavior == "very nice")
+            return _wishlist[0];
 
         return null;
     }
