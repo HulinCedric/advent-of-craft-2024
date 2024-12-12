@@ -10,16 +10,11 @@ public class WishList
         => _wishlist = [firstChoice, secondChoice, thirdChoice];
 
     public Toy? GetChoice(Behavior behavior)
-    {
-        if (behavior.Value == "naughty")
-            return _wishlist[^1];
-
-        if (behavior.Value == "nice")
-            return _wishlist[1];
-
-        if (behavior.Value == "very nice")
-            return _wishlist[0];
-
-        return null;
-    }
+        => behavior.Value switch
+        {
+            "naughty" => _wishlist[^1],
+            "nice" => _wishlist[1],
+            "very nice" => _wishlist[0],
+            _ => null
+        };
 }
