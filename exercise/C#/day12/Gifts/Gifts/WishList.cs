@@ -9,12 +9,9 @@ public class WishList
     public WishList(Toy firstChoice, Toy secondChoice, Toy thirdChoice)
         => _wishlist = [firstChoice, secondChoice, thirdChoice];
 
-    public Toy? GetChoice(Behavior behavior)
-        => behavior.Value switch
-        {
-            "naughty" => _wishlist[^1],
-            "nice" => _wishlist[1],
-            "very nice" => _wishlist[0],
-            _ => null
-        };
+    public Toy GetThirdChoice() => _wishlist[^1];
+
+    public Toy GetSecondChoice() => _wishlist[1];
+
+    public Toy GetFirstChoice() => _wishlist[0];
 }

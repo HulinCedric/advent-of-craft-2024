@@ -16,5 +16,5 @@ public class Child
     public void SetWishList(Toy firstChoice, Toy secondChoice, Toy thirdChoice)
         => _wishlist = new WishList(firstChoice, secondChoice, thirdChoice);
 
-    public Toy? GetChoice() => _wishlist.GetChoice(_behavior);
+    public Toy? GetChoice() => _behavior.GetChoice(_wishlist);
 }
