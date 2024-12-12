@@ -2,7 +2,7 @@
 
 public class Child
 {
-    private List<Toy> _wishlist;
+    private WishList _wishlist;
     private readonly string _behavior;
     public string Name { get; }
 
@@ -10,23 +10,11 @@ public class Child
     {
         Name = name;
         _behavior = behavior;
-        _wishlist = [];
+        _wishlist = new WishList();
     }
 
     public void SetWishList(Toy firstChoice, Toy secondChoice, Toy thirdChoice)
-        => _wishlist = [firstChoice, secondChoice, thirdChoice];
+        => _wishlist = new WishList(firstChoice, secondChoice, thirdChoice);
 
-    public Toy? GetChoice()
-    {
-        if (_behavior == "naughty")
-            return _wishlist[^1];
-
-        if (_behavior == "nice")
-            return _wishlist[1];
-
-        if (_behavior == "very nice")
-            return _wishlist[0];
-
-        return null;
-    }
+    public Toy? GetChoice() => _wishlist.GetChoice(_behavior);
 }
