@@ -4,9 +4,15 @@ namespace Gifts;
 
 internal class Children
 {
-    private Seq<Child> _children = Seq<Child>.Empty;
+    private readonly Seq<Child> _children;
+
+    internal Children() : this(Seq<Child>.Empty)
+    {
+    }
+
+    private Children(Seq<Child> children) => _children = children;
 
     internal Option<Child> FindChildByName(ChildName childName) => _children.Find(child => child.IsNamed(childName));
 
-    internal void AddChild(Child child) => _children = _children.Add(child);
+    internal Children AddChild(Child child) => new(_children.Add(child));
 }
