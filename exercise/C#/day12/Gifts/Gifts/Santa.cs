@@ -6,6 +6,13 @@ public class Santa
 
     public Toy? ChooseToyForChild(string childName)
     {
+        var found = FindChildByName(childName);
+
+        return found.GetChoice();
+    }
+
+    private Child FindChildByName(string childName)
+    {
         Child? found = null;
         for (int i = 0; i < _childrenRepository.Count; i++)
         {
@@ -18,8 +25,7 @@ public class Santa
 
         if (found == null)
             throw new InvalidOperationException("No such child found");
-
-        return found.GetChoice();
+        return found;
     }
 
     public void AddChild(Child child) => _childrenRepository.Add(child);
