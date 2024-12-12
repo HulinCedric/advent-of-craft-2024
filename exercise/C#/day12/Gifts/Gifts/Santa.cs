@@ -2,15 +2,14 @@
 
 public class Santa
 {
-    private readonly Children _children = new Children();
-    
+    private readonly Children _children = new();
+
     public Toy? ChooseToyForChild(string childName)
     {
-        var found = _children.FindChildByName(childName);
+        var found = _children.FindChildByName(childName) ?? throw new InvalidOperationException("No such child found");
 
         return found.GetChoice();
     }
-    
-    public void AddChild(Child child) => _children.AddChild(child);
 
+    public void AddChild(Child child) => _children.AddChild(child);
 }
