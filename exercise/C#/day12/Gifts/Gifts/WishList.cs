@@ -13,9 +13,9 @@ internal class WishList
 
     internal static WishList Empty() => new();
 
-    internal Option<Toy> GetThirdChoice() => _wishlist.At(2);
-
-    internal Option<Toy> GetSecondChoice() => _wishlist.At(1);
-
     internal Option<Toy> GetFirstChoice() => _wishlist.At(0);
+    
+    internal Option<Toy> GetSecondChoice() => _wishlist.At(1);
+    
+    internal Option<Toy> GetThirdChoice() => _wishlist.At(2);
 }
