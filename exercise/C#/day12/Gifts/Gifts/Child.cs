@@ -1,17 +1,10 @@
 ﻿namespace Gifts;
 
-public class Child
+public class Child(string name, string behavior)
 {
-    private readonly Behavior _behavior;
-    private readonly ChildName _childName;
-    private WishList _wishlist;
-
-    public Child(string name, string behavior)
-    {
-        _childName = new ChildName(name);
-        _behavior = new Behavior(behavior);
-        _wishlist = WishList.Empty();
-    }
+    private readonly Behavior _behavior = new(behavior);
+    private readonly ChildName _childName = new(name);
+    private WishList _wishlist = WishList.Empty();
 
     public void SetWishList(Toy firstChoice, Toy secondChoice, Toy thirdChoice)
         => _wishlist = new WishList(firstChoice, secondChoice, thirdChoice);
