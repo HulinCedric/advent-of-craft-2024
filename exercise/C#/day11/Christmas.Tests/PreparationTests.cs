@@ -1,3 +1,4 @@
+using Bogus;
 using FluentAssertions;
 using Xunit;
 using static Christmas.ToyType;
@@ -32,11 +33,25 @@ namespace Christmas.Tests
         [InlineData(Educational, 20, 100, false)]
         [InlineData(Fun, 29, 100, false)]
         [InlineData(Creative, 15, 100, false)]
-        [InlineData((ToyType)4, 1, 1, false)]
-        [InlineData(Educational, 1, 0, false)]
         public void EnsureToyBalance(ToyType toyType, int toysCount, int totalToys, bool expected)
             => Preparation.EnsureToyBalance(toyType, toysCount, totalToys)
                 .Should()
                 .Be(expected);
+
+        [Fact]
+        public void ToyBalanceIsFalseForUnExistingToyType()
+            => Preparation.EnsureToyBalance(UnExistingToyType(), RandomInt(), RandomInt())
+                .Should()
+                .BeFalse();
+
+        [Fact]
+        public void ToyBalanceIsFalseForZeroTotalToys()
+            => Preparation.EnsureToyBalance(RandomToyType(), RandomInt(), 0)
+                .Should()
+                .BeFalse();
+
+        private static ToyType RandomToyType() => new Randomizer().Enum<ToyType>();
+        private static ToyType UnExistingToyType() => (ToyType)new Randomizer().Int(4, int.MaxValue);
+        private static int RandomInt() => new Randomizer().Int();
     }
 }

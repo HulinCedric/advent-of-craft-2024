@@ -28,7 +28,7 @@ namespace Christmas
 
         public static bool EnsureToyBalance(ToyType toyType, int toysCount, int totalToys)
         {
-            if (totalToys == 0)
+            if (toysCount != 0 && totalToys == 0)
                 return false;
             
             return ((double)toysCount / totalToys)
