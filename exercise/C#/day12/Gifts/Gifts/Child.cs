@@ -9,7 +9,7 @@ public class Child
     {
         Name = name;
         _behavior = new Behavior(behavior);
-        _wishlist = new WishList();
+        _wishlist = WishList.Empty();
     }
 
     internal string Name { get; }
