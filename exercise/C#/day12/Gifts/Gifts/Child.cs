@@ -15,4 +15,18 @@ public class Child
 
     public void SetWishList(Toy firstChoice, Toy secondChoice, Toy thirdChoice)
         => Wishlist = [firstChoice, secondChoice, thirdChoice];
+
+    public Toy? GetChoice()
+    {
+        if (Behavior == "naughty")
+            return Wishlist[^1];
+
+        if (Behavior == "nice")
+            return Wishlist[1];
+
+        if (Behavior == "very nice")
+            return Wishlist[0];
+
+        return null;
+    }
 }
