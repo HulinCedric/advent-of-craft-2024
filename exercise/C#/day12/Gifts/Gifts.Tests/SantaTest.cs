@@ -4,6 +4,7 @@ using Gifts.Adapters;
 using Gifts.Domain;
 using Gifts.Domain.Behaviors;
 using Gifts.Services;
+using LanguageExt;
 
 namespace Gifts.Tests;
 
@@ -12,6 +13,7 @@ public class SantaTest
     private static readonly Toy Playstation = new("playstation");
     private static readonly Toy Ball = new("ball");
     private static readonly Toy Plush = new("plush");
+    private static readonly Option<Toy> NoToy = Option<Toy>.None;
 
     [Fact]
     public void GivenNaughtyChildWhenDistributingGiftsThenChildReceivesThirdChoice()
@@ -59,5 +61,16 @@ public class SantaTest
 
         var got = santa.ChooseToyForChild("alice");
         got.Should().Be("No such child found");
+    }
+    
+    [Fact]
+    public void GivenChildWithoutWishListWhenDistributingGiftsThenChildReceivesNoToy()
+    {
+        var bobby = new Child("bobby", Behavior.VeryNice);
+        var santa = new Santa(new InMemoryChildrenRepository());
+        santa.AddChild(bobby);
+        var got = santa.ChooseToyForChild("bobby");
+
+        got.Should().Be(NoToy);
     }
 }
