@@ -1,15 +1,29 @@
 ﻿using LanguageExt;
+using LanguageExt.ClassInstances.Const;
 
 namespace Gifts;
 
-public class Child(ChildName name, Behavior behavior)
+public class Child
 {
-    private WishList _wishlist = WishList.Empty();
+    private readonly WishList _wishlist;
+    private readonly ChildName _name;
+    private readonly Behavior _behavior;
 
-    public void SetWishList(Toy firstChoice, Toy secondChoice, Toy thirdChoice)
-        => _wishlist = new WishList(firstChoice, secondChoice, thirdChoice);
+    public Child(ChildName name, Behavior behavior): this(name, behavior, WishList.Empty())
+    {
+    }
+    
+    private Child(ChildName name, Behavior behavior, WishList wishlist)
+    {
+        _name = name;
+        _behavior = behavior;
+        _wishlist = wishlist;
+    }
 
-    internal Option<Toy> GetChoice() => behavior.GetChoice(_wishlist);
+    public Child SetWishList(Toy firstChoice, Toy secondChoice, Toy thirdChoice)
+        => new(_name, _behavior, new WishList(firstChoice, secondChoice, thirdChoice));
 
-    internal bool IsNamed(ChildName childName) => name == childName;
+    internal Option<Toy> GetChoice() => _behavior.GetChoice(_wishlist);
+
+    internal bool IsNamed(ChildName childName) => _name == childName;
 }
