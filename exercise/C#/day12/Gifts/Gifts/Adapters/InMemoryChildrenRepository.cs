@@ -1,6 +1,8 @@
+using Gifts.Domain;
+using Gifts.Ports;
 using LanguageExt;
 
-namespace Gifts;
+namespace Gifts.Adapters;
 
 public class InMemoryChildrenRepository : IChildrenRepository
 {

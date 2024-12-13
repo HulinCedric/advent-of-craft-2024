@@ -1,5 +1,9 @@
 global using Xunit;
 using FluentAssertions;
+using Gifts.Adapters;
+using Gifts.Domain;
+using Gifts.Domain.Behaviors;
+using Gifts.Services;
 
 namespace Gifts.Tests;
 

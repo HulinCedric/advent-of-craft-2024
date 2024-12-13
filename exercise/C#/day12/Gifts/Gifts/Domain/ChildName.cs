@@ -1,4 +1,4 @@
-namespace Gifts;
+namespace Gifts.Domain;
 
 public record ChildName(string Name)
 {

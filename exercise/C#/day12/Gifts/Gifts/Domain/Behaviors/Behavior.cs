@@ -1,6 +1,6 @@
 using LanguageExt;
 
-namespace Gifts;
+namespace Gifts.Domain.Behaviors;
 
 public class Behavior(string value)
 {

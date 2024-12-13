@@ -1,7 +1,7 @@
-﻿using LanguageExt;
-using LanguageExt.ClassInstances.Const;
+﻿using Gifts.Domain.Behaviors;
+using LanguageExt;
 
-namespace Gifts;
+namespace Gifts.Domain;
 
 public class Child
 {

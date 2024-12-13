@@ -1,6 +1,6 @@
 using LanguageExt;
 
-namespace Gifts;
+namespace Gifts.Domain;
 
 internal class WishList
 {

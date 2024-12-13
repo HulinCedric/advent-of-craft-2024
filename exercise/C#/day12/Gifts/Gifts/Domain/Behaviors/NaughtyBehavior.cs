@@ -1,6 +1,6 @@
 using LanguageExt;
 
-namespace Gifts;
+namespace Gifts.Domain.Behaviors;
 
 internal class NaughtyBehavior : Behavior
 {

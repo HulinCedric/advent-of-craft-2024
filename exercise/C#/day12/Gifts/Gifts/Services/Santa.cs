@@ -1,6 +1,8 @@
-﻿using LanguageExt;
+﻿using Gifts.Domain;
+using Gifts.Ports;
+using LanguageExt;
 
-namespace Gifts;
+namespace Gifts.Services;
 
 public class Santa(IChildrenRepository childrenRepository)
 {

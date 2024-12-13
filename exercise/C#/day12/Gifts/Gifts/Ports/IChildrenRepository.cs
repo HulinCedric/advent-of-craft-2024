@@ -1,6 +1,7 @@
+using Gifts.Domain;
 using LanguageExt;
 
-namespace Gifts;
+namespace Gifts.Ports;
 
 public interface IChildrenRepository
 {
