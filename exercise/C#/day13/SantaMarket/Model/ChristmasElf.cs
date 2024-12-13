@@ -4,8 +4,8 @@ namespace SantaMarket.Model
     {
         private readonly Dictionary<Product, Offer> _offers = new();
 
-        public void AddSpecialOffer(SpecialOfferType offerType, Product product, double argument)
-            => _offers[product] = new Offer(offerType, product, argument);
+        public void AddSpecialOffer(Product product, Offer offer)
+            => _offers[product] = offer;
 
         public Receipt ChecksOutArticlesFrom(ShoppingSleigh thesleigh)
         {

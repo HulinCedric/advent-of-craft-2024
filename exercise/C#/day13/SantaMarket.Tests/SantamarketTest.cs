@@ -45,7 +45,7 @@ namespace SantaMarket.Tests
             sleigh.AddItemQuantity(turkey, turkeyQuantity);
 
             var elf = new ChristmasElf(catalog);
-            elf.AddSpecialOffer(SpecialOfferType.TenPercentDiscount, turkey, 10.0);
+            elf.AddSpecialOffer(turkey, new TenPercentDiscountOffer());
 
             var receipt = elf.ChecksOutArticlesFrom(sleigh);
 
@@ -69,7 +69,7 @@ namespace SantaMarket.Tests
             catalog.AddProduct(teddyBear, teddyBearPrice);
 
             var elf = new ChristmasElf(catalog);
-            elf.AddSpecialOffer(SpecialOfferType.ThreeForTwo, teddyBear, 0.0);
+            elf.AddSpecialOffer(teddyBear, new XForYOffer(3, 2));
 
             var sleigh = new ShoppingSleigh();
             const int numberOfTeddyBears = 3;
@@ -87,6 +87,35 @@ namespace SantaMarket.Tests
             receipt.Items().Should().ContainSingle().Which.Should().BeEquivalentTo(expectedReceiptItem);
             receipt.GetDiscounts().Should().ContainSingle().Which.Should().BeEquivalentTo(expectedDiscount);
         }
+        
+        [Fact]
+        public void TwoForOneDiscount()
+        {
+            var catalog = new FakeCatalog();
+
+            var teddyBear = new Product("teddyBear", ProductUnit.Each);
+            const double teddyBearPrice = 1;
+            catalog.AddProduct(teddyBear, teddyBearPrice);
+
+            var elf = new ChristmasElf(catalog);
+            elf.AddSpecialOffer(teddyBear, new XForYOffer(2, 1));
+
+            var sleigh = new ShoppingSleigh();
+            const int numberOfTeddyBears = 2;
+            sleigh.AddItemQuantity(teddyBear, numberOfTeddyBears);
+
+            var receipt = elf.ChecksOutArticlesFrom(sleigh);
+
+            var expectedNonDiscountedPrice = numberOfTeddyBears * teddyBearPrice;
+            const double expectedTotalPrice = 1;
+            var expectedReceiptItem =
+                new ReceiptItem(teddyBear, numberOfTeddyBears, teddyBearPrice, expectedNonDiscountedPrice);
+            var expectedDiscount = new Discount(teddyBear, "2 for 1", expectedTotalPrice - expectedNonDiscountedPrice);
+
+            receipt.TotalPrice().Should().Be(expectedTotalPrice);
+            receipt.Items().Should().ContainSingle().Which.Should().BeEquivalentTo(expectedReceiptItem);
+            receipt.GetDiscounts().Should().ContainSingle().Which.Should().BeEquivalentTo(expectedDiscount);
+        }
 
         [Fact]
         public void TwoForAmountDiscount()
@@ -99,7 +128,7 @@ namespace SantaMarket.Tests
 
             var elf = new ChristmasElf(catalog);
             const double discountedPriceForTwoTeddyBears = 1.6;
-            elf.AddSpecialOffer(SpecialOfferType.TwoForAmount, teddyBear, discountedPriceForTwoTeddyBears);
+            elf.AddSpecialOffer(teddyBear, new TwoForAmountOffer(discountedPriceForTwoTeddyBears));
 
             var sleigh = new ShoppingSleigh();
             const int numberOfTeddyBears = 2;
@@ -129,7 +158,7 @@ namespace SantaMarket.Tests
 
             var elf = new ChristmasElf(catalog);
             const double discountedPriceForFiveTeddyBears = 4;
-            elf.AddSpecialOffer(SpecialOfferType.FiveForAmount, teddyBear, discountedPriceForFiveTeddyBears);
+            elf.AddSpecialOffer(teddyBear, new FiveForAmountOffer(discountedPriceForFiveTeddyBears));
 
             var sleigh = new ShoppingSleigh();
             var numberOfTeddyBears = 6;
