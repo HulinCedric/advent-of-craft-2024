@@ -14,7 +14,7 @@ public class SantaTest
     {
         var bobby = new Child("bobby", "naughty");
         bobby.SetWishList(Playstation, Plush, Ball);
-        var santa = new Santa();
+        var santa = new Santa(new InMemoryChildrenRepository());
         santa.AddChild(bobby);
         var got = santa.ChooseToyForChild("bobby");
 
@@ -26,7 +26,7 @@ public class SantaTest
     {
         var bobby = new Child("bobby", "nice");
         bobby.SetWishList(Playstation, Plush, Ball);
-        var santa = new Santa();
+        var santa = new Santa(new InMemoryChildrenRepository());
         santa.AddChild(bobby);
         var got = santa.ChooseToyForChild("bobby");
 
@@ -38,7 +38,7 @@ public class SantaTest
     {
         var bobby = new Child("bobby", "very nice");
         bobby.SetWishList(Playstation, Plush, Ball);
-        var santa = new Santa();
+        var santa = new Santa(new InMemoryChildrenRepository());
         santa.AddChild(bobby);
         var got = santa.ChooseToyForChild("bobby");
 
@@ -48,7 +48,7 @@ public class SantaTest
     [Fact]
     public void GivenNonExistingChildWhenDistributingGiftsThenExceptionThrown()
     {
-        var santa = new Santa();
+        var santa = new Santa(new InMemoryChildrenRepository());
         var bobby = new Child("bobby", "very nice");
         bobby.SetWishList(Playstation, Plush, Ball);
         santa.AddChild(bobby);
