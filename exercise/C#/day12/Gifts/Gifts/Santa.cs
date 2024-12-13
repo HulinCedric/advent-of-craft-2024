@@ -4,7 +4,7 @@ namespace Gifts;
 
 public class Santa
 {
-    private ChildrenRepository _childrenRepository = new();
+    private readonly IChildrenRepository _childrenRepository = new ChildrenRepository();
 
     public Option<Toy> ChooseToyForChild(ChildName childName)
         => _childrenRepository.FindChildByName(childName)
