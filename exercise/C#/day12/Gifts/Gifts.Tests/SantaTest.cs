@@ -50,16 +50,14 @@ public class SantaTest
     }
 
     [Fact]
-    public void GivenNonExistingChildWhenDistributingGiftsThenExceptionThrown()
+    public void GivenNonExistingChildWhenDistributingGiftsThenFailed()
     {
         var santa = new Santa(new InMemoryChildrenRepository());
         var bobby = new Child("bobby", Behavior.VeryNice);
         bobby = bobby.SetWishList(Playstation, Plush, Ball);
         santa.AddChild(bobby);
 
-        var chooseToyForChild = () => santa.ChooseToyForChild("alice");
-        chooseToyForChild.Should()
-            .Throw<InvalidOperationException>()
-            .WithMessage("No such child found");
+        var got = santa.ChooseToyForChild("alice");
+        got.Should().Be("No such child found");
     }
 }
