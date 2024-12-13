@@ -2,15 +2,15 @@ using LanguageExt;
 
 namespace Gifts;
 
-public class ChildrenRepository : IChildrenRepository
+public class InMemoryChildrenRepository : IChildrenRepository
 {
     private Seq<Child> _children;
 
-    internal ChildrenRepository() : this(Seq<Child>.Empty)
+    internal InMemoryChildrenRepository() : this(Seq<Child>.Empty)
     {
     }
 
-    private ChildrenRepository(Seq<Child> children) => _children = children;
+    private InMemoryChildrenRepository(Seq<Child> children) => _children = children;
 
     public Option<Child> FindChildByName(ChildName childName) => _children.Find(child => child.IsNamed(childName));
 
