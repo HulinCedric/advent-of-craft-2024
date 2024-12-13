@@ -21,7 +21,7 @@ public class Child
     }
 
     public Child SetWishList(Toy firstChoice, Toy secondChoice, Toy thirdChoice)
-        => new(_name, _behavior, new WishList(firstChoice, secondChoice, thirdChoice));
+        => new(_name, _behavior, WishList.WithThreeChoices(firstChoice, secondChoice, thirdChoice));
 
     internal Option<Toy> GetChoice() => _behavior.GetChoice(_wishlist);
 
