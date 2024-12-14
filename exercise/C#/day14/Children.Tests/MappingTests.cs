@@ -1,7 +1,4 @@
 using Children.Db2;
-using FluentAssertions;
-using Xunit;
-using static Children.DTOs.Gender;
 
 namespace Children.Tests
 {
