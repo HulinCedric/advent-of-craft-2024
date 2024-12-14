@@ -10,7 +10,7 @@ namespace Children.Tests
         private readonly ChildMapper _mapper = new();
 
         [Fact]
-        public void Map_X5T78_To_Girl()
+        public async Task Map_X5T78_To_Girl()
         {
             var db2Child = new X5T78
             {
@@ -36,22 +36,11 @@ namespace Children.Tests
 
             var child = _mapper.ToDto(db2Child);
 
-            child.Id.Should().Be(Guid.Parse(db2Child.Id));
-            child.FirstName.Should().Be(db2Child.N_1);
-            child.MiddleName.Should().Be(db2Child.N_2);
-            child.LastName.Should().Be(db2Child.N_3);
-            child.BirthCity.Should().Be(db2Child.CityOfBirth__pc);
-            child.BirthDate.Should().Be(new DateOnly(2017, 3, 19));
-            child.Gender.Should().Be(Girl);
-            child.Address.Should().NotBeNull();
-            child.Address?.Number.Should().Be(db2Child.ST_Num);
-            child.Address?.Street.Should().Be(db2Child.ST____Name);
-            child.Address?.City.Should().Be(db2Child.ST_C);
-            child.Address?.CountryId.Should().Be(99);
+            await Verify(child);
         }
 
         [Fact]
-        public void Map_X5T78_To_Child_For_A_Boy()
+        public async Task Map_X5T78_To_Child_For_A_Boy()
         {
             var db2Child = new X5T78
             {
@@ -76,18 +65,7 @@ namespace Children.Tests
 
             var child = _mapper.ToDto(db2Child);
 
-            child.Id.Should().Be(Guid.Parse(db2Child.Id));
-            child.FirstName.Should().Be(db2Child.N_1);
-            child.MiddleName.Should().Be(db2Child.N_2);
-            child.LastName.Should().Be(db2Child.N_3);
-            child.BirthCity.Should().Be(db2Child.CityOfBirth__pc);
-            child.BirthDate.Should().Be(new DateOnly(2021, 9, 1));
-            child.Gender.Should().Be(Boy);
-            child.Address.Should().NotBeNull();
-            child.Address?.Number.Should().Be(db2Child.ST_Num);
-            child.Address?.Street.Should().Be(db2Child.ST____Name);
-            child.Address?.City.Should().Be(db2Child.ST_C);
-            child.Address?.CountryId.Should().Be(98988);
+            await Verify(child);
         }
     }
 }
