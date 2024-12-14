@@ -5,6 +5,7 @@
   LastName: Smith,
   BirthCity: Paradise,
   BirthDate: 2017-03-19,
+  Gender: Girl,
   Address: {
     Number: 123,
     Street: Sunny Street,

@@ -1,3 +1,4 @@
+using Argon;
 using Children.Db2;
 
 namespace Children.Tests
@@ -13,6 +14,7 @@ namespace Children.Tests
             
             _settings = new VerifySettings();
             _settings.DontScrubDateTimes();
+            _settings.AddExtraSettings(s => s.DefaultValueHandling = DefaultValueHandling.Include);
         }        
 
         [Fact]
@@ -41,7 +43,7 @@ namespace Children.Tests
             };
 
             var child = _mapper.ToDto(db2Child);
-
+            
             await Verify(child, _settings);
         }
 

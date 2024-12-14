@@ -1,6 +1,7 @@
 ﻿{
   Id: Guid_1,
   FirstName: Bob,
+  MiddleName: null,
   LastName: Brown,
   BirthCity: Paradise,
   BirthDate: 2021-09-01,
