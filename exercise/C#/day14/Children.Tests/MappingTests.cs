@@ -36,7 +36,7 @@ namespace Children.Tests
 
             var child = _mapper.ToDto(db2Child);
 
-            await Verify(child);
+            await Verify(child).DontScrubDateTimes();
         }
 
         [Fact]
@@ -65,7 +65,7 @@ namespace Children.Tests
 
             var child = _mapper.ToDto(db2Child);
 
-            await Verify(child);
+            await Verify(child).DontScrubDateTimes();
         }
     }
 }
