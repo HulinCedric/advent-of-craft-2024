@@ -1,4 +1,6 @@
+using System.Globalization;
 using Argon;
+using Bogus;
 using static Children.Tests.X5T78Mother;
 
 namespace Children.Tests
@@ -7,15 +9,19 @@ namespace Children.Tests
     {
         private readonly ChildMapper _mapper;
         private readonly VerifySettings _settings;
+        private readonly Faker _faker = new();
+
 
         public MappingTests()
         {
+            CultureInfo.CurrentCulture = _faker.RandomCulture();
+
             _mapper = new ChildMapper();
-            
+
             _settings = new VerifySettings();
             _settings.DontScrubDateTimes();
             _settings.AddExtraSettings(s => s.DefaultValueHandling = DefaultValueHandling.Include);
-        }        
+        }
 
         [Fact]
         public async Task Map_X5T78_To_Girl()
