@@ -24,10 +24,13 @@ public class Business(Factory factory, Inventory inventory, WishList wishList)
             }
 
             var finalGift = inventory.PickUpGift(manufactured.BarCode);
-            if (finalGift is not null)
+            if (finalGift is null)
             {
-                list.Add(child, $"Gift: {finalGift.Name} has been loaded!");
+                list.Add(child, Error.New("Missing gift: The gift has probably been misplaced by the elves!"));
+                continue;
             }
+
+            list.Add(child, $"Gift: {finalGift.Name} has been loaded!");
         }
         return list;
     }
