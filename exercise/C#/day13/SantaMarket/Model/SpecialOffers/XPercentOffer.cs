@@ -1,3 +1,5 @@
+using LanguageExt;
+
 namespace SantaMarket.Model.SpecialOffers;
 
 public class XPercentOffer : IOffer
@@ -11,8 +13,8 @@ public class XPercentOffer : IOffer
         _discountRate = _discountPercentage / 100.0;
     }
 
-    public Discount? CalculateDiscount(Product product, double unitPrice, int quantity)
-        => new(
+    public Option<Discount> CalculateDiscount(Product product, double unitPrice, int quantity)
+        => new Discount(
             product,
             _discountPercentage + "% off",
             -quantity * unitPrice * _discountRate);

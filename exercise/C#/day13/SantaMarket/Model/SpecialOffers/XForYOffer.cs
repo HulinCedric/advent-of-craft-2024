@@ -1,8 +1,10 @@
+using LanguageExt;
+
 namespace SantaMarket.Model.SpecialOffers;
 
 public class XForYOffer(int x, int y) : IOffer
 {
-    public Discount? CalculateDiscount(Product product, double unitPrice, int quantity)
+    public Option<Discount> CalculateDiscount(Product product, double unitPrice, int quantity)
     {
         Discount? discount = null;
 

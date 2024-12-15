@@ -1,6 +1,8 @@
+using LanguageExt;
+
 namespace SantaMarket.Model.SpecialOffers;
 
 public interface IOffer
 {
-    public Discount? CalculateDiscount(Product product, double unitPrice, int quantity);
+    public Option<Discount> CalculateDiscount(Product product, double unitPrice, int quantity);
 }

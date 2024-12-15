@@ -37,11 +37,7 @@ namespace SantaMarket.Model
                     var unitPrice = catalog.GetUnitPrice(product);
                     var quantityAsInt = (int) quantity;
 
-                    var discount = offer.CalculateDiscount(product, unitPrice, quantityAsInt);
-                    if (discount != null)
-                    {
-                        receipt.AddDiscount(discount);
-                    }
+                   offer.CalculateDiscount(product, unitPrice, quantityAsInt).Do(receipt.AddDiscount);
                 }
             }
         }
