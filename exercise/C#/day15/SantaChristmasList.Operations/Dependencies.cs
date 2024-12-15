@@ -1,3 +1,5 @@
+using LanguageExt;
+
 namespace SantaChristmasList.Operations;
 
 public class Factory : Dictionary<Gift, ManufacturedGift>
@@ -10,7 +12,7 @@ public class Factory : Dictionary<Gift, ManufacturedGift>
 
 public class Inventory : Dictionary<string, Gift>
 {
-    public Gift PickUpGift(string barCode)
+    public Option<Gift> PickUpGift(string barCode)
     {
         return ContainsKey(barCode) ? this[barCode] : null;
     }

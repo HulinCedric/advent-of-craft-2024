@@ -17,12 +17,10 @@ public class Business(Factory factory, Inventory inventory, WishList wishList)
     private static string LoadToSleigh(Gift loadedGift) => $"Gift: {loadedGift.Name} has been loaded!";
 
     private Either<Error, Gift> LoadGiftFromInventory(ManufacturedGift manufacturedGift)
-    {
-        var finalGift = inventory.PickUpGift(manufacturedGift.BarCode);
-        return finalGift is not null
-            ? finalGift
-            : Error.New("Missing gift: The gift has probably been misplaced by the elves!");
-    }
+        => inventory.PickUpGift(manufacturedGift.BarCode)
+            .Match(
+                Either<Error, Gift>.Right,
+                () => Error.New("Missing gift: The gift has probably been misplaced by the elves!"));
 
     private Either<Error, ManufacturedGift> FindManufacturedGift(Gift gift)
     {
