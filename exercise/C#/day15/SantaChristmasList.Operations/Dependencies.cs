@@ -20,7 +20,7 @@ public class Inventory : Dictionary<string, Gift>
 
 public class WishList : Dictionary<Child, Gift>
 {
-    public Gift IdentifyGift(Child child)
+    public Option<Gift> IdentifyGift(Child child)
     {
         return ContainsKey(child) ? this[child] : null;
     }

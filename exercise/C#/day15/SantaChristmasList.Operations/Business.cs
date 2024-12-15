@@ -29,10 +29,8 @@ public class Business(Factory factory, Inventory inventory, WishList wishList)
                 () => Error.New("Missing gift: Gift wasn't manufactured!"));
 
     private Either<Error, Gift> IdentifyGift(Child child)
-    {
-        var gift = wishList.IdentifyGift(child);
-        return gift is not null
-            ? gift
-            : Error.New("Missing gift: Child wasn't nice this year!");
-    }
+        => wishList.IdentifyGift(child)
+            .Match(
+                Either<Error, Gift>.Right,
+                () => Error.New("Missing gift: Child wasn't nice this year!"));
 }
