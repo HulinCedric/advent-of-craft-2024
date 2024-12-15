@@ -1,10 +1,12 @@
+using SantaMarket.Model.SpecialOffers;
+
 namespace SantaMarket.Model
 {
     public class ChristmasElf(ISantamarketCatalog catalog)
     {
-        private readonly Dictionary<Product, Offer> _offers = new();
+        private readonly Dictionary<Product, IOffer> _offers = new();
 
-        public void AddSpecialOffer(Product product, Offer offer)
+        public void AddSpecialOffer(Product product, IOffer offer)
             => _offers[product] = offer;
 
         public Receipt ChecksOutArticlesFrom(ShoppingSleigh thesleigh)

@@ -1,3 +1,5 @@
+using SantaMarket.Model.SpecialOffers;
+
 namespace SantaMarket.Model
 {
     public class ShoppingSleigh
@@ -24,7 +26,7 @@ namespace SantaMarket.Model
             }
         }
 
-        public void HandleOffers(Receipt receipt, Dictionary<Product, Offer> offers, ISantamarketCatalog catalog)
+        public void HandleOffers(Receipt receipt, Dictionary<Product, IOffer> offers, ISantamarketCatalog catalog)
         {
             foreach (var product in ProductQuantities().Keys)
             {
@@ -35,7 +37,7 @@ namespace SantaMarket.Model
                     var unitPrice = catalog.GetUnitPrice(product);
                     var quantityAsInt = (int) quantity;
 
-                    var discount = offer.CalculateDiscount(quantityAsInt, unitPrice, product);
+                    var discount = offer.CalculateDiscount(product, unitPrice, quantityAsInt);
                     if (discount != null)
                     {
                         receipt.AddDiscount(discount);

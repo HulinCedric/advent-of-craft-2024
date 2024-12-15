@@ -1,5 +1,6 @@
 using FluentAssertions;
 using SantaMarket.Model;
+using SantaMarket.Model.SpecialOffers;
 using Xunit;
 
 namespace SantaMarket.Tests
