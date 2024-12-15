@@ -43,7 +43,7 @@ public class BusinessTest
         var sut = new Business(_factory, _inventory, _wishList);
         var sleigh = sut.LoadGiftsInSleigh(_john);
 
-        sleigh.ContainsKey(_john).Should().BeFalse();
+        sleigh[_john].Should().Be(Error.New("Missing gift: Gift wasn't manufactured!"));
     }
 
     [Fact]
