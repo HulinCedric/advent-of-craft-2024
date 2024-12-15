@@ -11,7 +11,7 @@ public class Business(Factory factory, Inventory inventory, WishList wishList)
         => IdentifyGift(child)
             .Bind(FindManufacturedGift)
             .Bind(LoadGiftFromInventory)
-            .Map(LoadGiftInSleigh);
+            .Bind(LoadGiftInSleigh);
 
     private Either<Failure, Gift> IdentifyGift(Child child)
         => wishList.IdentifyGift(child)
@@ -25,5 +25,5 @@ public class Business(Factory factory, Inventory inventory, WishList wishList)
         => inventory.PickUpGift(gift.BarCode)
             .ToEither(() => Failure.New("Missing gift: The gift has probably been misplaced by the elves!"));
 
-    private static string LoadGiftInSleigh(Gift gift) => $"Gift: {gift.Name} has been loaded!";
+    private static Either<Failure, string> LoadGiftInSleigh(Gift gift) => $"Gift: {gift.Name} has been loaded!";
 }
