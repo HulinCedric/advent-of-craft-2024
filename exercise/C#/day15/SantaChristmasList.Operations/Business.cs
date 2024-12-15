@@ -7,32 +7,20 @@ public class Business(Factory factory, Inventory inventory, WishList wishList)
 {
     public Sleigh LoadGiftsInSleigh(params Child[] children)
     {
-        var list = new Sleigh();
+        var sleigh = new Sleigh();
         foreach (var child in children)
         {
-            LoadGiftForChild(list, child);
+            sleigh.Add(child, LoadGiftForChild(child));
         }
 
-        return list;
+        return sleigh;
     }
 
-    private void LoadGiftForChild(Sleigh sleigh, Child child)
+    private Either<Error, string> LoadGiftForChild(Child child)
         => IdentifyGift(child)
-            .Match(
-                gift =>
-                {
-                    FindManufacturedGift(gift)
-                        .Match(
-                            manufacturedGift =>
-                            {
-                                LoadGiftFromInventory(manufacturedGift)
-                                    .Match(
-                                        finalGift => sleigh.Add(child, $"Gift: {finalGift.Name} has been loaded!"),
-                                        failure => sleigh.Add(child, failure));
-                            },
-                            failure => sleigh.Add(child, failure));
-                },
-                failure => sleigh.Add(child, failure));
+            .Bind(FindManufacturedGift)
+            .Bind(LoadGiftFromInventory)
+            .Map(loadedGift => $"Gift: {loadedGift.Name} has been loaded!");
 
     private Either<Error, Gift> LoadGiftFromInventory(ManufacturedGift manufacturedGift)
     {
