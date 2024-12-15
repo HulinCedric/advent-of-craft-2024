@@ -1,5 +1,3 @@
-using LanguageExt.Common;
-
 namespace SantaChristmasList.Operations.Test;
 
 public class BusinessTest
@@ -33,7 +31,7 @@ public class BusinessTest
         var sut = new Business(_factory, _inventory, _wishList);
         var sleigh = sut.LoadGiftsInSleigh(_john);
 
-        sleigh[_john].Should().Be(Error.New("Missing gift: Child wasn't nice this year!"));
+        sleigh[_john].Should().Be(Failure.New("Missing gift: Child wasn't nice this year!"));
     }
 
     [Fact]
@@ -43,7 +41,7 @@ public class BusinessTest
         var sut = new Business(_factory, _inventory, _wishList);
         var sleigh = sut.LoadGiftsInSleigh(_john);
 
-        sleigh[_john].Should().Be(Error.New("Missing gift: Gift wasn't manufactured!"));
+        sleigh[_john].Should().Be(Failure.New("Missing gift: Gift wasn't manufactured!"));
     }
 
     [Fact]
@@ -54,6 +52,6 @@ public class BusinessTest
         var sut = new Business(_factory, _inventory, _wishList);
         var sleigh = sut.LoadGiftsInSleigh(_john);
 
-        sleigh[_john].Should().Be(Error.New("Missing gift: The gift has probably been misplaced by the elves!"));
+        sleigh[_john].Should().Be(Failure.New("Missing gift: The gift has probably been misplaced by the elves!"));
     }
 }
