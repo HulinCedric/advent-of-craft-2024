@@ -129,7 +129,7 @@ namespace SantaMarket.Tests
 
             var elf = new ChristmasElf(catalog);
             const double discountedPriceForTwoTeddyBears = 1.6;
-            elf.AddSpecialOffer(teddyBear, new TwoForAmountOffer(discountedPriceForTwoTeddyBears));
+            elf.AddSpecialOffer(teddyBear, new XForAmountOffer(2, discountedPriceForTwoTeddyBears));
 
             var sleigh = new ShoppingSleigh();
             const int numberOfTeddyBears = 2;
@@ -159,7 +159,7 @@ namespace SantaMarket.Tests
 
             var elf = new ChristmasElf(catalog);
             const double discountedPriceForFiveTeddyBears = 4;
-            elf.AddSpecialOffer(teddyBear, new FiveForAmountOffer(discountedPriceForFiveTeddyBears));
+            elf.AddSpecialOffer(teddyBear, new XForAmountOffer(x: 5, discountedPriceForFiveTeddyBears));
 
             var sleigh = new ShoppingSleigh();
             var numberOfTeddyBears = 6;
