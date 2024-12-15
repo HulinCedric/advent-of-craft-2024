@@ -6,15 +6,7 @@ namespace SantaChristmasList.Operations;
 public class Business(Factory factory, Inventory inventory, WishList wishList)
 {
     public Sleigh LoadGiftsInSleigh(params Child[] children)
-    {
-        var sleigh = new Sleigh();
-        foreach (var child in children)
-        {
-            sleigh.Add(child, LoadGiftForChild(child));
-        }
-
-        return sleigh;
-    }
+        => new(children.ToDictionary(child => child, LoadGiftForChild));
 
     private Either<Error, string> LoadGiftForChild(Child child)
         => IdentifyGift(child)
