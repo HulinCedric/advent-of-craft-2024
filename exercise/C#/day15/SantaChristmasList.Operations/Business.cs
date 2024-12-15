@@ -17,13 +17,16 @@ public class Business(Factory factory, Inventory inventory, WishList wishList)
             }
             
             var manufactured = factory.FindManufacturedGift(gift);
-            if (manufactured is not null)
+            if (manufactured is null)
             {
-                var finalGift = inventory.PickUpGift(manufactured.BarCode);
-                if (finalGift is not null)
-                {
-                    list.Add(child, $"Gift: {finalGift.Name} has been loaded!");
-                }
+                list.Add(child, Error.New("Missing gift: Gift wasn't manufactured!"));
+                continue;
+            }
+
+            var finalGift = inventory.PickUpGift(manufactured.BarCode);
+            if (finalGift is not null)
+            {
+                list.Add(child, $"Gift: {finalGift.Name} has been loaded!");
             }
         }
         return list;
