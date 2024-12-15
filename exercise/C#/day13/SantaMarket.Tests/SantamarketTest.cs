@@ -46,7 +46,7 @@ namespace SantaMarket.Tests
             sleigh.AddItemQuantity(turkey, turkeyQuantity);
 
             var elf = new ChristmasElf(catalog);
-            elf.AddSpecialOffer(turkey, new TenPercentDiscountOffer());
+            elf.AddSpecialOffer(turkey, new XPercentOffer(10.0));
 
             var receipt = elf.ChecksOutArticlesFrom(sleigh);
 
