@@ -20,7 +20,9 @@ public class Business(Factory factory, Inventory inventory, WishList wishList)
         => IdentifyGift(child)
             .Bind(FindManufacturedGift)
             .Bind(LoadGiftFromInventory)
-            .Map(loadedGift => $"Gift: {loadedGift.Name} has been loaded!");
+            .Map(LoadToSleigh);
+
+    private static string LoadToSleigh(Gift loadedGift) => $"Gift: {loadedGift.Name} has been loaded!";
 
     private Either<Error, Gift> LoadGiftFromInventory(ManufacturedGift manufacturedGift)
     {
