@@ -23,12 +23,10 @@ public class Business(Factory factory, Inventory inventory, WishList wishList)
                 () => Error.New("Missing gift: The gift has probably been misplaced by the elves!"));
 
     private Either<Error, ManufacturedGift> FindManufacturedGift(Gift gift)
-    {
-        var manufacturedGift = factory.FindManufacturedGift(gift);
-        return manufacturedGift is not null
-            ? manufacturedGift
-            : Error.New("Missing gift: Gift wasn't manufactured!");
-    }
+        => factory.FindManufacturedGift(gift)
+            .Match(
+                Either<Error, ManufacturedGift>.Right,
+                () => Error.New("Missing gift: Gift wasn't manufactured!"));
 
     private Either<Error, Gift> IdentifyGift(Child child)
     {
