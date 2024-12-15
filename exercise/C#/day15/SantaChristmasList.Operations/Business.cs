@@ -23,22 +23,24 @@ public class Business(Factory factory, Inventory inventory, WishList wishList)
                 {
                     FindManufacturedGift(gift)
                         .Match(
-                            manufactured =>
+                            manufacturedGift =>
                             {
-                                var finalGift = inventory.PickUpGift(manufactured.BarCode);
-                                if (finalGift is null)
-                                {
-                                    sleigh.Add(
-                                        child,
-                                        Error.New("Missing gift: The gift has probably been misplaced by the elves!"));
-                                    return;
-                                }
-
-                                sleigh.Add(child, $"Gift: {finalGift.Name} has been loaded!");
+                                LoadGiftFromInventory(manufacturedGift)
+                                    .Match(
+                                        finalGift => sleigh.Add(child, $"Gift: {finalGift.Name} has been loaded!"),
+                                        failure => sleigh.Add(child, failure));
                             },
                             failure => sleigh.Add(child, failure));
                 },
                 failure => sleigh.Add(child, failure));
+
+    private Either<Error, Gift> LoadGiftFromInventory(ManufacturedGift manufacturedGift)
+    {
+        var finalGift = inventory.PickUpGift(manufacturedGift.BarCode);
+        return finalGift is not null
+            ? finalGift
+            : Error.New("Missing gift: The gift has probably been misplaced by the elves!");
+    }
 
     private Either<Error, ManufacturedGift> FindManufacturedGift(Gift gift)
     {
