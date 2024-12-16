@@ -20,7 +20,10 @@ namespace TaskAssignmentSystem
             => elves.Aggregate((prev, current) => prev.SkillLevel > current.SkillLevel ? prev : current);
 
         public Elf AssignTask(int taskSkillRequired)
-            => elves.FirstOrDefault(elf => elf.SkillLevel >= taskSkillRequired + 1);
+            => elves
+                .Where(elf => elf.SkillLevel >= taskSkillRequired + 1)
+                .OrderBy(elf => elf.SkillLevel)
+                .FirstOrDefault();
 
         public void IncreaseSkillLevel(int elfId, int increment)
         {
