@@ -47,9 +47,12 @@ public class TaskAssignmentTests
         highestSkillElf.Should().BeNull();
     }
 
-    [Fact]
-    public void AssignTask_AssignsElfBasedOnSkillLevel()
-        => _system.AssignTask(8).Should().BeEquivalentTo(new Elf(2, 10));
+    [Theory]
+    [InlineData(9, 2)]
+    [InlineData(10, 2)]
+    [InlineData(11, 3)]
+    public void AssignTask_AssignsElfBasedOnSkillLevel(int taskSkillRequired, int elfId)
+        => _system.AssignTask(taskSkillRequired)!.Id.Should().Be(elfId);
 
     [Fact]
     public void IncreaseSkillLevel_UpdatesElfSkillCorrectly()

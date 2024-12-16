@@ -18,9 +18,9 @@ namespace TaskAssignmentSystem
 
         public Elf? ElfWithHighestSkill() => elves.OrderByDescending(e => e.SkillLevel).FirstOrDefault();
 
-        public Elf AssignTask(int taskSkillRequired)
+        public Elf? AssignTask(int taskSkillRequired)
             => elves
-                .Where(elf => elf.SkillLevel >= taskSkillRequired + 1)
+                .Where(elf => elf.SkillLevel >= taskSkillRequired)
                 .OrderBy(elf => elf.SkillLevel)
                 .FirstOrDefault();
 
