@@ -24,6 +24,13 @@ public class TaskAssignmentTests
         _system.ReportTaskCompletion(1).Should().BeTrue();
         _system.TotalTasksCompleted.Should().Be(1);
     }
+    
+    [Fact]
+    public void ReportTaskCompletion_DoNotIncreasesTotal_WhenElfIsUnknown()
+    {
+        _system.ReportTaskCompletion(4).Should().BeFalse();
+        _system.TotalTasksCompleted.Should().Be(0);
+    }
 
     [Fact]
     public void GetElfWithHighestSkill_ReturnsCorrectElf()
