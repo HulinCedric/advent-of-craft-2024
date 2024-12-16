@@ -34,9 +34,7 @@ public class TaskAssignmentTests
 
     [Fact]
     public void AssignTask_AssignsElfBasedOnSkillLevel()
-    {
-        _system.AssignTask(8).Should().BeEquivalentTo(new Elf(2, 10));
-    }
+        => _system.AssignTask(8).Should().BeEquivalentTo(new Elf(2, 10));
 
     [Fact]
     public void IncreaseSkillLevel_UpdatesElfSkillCorrectly()
@@ -73,16 +71,13 @@ public class TaskAssignmentTests
     }
 
     [Fact]
-    public void AssignTask_FailsWhenSkillsRequiredIsTooHigh()
-    {
-        _system.AssignTask(50).Should().BeNull();
-    }
+    public void AssignTask_FailsWhenSkillsRequiredIsTooHigh() => _system.AssignTask(50).Should().BeNull();
 
     [Fact]
     public void ListElvesBySkillDescending_ReturnsElvesInCorrectOrder()
     {
         var sortedElves = _system.ElvesBySkillDescending();
-        sortedElves.ConvertAll(elf => elf.Id).Should().Equal(new List<int> {3, 2, 1});
+        sortedElves.ConvertAll(elf => elf.Id).Should().Equal(new List<int> { 3, 2, 1 });
     }
 
     [Fact]
@@ -103,5 +98,31 @@ public class TaskAssignmentTests
         var elf = _system.AssignTask(4);
         elf.Id.Should().Be(1);
         elf.SkillLevel.Should().Be(5);
+    }
+    
+    [Fact]
+    public void AssignTask_AssignsElfWithLowestMatchingSkillLevel()
+    {
+        // Imagine we have three elves: Alice, Bob, and Charlie. 
+        // Alice has a skill level of 7, Bob has a skill level of 5, and Charlie has a skill level of 3. 
+        var alice = new Elf(1, 7);
+        var bob = new Elf(2, 5);
+        var charlie = new Elf(3, 3);
+        var elves = new List<Elf>
+        {
+            alice,
+            bob,
+            charlie
+        };
+
+        var system = new TaskAssignment(elves);
+
+        // Now, let's say we have a task that requires a skill level of 4.
+        // You'd think that Alice and Bob would both be capable of doing this task, right?
+        var elf = system.AssignTask(4);
+
+        // But sometimes, our Task Assignment System only assigns the task to Alice and completely overlooks Bob! 
+        // It's like the system is completely ignoring our skill levels and just assigning tasks randomly.
+        elf.Should().Be(bob);
     }
 }
