@@ -1,10 +1,13 @@
+using System.Runtime.InteropServices;
 using FluentAssertions;
 using Xunit;
+using static FluentAssertions.FluentActions;
 
 namespace TaskAssignmentSystem.Tests;
 
 public class TaskAssignmentTests
 {
+    private const int UnknownElfId = 4;
     private readonly TaskAssignment _system;
 
     public TaskAssignmentTests()
@@ -24,11 +27,11 @@ public class TaskAssignmentTests
         _system.ReportTaskCompletion(1).Should().BeTrue();
         _system.TotalTasksCompleted.Should().Be(1);
     }
-    
+
     [Fact]
     public void ReportTaskCompletion_DoNotIncreasesTotal_WhenElfIsUnknown()
     {
-        _system.ReportTaskCompletion(4).Should().BeFalse();
+        _system.ReportTaskCompletion(UnknownElfId).Should().BeFalse();
         _system.TotalTasksCompleted.Should().Be(0);
     }
 
@@ -36,9 +39,9 @@ public class TaskAssignmentTests
     public void GetElfWithHighestSkill_ReturnsCorrectElf()
     {
         var highestSkillElf = _system.ElfWithHighestSkill();
-        highestSkillElf.Id.Should().Be(3);
+        highestSkillElf.Should().BeEquivalentTo(new Elf(3, 20));
     }
-    
+
     [Fact]
     public void GetElfWithHighestSkill_ReturnsNull_WhenNoElves()
     {
@@ -59,8 +62,12 @@ public class TaskAssignmentTests
     {
         _system.IncreaseSkillLevel(1, 3);
         var elf = _system.AssignTask(7);
-        elf.Id.Should().Be(1);
+        elf.Should().BeEquivalentTo(new Elf(1, 8));
     }
+
+    [Fact]
+    public void IncreaseSkillLevel_DoNoFail_WhenElfIsUnknown()
+        => Invoking(() => _system.IncreaseSkillLevel(UnknownElfId, 3)).Should().NotThrow();
 
     [Fact]
     public void DecreaseSkillLevel_UpdatesElfSkillCorrectly()
@@ -69,15 +76,21 @@ public class TaskAssignmentTests
         _system.DecreaseSkillLevel(2, 5);
 
         var elf = _system.AssignTask(4);
-        elf.Id.Should().Be(2);
-        elf.SkillLevel.Should().Be(5);
+        elf.Should().BeEquivalentTo(new Elf(2, 5));
     }
 
     [Fact]
-    public void AssignTaskBasedOnAvailability_AssignsAvailableElf()
+    public void DecreaseSkillLevel_DoNotFail_WhenElfIsUnknown()
+        => Invoking(() => _system.DecreaseSkillLevel(UnknownElfId, 3)).Should().NotThrow();
+
+    [Theory]
+    [InlineData(4)]
+    [InlineData(5)]
+    public void DecreaseSkillLevel_UpdatesElfSkillAndDoesNotAllowNegativeValues(int decrement)
     {
-        var elf = _system.AssignTaskBasedOnAvailability(10);
-        elf.Should().NotBeNull();
+        _system.DecreaseSkillLevel(1, decrement);
+        var elf = _system.AssignTask(1);
+        elf.Should().BeEquivalentTo(new Elf(1, 1));
     }
 
     [Fact]
@@ -85,7 +98,7 @@ public class TaskAssignmentTests
     {
         _system.ReassignTask(3, 1);
         var elf = _system.AssignTask(19);
-        elf.Id.Should().Be(1);
+        elf.Should().BeEquivalentTo(new Elf(1, 20));
     }
 
     [Fact]
@@ -109,15 +122,6 @@ public class TaskAssignmentTests
         }
     }
 
-    [Fact]
-    public void DecreaseSkillLevel_UpdatesElfSkillAndDoesNotAllowNegativeValues()
-    {
-        _system.DecreaseSkillLevel(1, 10);
-        var elf = _system.AssignTask(4);
-        elf.Id.Should().Be(1);
-        elf.SkillLevel.Should().Be(5);
-    }
-    
     [Fact]
     public void AssignTask_AssignsElfWithLowestMatchingSkillLevel()
     {

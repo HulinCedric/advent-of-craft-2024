@@ -36,25 +36,12 @@ namespace TaskAssignmentSystem
         public void DecreaseSkillLevel(int elfId, int decrement)
         {
             var elf = elves.FirstOrDefault(e => e.Id == elfId);
-            if (elf != null && elf.SkillLevel - decrement > 0)
+            if (elf != null)
             {
-                elf.SkillLevel -= decrement;
+                elf.SkillLevel -= (elf.SkillLevel - decrement <= 0) ? elf.SkillLevel - 1 : decrement;
             }
         }
-
-        // Ignore this function and use AssignTask instead
-        public Elf AssignTaskBasedOnAvailability(int taskSkillRequired)
-        {
-            var availableElves = elves.Where(elf => elf.SkillLevel >= taskSkillRequired).ToList();
-            if (availableElves.Any())
-            {
-                var random = new Random();
-                return availableElves[random.Next(availableElves.Count)];
-            }
-
-            return null;
-        }
-
+        
         public bool ReassignTask(int fromElfId, int toElfId)
         {
             var fromElf = elves.FirstOrDefault(e => e.Id == fromElfId);
