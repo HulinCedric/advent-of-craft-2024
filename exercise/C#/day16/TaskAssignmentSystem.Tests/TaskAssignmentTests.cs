@@ -38,6 +38,14 @@ public class TaskAssignmentTests
         var highestSkillElf = _system.ElfWithHighestSkill();
         highestSkillElf.Id.Should().Be(3);
     }
+    
+    [Fact]
+    public void GetElfWithHighestSkill_ReturnsNull_WhenNoElves()
+    {
+        var emptySystem = new TaskAssignment(new List<Elf>());
+        var highestSkillElf = emptySystem.ElfWithHighestSkill();
+        highestSkillElf.Should().BeNull();
+    }
 
     [Fact]
     public void AssignTask_AssignsElfBasedOnSkillLevel()

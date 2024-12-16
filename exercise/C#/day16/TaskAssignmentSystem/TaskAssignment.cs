@@ -16,8 +16,7 @@ namespace TaskAssignmentSystem
 
         public int TotalTasksCompleted { get; private set; }
 
-        public Elf ElfWithHighestSkill()
-            => elves.Aggregate((prev, current) => prev.SkillLevel > current.SkillLevel ? prev : current);
+        public Elf? ElfWithHighestSkill() => elves.OrderByDescending(e => e.SkillLevel).FirstOrDefault();
 
         public Elf AssignTask(int taskSkillRequired)
             => elves
