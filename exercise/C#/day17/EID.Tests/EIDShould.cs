@@ -8,7 +8,6 @@ namespace EID.Tests;
 public class EIDShould
 {
     [Theory]
-    [InlineData("1", "too short")]
     [InlineData("198007671", "too long")]
     [InlineData("49800767", "incorrect sex")]
     [InlineData("1xx00767", "incorrect year")]
@@ -20,7 +19,14 @@ public class EIDShould
     public void Be_invalid(string input, string reason)
         => EID.Parse(input)
             .Should()
-            .BeLeft(error => error.Should().Be(new ParsingError("unknown reason"), reason), reason);
+            .BeLeft(reason);
+
+    [Theory]
+    [InlineData("1", "too short")]
+    public void Be_invalid_with_reason(string input, string reason)
+        => EID.Parse(input)
+            .Should()
+            .Be(new ParsingError(reason));
 
     [Theory]
     [InlineData("19800767", "Sloubi sex")]
