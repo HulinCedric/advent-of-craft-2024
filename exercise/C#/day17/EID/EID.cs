@@ -41,6 +41,9 @@ public record EID
 
     public static Either<ParsingError, EID> Parse(string input)
     {
+        if (input.Length < ValidLength)
+            return new ParsingError("too short");
+        
         if (!(ValidateLength(input)
               && ValidateSex(input[0])
               && ValidateYear(input[1..3])
