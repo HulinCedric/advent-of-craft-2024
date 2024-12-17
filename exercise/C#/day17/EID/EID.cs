@@ -23,10 +23,10 @@ public record EID
         };
 
     public static Either<ParsingError, EID> Parse(string input)
-        => ValidateLength(input)
-            .Bind(_ => Sex.Parse(input[0]))
-            .Bind(_ => Year.Parse(input[1..3]))
-            .Bind(_ => SerialNumber.Parse(input[3..6]))
-            .Bind(_ => ControlKey.Parse(input[..6], input[6..8]))
-            .Map(_ => new EID(input));
+        => from _ in ValidateLength(input)
+            from sex in Sex.Parse(input[0])
+            from year in Year.Parse(input[1..3])
+            from serialNumber in SerialNumber.Parse(input[3..6])
+            from controlKey in ControlKey.Parse(input[..6], input[6..8])
+            select new EID(input);
 }
