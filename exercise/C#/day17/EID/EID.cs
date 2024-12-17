@@ -19,13 +19,6 @@ public record EID
 
     public static implicit operator string(EID eid) => eid._value;
 
-    private static bool Validate(string input)
-        => ValidateLength(input)
-           && ValidateSex(input[0])
-           && ValidateYear(input[1..3])
-           && ValidateSerialNumber(input[3..6])
-           && ValidateControlKey(input[..6], input[6..8]);
-
     private static bool ValidateLength(string input) => input.Length == ValidLength;
 
     private static bool ValidateSex(char sex) => sex is SloubiSex or GagnaSex or CatactSex;
@@ -48,7 +41,11 @@ public record EID
 
     public static Either<ParsingError, EID> Parse(string input)
     {
-        if (!Validate(input))
+        if (!(ValidateLength(input)
+              && ValidateSex(input[0])
+              && ValidateYear(input[1..3])
+              && ValidateSerialNumber(input[3..6])
+              && ValidateControlKey(input[..6], input[6..8])))
             return new ParsingError("unknown reason");
 
         return new EID(input);
