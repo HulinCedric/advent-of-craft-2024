@@ -12,16 +12,12 @@ public record Year
     internal static Either<ParsingError, Year> Parse(string yearRepresentation)
         => parseInt(yearRepresentation)
             .Match<Either<ParsingError, Year>>(
-                yearValue => new Year(yearValue),
+                yearValue => Parse(yearValue),
                 () => new ParsingError("incorrect year"));
+
+    public static Either<ParsingError, Year> Parse(int yearValue) => new Year(yearValue);
 
     public override string ToString() => Representation(_value);
 
     private static string Representation(int value) => $"{value:D2}";
-
-    public static Year ParseUnsafe(int yearRepresentation)
-        => Parse(Representation(yearRepresentation))
-            .Match(
-                year => year,
-                error => throw new ArgumentException(error.Reason));
 }

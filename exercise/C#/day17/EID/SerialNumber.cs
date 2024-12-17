@@ -17,7 +17,7 @@ public record SerialNumber
                 Parse,
                 () => new ParsingError("incorrect serial number"));
 
-    private static Either<ParsingError, SerialNumber> Parse(int potentialSerialNumberValue)
+    public static Either<ParsingError, SerialNumber> Parse(int potentialSerialNumberValue)
         => potentialSerialNumberValue < MinimumValue
             ? new ParsingError("incorrect serial number")
             : new SerialNumber(potentialSerialNumberValue);
@@ -25,10 +25,4 @@ public record SerialNumber
     public override string ToString() => Representation(_value);
 
     private static string Representation(int value) => $"{value:D3}";
-
-    public static SerialNumber ParseUnsafe(int potentialSerialNumberValue)
-        => Parse(Representation(potentialSerialNumberValue))
-            .Match(
-                serialNumber => serialNumber,
-                error => throw new ArgumentException(error.Reason));
 }
