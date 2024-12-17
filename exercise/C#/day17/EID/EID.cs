@@ -44,6 +44,9 @@ public record EID
         if (input.Length < ValidLength)
             return new ParsingError("too short");
         
+        if (input.Length > ValidLength)
+            return new ParsingError("too long");
+        
         if (!(ValidateLength(input)
               && ValidateSex(input[0])
               && ValidateYear(input[1..3])
