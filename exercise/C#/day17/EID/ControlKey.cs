@@ -9,6 +9,7 @@ public record ControlKey
     private readonly string _value;
 
     private ControlKey(string value) => _value = value;
+    public override string ToString() => _value;
 
     public static Either<ParsingError, ControlKey> Parse(string eidWithoutKey, string controlKey)
     {

@@ -28,5 +28,5 @@ public record EID
             from year in Year.Parse(input[1..3])
             from serialNumber in SerialNumber.Parse(input[3..6])
             from controlKey in ControlKey.Parse(input[..6], input[6..8])
-            select new EID(input);
+            select new EID($"{sex}{year}{serialNumber}{controlKey}");
 }

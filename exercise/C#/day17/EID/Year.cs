@@ -15,4 +15,6 @@ internal record Year
 
         return new Year(yearDescription);
     }
+
+    public override string ToString() => _value;
 }

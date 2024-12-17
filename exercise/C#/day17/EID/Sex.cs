@@ -20,4 +20,6 @@ internal record Sex
             CatactSex => new Sex(CatactSex),
             _ => new ParsingError("incorrect sex")
         };
+
+    public override string ToString() => _value.ToString();
 }

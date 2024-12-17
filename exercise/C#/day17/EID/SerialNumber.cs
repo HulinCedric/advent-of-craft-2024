@@ -18,4 +18,6 @@ internal record SerialNumber
 
         return new SerialNumber(serialNumberDescription);
     }
+
+    public override string ToString() => _value;
 }
