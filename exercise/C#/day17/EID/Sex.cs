@@ -1,4 +1,5 @@
 using LanguageExt;
+using static LanguageExt.Prelude;
 
 namespace EID;
 
@@ -13,7 +14,7 @@ public record Sex
     private Sex(int value) => _value = value;
 
     internal static Either<ParsingError, Sex> Parse(string sexRepresentation)
-        => sexRepresentation.ToInt()
+        => parseInt(sexRepresentation)
             .Match(
                 Parse,
                 () => new ParsingError("incorrect sex"));

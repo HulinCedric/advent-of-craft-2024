@@ -1,4 +1,5 @@
 using LanguageExt;
+using static LanguageExt.Prelude;
 
 namespace EID;
 
@@ -15,7 +16,7 @@ public record ControlKey
     private static string Representation(int value) => $"{value:D2}";
 
     internal static Either<ParsingError, ControlKey> Parse(EIDWithoutKey eidWithoutKey, string controlKeyRepresentation)
-        => controlKeyRepresentation.ToInt()
+        => parseInt(controlKeyRepresentation)
             .Match<Either<ParsingError, ControlKey>>(
                 controlKeyValue => Parse(eidWithoutKey, controlKeyValue),
                 () => new ParsingError("incorrect control key"));

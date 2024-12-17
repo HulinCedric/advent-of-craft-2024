@@ -1,4 +1,5 @@
 using LanguageExt;
+using static LanguageExt.Prelude;
 
 namespace EID;
 
@@ -11,7 +12,7 @@ public record SerialNumber
     private SerialNumber(int value) => _value = value;
 
     internal static Either<ParsingError, SerialNumber> Parse(string serialNumberRepresentation)
-        => serialNumberRepresentation.ToInt()
+        => parseInt(serialNumberRepresentation)
             .Match(
                 Parse,
                 () => new ParsingError("incorrect serial number"));

@@ -1,4 +1,5 @@
 using LanguageExt;
+using static LanguageExt.Prelude;
 
 namespace EID;
 
@@ -9,7 +10,7 @@ public record Year
     private Year(int value) => _value = value;
 
     internal static Either<ParsingError, Year> Parse(string yearRepresentation)
-        => yearRepresentation.ToInt()
+        => parseInt(yearRepresentation)
             .Match<Either<ParsingError, Year>>(
                 yearValue => new Year(yearValue),
                 () => new ParsingError("incorrect year"));
