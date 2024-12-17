@@ -13,16 +13,19 @@ public record Sex
     private Sex(int value) => _value = value;
 
     internal static Either<ParsingError, Sex> Parse(string sexRepresentation)
-    {
-        var potentialValue = int.Parse(sexRepresentation);
-        return potentialValue switch
+        => sexRepresentation.ToInt()
+            .Match(
+                Parse,
+                () => new ParsingError("incorrect sex"));
+
+    private static Either<ParsingError, Sex> Parse(int potentialSexValue)
+        => potentialSexValue switch
         {
             SloubiSex => new Sex(SloubiSex),
             GagnaSex => new Sex(GagnaSex),
             CatactSex => new Sex(CatactSex),
             _ => new ParsingError("incorrect sex")
         };
-    }
 
     public override string ToString() => Representation(_value);
 

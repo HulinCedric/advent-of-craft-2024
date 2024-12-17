@@ -11,13 +11,15 @@ public record SerialNumber
     private SerialNumber(int value) => _value = value;
 
     internal static Either<ParsingError, SerialNumber> Parse(string serialNumberRepresentation)
-    {
-        if (!(serialNumberRepresentation.IsANumber() &&
-              int.Parse(serialNumberRepresentation) >= MinimumValue))
-            return new ParsingError("incorrect serial number");
+        => serialNumberRepresentation.ToInt()
+            .Match(
+                Parse,
+                () => new ParsingError("incorrect serial number"));
 
-        return new SerialNumber(int.Parse(serialNumberRepresentation));
-    }
+    private static Either<ParsingError, SerialNumber> Parse(int potentialSerialNumberValue)
+        => potentialSerialNumberValue < MinimumValue
+            ? new ParsingError("incorrect serial number")
+            : new SerialNumber(potentialSerialNumberValue);
 
     public override string ToString() => Representation(_value);
 

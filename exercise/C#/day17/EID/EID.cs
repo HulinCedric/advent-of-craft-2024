@@ -14,7 +14,7 @@ public record EID
     {
     }
 
-    private EID(EIDWithoutKey eidWithoutKey) : this(eidWithoutKey, ControlKey.CreateFrom(eidWithoutKey))
+    private EID(EIDWithoutKey eidWithoutKey) : this(eidWithoutKey, ControlKey.KeyFor(eidWithoutKey))
     {
     }
 

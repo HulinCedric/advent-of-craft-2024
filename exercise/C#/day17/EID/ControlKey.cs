@@ -15,18 +15,18 @@ public record ControlKey
     private static string Representation(int value) => $"{value:D2}";
 
     internal static Either<ParsingError, ControlKey> Parse(EIDWithoutKey eidWithoutKey, string controlKeyRepresentation)
-    {
-        if (!controlKeyRepresentation.IsANumber()) return new ParsingError("incorrect control key");
+        => controlKeyRepresentation.ToInt()
+            .Match<Either<ParsingError, ControlKey>>(
+                controlKeyValue => Parse(eidWithoutKey, controlKeyValue),
+                () => new ParsingError("incorrect control key"));
 
-        var controlKeyValue = int.Parse(controlKeyRepresentation);
-
-        if (controlKeyValue != Checksum(eidWithoutKey)) return new ParsingError("incorrect control key");
-
-        return new ControlKey(controlKeyValue);
-    }
+    private static Either<ParsingError, ControlKey> Parse(EIDWithoutKey eidWithoutKey, int potentialControlKeyValue)
+        => potentialControlKeyValue != Checksum(eidWithoutKey)
+            ? new ParsingError("incorrect control key")
+            : new ControlKey(potentialControlKeyValue);
 
     private static int Checksum(EIDWithoutKey eidWithoutKeyValue)
         => ControlKeyComplement - eidWithoutKeyValue.GetValue() % ControlKeyComplement;
 
-    internal static ControlKey CreateFrom(EIDWithoutKey eidWithoutKey) => new(Checksum(eidWithoutKey));
+    internal static ControlKey KeyFor(EIDWithoutKey eidWithoutKey) => new(Checksum(eidWithoutKey));
 }

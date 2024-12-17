@@ -9,14 +9,10 @@ public record Year
     private Year(int value) => _value = value;
 
     internal static Either<ParsingError, Year> Parse(string yearRepresentation)
-    {
-        if (!yearRepresentation.IsANumber())
-            return new ParsingError("incorrect year");
-
-        var potentialYearValue = int.Parse(yearRepresentation);
-
-        return new Year(potentialYearValue);
-    }
+        => yearRepresentation.ToInt()
+            .Match<Either<ParsingError, Year>>(
+                yearValue => new Year(yearValue),
+                () => new ParsingError("incorrect year"));
 
     public override string ToString() => Representation(_value);
 
