@@ -12,7 +12,7 @@ internal record Sex
 
     private Sex(char value) => _value = value;
 
-    public static Either<ParsingError, Sex> Parse(char sexDescription)
+    internal static Either<ParsingError, Sex> Parse(char sexDescription)
         => sexDescription switch
         {
             SloubiSex => new Sex(SloubiSex),

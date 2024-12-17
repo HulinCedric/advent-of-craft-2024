@@ -23,8 +23,7 @@ public record EID
             > ValidLength => new ParsingError("too long"),
             _ => Unit.Default
         };
-    
-    private static bool ValidateYear(string year) => year.IsANumber();
+
 
     private static bool ValidateSerialNumber(string serialNumber)
         => serialNumber.IsANumber() &&
@@ -43,12 +42,12 @@ public record EID
     public static Either<ParsingError, EID> Parse(string input)
         => ValidateLength(input)
             .Bind(_ => Sex.Parse(input[0]))
+            .Bind(_ => Year.Parse(input[1..3]))
             .Bind(_ => ContinueParse(input));
 
     private static Either<ParsingError, EID> ContinueParse(string input)
     {
-        if (!(ValidateYear(input[1..3])
-              && ValidateSerialNumber(input[3..6])
+        if (!(ValidateSerialNumber(input[3..6])
               && ValidateControlKey(input[..6], input[6..8])))
             return new ParsingError("unknown reason");
 
