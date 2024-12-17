@@ -6,13 +6,22 @@ namespace EID;
 public record EID
 {
     private const int ValidLength = 8;
-    private readonly string _value;
+    private readonly ControlKey _controlKey;
+    private readonly SerialNumber _serialNumber;
+    private readonly Sex _sex;
+    private readonly Year _year;
 
-    private EID(string value) => _value = value;
+    private EID(Sex sex, Year year, SerialNumber serialNumber, ControlKey controlKey)
+    {
+        _sex = sex;
+        _year = year;
+        _serialNumber = serialNumber;
+        _controlKey = controlKey;
+    }
 
-    public override string ToString() => _value;
+    public override string ToString() => $"{_sex}{_year}{_serialNumber}{_controlKey}";
 
-    public static implicit operator string(EID eid) => eid._value;
+    public static implicit operator string(EID eid) => eid.ToString();
 
     private static Either<ParsingError, Unit> ValidateLength(string input)
         => input.Length switch
@@ -28,5 +37,5 @@ public record EID
             from year in Year.Parse(input[1..3])
             from serialNumber in SerialNumber.Parse(input[3..6])
             from controlKey in ControlKey.Parse(input[..6], input[6..8])
-            select new EID($"{sex}{year}{serialNumber}{controlKey}");
+            select new EID(sex, year, serialNumber, controlKey);
 }
