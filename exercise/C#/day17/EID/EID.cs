@@ -5,9 +5,6 @@ namespace EID;
 // ReSharper disable once InconsistentNaming
 public record EID
 {
-    private const char SloubiSex = '1';
-    private const char GagnaSex = '2';
-    private const char CatactSex = '3';
     private const int ControlKeyComplement = 97;
     private const int ValidLength = 8;
     private const int MinimumSerialNumberValue = 001;
@@ -26,9 +23,7 @@ public record EID
             > ValidLength => new ParsingError("too long"),
             _ => Unit.Default
         };
-
-    private static bool ValidateSex(char sex) => sex is SloubiSex or GagnaSex or CatactSex;
-
+    
     private static bool ValidateYear(string year) => year.IsANumber();
 
     private static bool ValidateSerialNumber(string serialNumber)
@@ -47,18 +42,38 @@ public record EID
 
     public static Either<ParsingError, EID> Parse(string input)
         => ValidateLength(input)
+            .Bind(_ => Sex.Parse(input[0]))
             .Bind(_ => ContinueParse(input));
 
     private static Either<ParsingError, EID> ContinueParse(string input)
     {
-        if (!(ValidateSex(input[0])
-              && ValidateYear(input[1..3])
+        if (!(ValidateYear(input[1..3])
               && ValidateSerialNumber(input[3..6])
               && ValidateControlKey(input[..6], input[6..8])))
             return new ParsingError("unknown reason");
 
         return new EID(input);
     }
+}
+
+internal record Sex
+{
+    private const char SloubiSex = '1';
+    private const char GagnaSex = '2';
+    private const char CatactSex = '3';
+
+    private readonly char _value;
+
+    private Sex(char value) => _value = value;
+
+    public static Either<ParsingError, Sex> Parse(char sexDescription)
+        => sexDescription switch
+        {
+            SloubiSex => new Sex(SloubiSex),
+            GagnaSex => new Sex(GagnaSex),
+            CatactSex => new Sex(CatactSex),
+            _ => new ParsingError("incorrect sex")
+        };
 }
 
 public record ParsingError(string Reason);
