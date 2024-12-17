@@ -6,20 +6,31 @@ public record ControlKey
 {
     private const int ControlKeyComplement = 97;
 
-    private readonly string _value;
+    private readonly int _value;
 
-    private ControlKey(string value) => _value = value;
-    public override string ToString() => _value;
+    private ControlKey(int value) => _value = value;
+    public override string ToString() => Representation(_value);
 
-    public static Either<ParsingError, ControlKey> Parse(string eidWithoutKey, string controlKey)
+    private static string Representation(int value) => $"{value}:D2";
+
+    public static Either<ParsingError, ControlKey> Parse(string eidWithoutKey, string controlKeyRepresentation)
     {
-        if (!controlKey.IsANumber()) return new ParsingError("incorrect control key");
+        if (!controlKeyRepresentation.IsANumber()) return new ParsingError("incorrect control key");
 
-        if (int.Parse(controlKey) != Checksum(eidWithoutKey)) return new ParsingError("incorrect control key");
+        var controlKeyValue = int.Parse(controlKeyRepresentation);
 
-        return new ControlKey(controlKey);
+        if (controlKeyValue != Checksum(eidWithoutKey)) return new ParsingError("incorrect control key");
+
+        return new ControlKey(controlKeyValue);
     }
 
     private static int Checksum(string eidWithoutKey)
         => ControlKeyComplement - int.Parse(eidWithoutKey) % ControlKeyComplement;
+
+    internal static ControlKey Create(string eidWithoutKey)
+    {
+        var controlKeyValue = Checksum(eidWithoutKey);
+        var controlKey = controlKeyValue.ToString("D2");
+        return new ControlKey(controlKey);
+    }
 }

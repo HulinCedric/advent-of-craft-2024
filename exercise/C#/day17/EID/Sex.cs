@@ -2,24 +2,35 @@ using LanguageExt;
 
 namespace EID;
 
-internal record Sex
+public record Sex
 {
-    private const char SloubiSex = '1';
-    private const char GagnaSex = '2';
-    private const char CatactSex = '3';
+    private const int SloubiSex = 1;
+    private const int GagnaSex = 2;
+    private const int CatactSex = 3;
 
-    private readonly char _value;
+    private readonly int _value;
 
-    private Sex(char value) => _value = value;
+    private Sex(int value) => _value = value;
 
-    internal static Either<ParsingError, Sex> Parse(char sexDescription)
-        => sexDescription switch
+    internal static Either<ParsingError, Sex> Parse(string sexRepresentation)
+    {
+        var potentialValue = int.Parse(sexRepresentation);
+        return potentialValue switch
         {
             SloubiSex => new Sex(SloubiSex),
             GagnaSex => new Sex(GagnaSex),
             CatactSex => new Sex(CatactSex),
             _ => new ParsingError("incorrect sex")
         };
+    }
 
-    public override string ToString() => _value.ToString();
+    public override string ToString() => Representation(_value);
+
+    private static string Representation(int value) => $"{value:D1}";
+
+    public static Sex ParseUnsafe(int potentialSexValue)
+        => Parse(Representation(potentialSexValue))
+            .Match(
+                sex => sex,
+                error => throw new ArgumentException(error.Reason));
 }

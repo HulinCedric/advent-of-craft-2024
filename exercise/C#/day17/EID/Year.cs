@@ -2,19 +2,29 @@ using LanguageExt;
 
 namespace EID;
 
-internal record Year
+public record Year
 {
-    private readonly string _value;
+    private readonly int _value;
 
-    private Year(string value) => _value = value;
+    private Year(int value) => _value = value;
 
-    internal static Either<ParsingError, Year> Parse(string yearDescription)
+    internal static Either<ParsingError, Year> Parse(string yearRepresentation)
     {
-        if (!yearDescription.IsANumber())
+        if (!yearRepresentation.IsANumber())
             return new ParsingError("incorrect year");
 
-        return new Year(yearDescription);
+        var potentialYearValue = int.Parse(yearRepresentation);
+
+        return new Year(potentialYearValue);
     }
 
-    public override string ToString() => _value;
+    public override string ToString() => Representation(_value);
+
+    private static string Representation(int value) => $"{value:D2}";
+
+    public static Year ParseUnsafe(int yearRepresentation)
+        => Parse(Representation(yearRepresentation))
+            .Match(
+                year => year,
+                error => throw new ArgumentException(error.Reason));
 }

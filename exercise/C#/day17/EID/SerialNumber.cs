@@ -2,22 +2,30 @@ using LanguageExt;
 
 namespace EID;
 
-internal record SerialNumber
+public record SerialNumber
 {
     private const int MinimumValue = 001;
 
-    private readonly string _value;
+    private readonly int _value;
 
-    private SerialNumber(string value) => _value = value;
+    private SerialNumber(int value) => _value = value;
 
-    internal static Either<ParsingError, SerialNumber> Parse(string serialNumberDescription)
+    internal static Either<ParsingError, SerialNumber> Parse(string serialNumberRepresentation)
     {
-        if (!(serialNumberDescription.IsANumber() &&
-              int.Parse(serialNumberDescription) >= MinimumValue))
+        if (!(serialNumberRepresentation.IsANumber() &&
+              int.Parse(serialNumberRepresentation) >= MinimumValue))
             return new ParsingError("incorrect serial number");
 
-        return new SerialNumber(serialNumberDescription);
+        return new SerialNumber(int.Parse(serialNumberRepresentation));
     }
 
-    public override string ToString() => _value;
+    public override string ToString() => Representation(_value);
+
+    private static string Representation(int value) => $"{value:D3}";
+
+    public static SerialNumber ParseUnsafe(int potentialSerialNumberValue)
+        => Parse(Representation(potentialSerialNumberValue))
+            .Match(
+                serialNumber => serialNumber,
+                error => throw new ArgumentException(error.Reason));
 }

@@ -4,7 +4,6 @@ using Xunit;
 
 namespace EID.Tests;
 
-// ReSharper disable once InconsistentNaming
 public class EIDShould
 {
     [Theory]
