@@ -25,9 +25,7 @@ public record EID
     }
 
     public override string ToString() => $"{_eidWithoutKey}{_controlKey}";
-
-    public static implicit operator string(EID eid) => eid.ToString();
-
+    
     private static Either<ParsingError, Unit> ValidateLength(string input)
         => input.Length switch
         {
