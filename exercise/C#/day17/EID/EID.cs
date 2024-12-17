@@ -5,28 +5,26 @@ namespace EID;
 public record EID
 {
     private const int ValidLength = 8;
-    private readonly ControlKey _controlKey;
-    private readonly SerialNumber _serialNumber;
-    private readonly Sex _sex;
-    private readonly Year _year;
 
-    private EID(Sex sex, Year year, SerialNumber serialNumber, ControlKey controlKey)
+    private readonly ControlKey _controlKey;
+
+    private readonly EIDWithoutKey _eidWithoutKey;
+
+    public EID(Sex sex, Year year, SerialNumber serialNumber) : this(new EIDWithoutKey(sex, year, serialNumber))
     {
-        _sex = sex;
-        _year = year;
-        _serialNumber = serialNumber;
+    }
+
+    private EID(EIDWithoutKey eidWithoutKey) : this(eidWithoutKey, ControlKey.CreateFrom(eidWithoutKey))
+    {
+    }
+
+    private EID(EIDWithoutKey eidWithoutKey, ControlKey controlKey)
+    {
+        _eidWithoutKey = eidWithoutKey;
         _controlKey = controlKey;
     }
 
-    public EID(Sex sex, Year year, SerialNumber serialNumber)
-    {
-        _sex = sex;
-        _year = year;
-        _serialNumber = serialNumber;
-        _controlKey = ControlKey.Create($"{_sex}{_year}{_serialNumber}");
-    }
-
-    public override string ToString() => $"{_sex}{_year}{_serialNumber}{_controlKey}";
+    public override string ToString() => $"{_eidWithoutKey}{_controlKey}";
 
     public static implicit operator string(EID eid) => eid.ToString();
 
@@ -43,6 +41,7 @@ public record EID
             from sex in Sex.Parse(input[0].ToString())
             from year in Year.Parse(input[1..3])
             from serialNumber in SerialNumber.Parse(input[3..6])
-            from controlKey in ControlKey.Parse(input[..6], input[6..8])
-            select new EID(sex, year, serialNumber, controlKey);
+            let eidWithoutKey = new EIDWithoutKey(sex, year, serialNumber)
+            from controlKey in ControlKey.Parse(eidWithoutKey, input[6..8])
+            select new EID(eidWithoutKey, controlKey);
 }

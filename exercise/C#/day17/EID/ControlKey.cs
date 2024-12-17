@@ -9,11 +9,12 @@ public record ControlKey
     private readonly int _value;
 
     private ControlKey(int value) => _value = value;
+
     public override string ToString() => Representation(_value);
 
-    private static string Representation(int value) => $"{value}:D2";
+    private static string Representation(int value) => $"{value:D2}";
 
-    public static Either<ParsingError, ControlKey> Parse(string eidWithoutKey, string controlKeyRepresentation)
+    internal static Either<ParsingError, ControlKey> Parse(EIDWithoutKey eidWithoutKey, string controlKeyRepresentation)
     {
         if (!controlKeyRepresentation.IsANumber()) return new ParsingError("incorrect control key");
 
@@ -24,13 +25,8 @@ public record ControlKey
         return new ControlKey(controlKeyValue);
     }
 
-    private static int Checksum(string eidWithoutKey)
-        => ControlKeyComplement - int.Parse(eidWithoutKey) % ControlKeyComplement;
+    private static int Checksum(EIDWithoutKey eidWithoutKeyValue)
+        => ControlKeyComplement - eidWithoutKeyValue.GetValue() % ControlKeyComplement;
 
-    internal static ControlKey Create(string eidWithoutKey)
-    {
-        var controlKeyValue = Checksum(eidWithoutKey);
-        var controlKey = controlKeyValue.ToString("D2");
-        return new ControlKey(controlKey);
-    }
+    internal static ControlKey CreateFrom(EIDWithoutKey eidWithoutKey) => new(Checksum(eidWithoutKey));
 }
