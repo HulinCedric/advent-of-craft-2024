@@ -17,7 +17,7 @@ public record ControlKey
 
     internal static Either<ParsingError, ControlKey> Parse(EIDWithoutKey eidWithoutKey, string controlKeyRepresentation)
         => parseInt(controlKeyRepresentation)
-            .Match<Either<ParsingError, ControlKey>>(
+            .Match(
                 controlKeyValue => Parse(eidWithoutKey, controlKeyValue),
                 () => new ParsingError("incorrect control key"));
 

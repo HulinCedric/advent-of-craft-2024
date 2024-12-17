@@ -11,8 +11,8 @@ public record Year
 
     internal static Either<ParsingError, Year> Parse(string yearRepresentation)
         => parseInt(yearRepresentation)
-            .Match<Either<ParsingError, Year>>(
-                yearValue => Parse(yearValue),
+            .Match(
+                Parse,
                 () => new ParsingError("incorrect year"));
 
     public static Either<ParsingError, Year> Parse(int yearValue) => new Year(yearValue);
