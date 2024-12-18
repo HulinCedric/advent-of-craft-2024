@@ -35,3 +35,6 @@ Feature: Rock Paper Scissors Game
           | 🪨     |
           | ✂️     |
           | 📄     |
+          | 🦎     |
+          | 🖖     |
+            
