@@ -42,6 +42,12 @@ Feature: Rock Paper Scissors Game
         When they play
         Then the result should be Player 1 because lizard poisons spock
 
+    Scenario: Player 1 wins with Lizard over Paper
+        Given Player 1 chooses 🦎
+        And Player 2 chooses 📄
+        When they play
+        Then the result should be Player 1 because lizard eats paper
+
     Scenario: Player 1 wins with Spock over Scissors️
         Given Player 1 chooses 🖖
         And Player 2 chooses ✂️

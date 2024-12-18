@@ -43,6 +43,7 @@ public static class RockPaperScissors
             (Choice.Scissors, Choice.Paper) => "scissors cuts paper",
             (Choice.Scissors, Choice.Lizard) => "scissors decapitates lizard",
             (Choice.Lizard, Choice.Spock) => "lizard poisons spock",
+            (Choice.Lizard, Choice.Paper) => "lizard eats paper",
             (Choice.Spock, Choice.Scissors) => "spock smashes scissors",
             _ => null
         };
