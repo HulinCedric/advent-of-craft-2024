@@ -6,6 +6,7 @@ namespace EID;
 public record SerialNumber
 {
     private const int MinimumValue = 001;
+    private const int MaximumValue = 999;
 
     private readonly int _value;
 
@@ -18,11 +19,13 @@ public record SerialNumber
                 () => new ParsingError("incorrect serial number"));
 
     public static Either<ParsingError, SerialNumber> Parse(int potentialSerialNumberValue)
-        => potentialSerialNumberValue < MinimumValue
-            ? new ParsingError("incorrect serial number")
-            : new SerialNumber(potentialSerialNumberValue);
+        => potentialSerialNumberValue is >= MinimumValue and <= MaximumValue
+            ? new SerialNumber(potentialSerialNumberValue)
+            : new ParsingError("incorrect serial number");
 
     public override string ToString() => Representation(_value);
 
     private static string Representation(int value) => $"{value:D3}";
+
+    public static IEnumerable<int> Values() => Range(MinimumValue, MaximumValue - MinimumValue + 1);
 }

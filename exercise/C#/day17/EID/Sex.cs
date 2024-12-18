@@ -31,4 +31,11 @@ public record Sex
     public override string ToString() => Representation(_value);
 
     private static string Representation(int value) => $"{value:D1}";
+
+    public static IEnumerable<int> Values()
+    {
+        yield return SloubiSex;
+        yield return GagnaSex;
+        yield return CatactSex;
+    }
 }

@@ -1,4 +1,5 @@
 using FsCheck;
+using LanguageExt.UnsafeValueAccess;
 
 namespace EID.Tests;
 
@@ -12,23 +13,14 @@ public static class EIDGenerator
             .ToArbitrary();
 
     private static Gen<Sex> GenerateSex()
-        => from value in Gen.Choose(1, 3)
-            select Sex.Parse(value)
-                .Match(
-                    s => s,
-                    error => throw new InvalidOperationException(error.Reason));
+        => from value in Gen.Elements(Sex.Values())
+            select Sex.Parse(value).ValueUnsafe();
 
     private static Gen<Year> GenerateYear()
-        => from value in Gen.Choose(0, 99)
-            select Year.Parse(value)
-                .Match(
-                    y => y,
-                    error => throw new InvalidOperationException(error.Reason));
+        => from value in Gen.Elements(Year.Values())
+            select Year.Parse(value).ValueUnsafe();
 
     private static Gen<SerialNumber> GenerateSerialNumber()
-        => from value in Gen.Choose(1, 999)
-            select SerialNumber.Parse(value)
-                .Match(
-                    sn => sn,
-                    error => throw new InvalidOperationException(error.Reason));
+        => from value in Gen.Elements(SerialNumber.Values())
+            select SerialNumber.Parse(value).ValueUnsafe();
 }
