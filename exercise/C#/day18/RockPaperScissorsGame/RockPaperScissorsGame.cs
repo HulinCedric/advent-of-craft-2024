@@ -23,16 +23,18 @@ public static class RockPaperScissors
     public static Result? Play(Choice player1, Choice player2)
     {
         if (player1 == player2) return new Result(Winner.Draw, "same choice");
-        return (player1, player2) switch
+
+        return EvaluateWinner(player1, player2, Winner.Player1)
+               ?? EvaluateWinner(player2, player1, Winner.Player2);
+    }
+
+    private static Result? EvaluateWinner(Choice player1, Choice player2, Winner winner)
+        => (player1, player2) switch
         {
-            (Choice.Rock, Choice.Scissors) => new Result(Winner.Player1, "rock crushes scissors"),
-            (Choice.Paper, Choice.Rock) => new Result(Winner.Player1, "paper covers rock"),
-            (Choice.Scissors, Choice.Paper) => new Result(Winner.Player1, "scissors cuts paper"),
-            (Choice.Spoke, Choice.Scissors) => new Result(Winner.Player1, "spock smashes scissors"),
-            (Choice.Scissors, Choice.Rock) => new Result(Winner.Player2, "rock crushes scissors"),
-            (Choice.Rock, Choice.Paper) => new Result(Winner.Player2, "paper covers rock"),
-            (Choice.Paper, Choice.Scissors) => new Result(Winner.Player2, "scissors cuts paper"),
+            (Choice.Rock, Choice.Scissors) => new Result(winner, "rock crushes scissors"),
+            (Choice.Paper, Choice.Rock) => new Result(winner, "paper covers rock"),
+            (Choice.Scissors, Choice.Paper) => new Result(winner, "scissors cuts paper"),
+            (Choice.Spoke, Choice.Scissors) => new Result(winner, "spock smashes scissors"),
             _ => null
         };
-    }
 }
