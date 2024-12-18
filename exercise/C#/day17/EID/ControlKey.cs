@@ -15,16 +15,16 @@ internal record ControlKey
 
     private static string Representation(int value) => $"{value:D2}";
 
-    internal static Either<ParsingError, ControlKey> Parse(EIDWithoutKey eidWithoutKey, string controlKeyRepresentation)
+    internal static Either<ParsingError, ControlKey> Validate(EIDWithoutKey eidWithoutKey, string controlKeyRepresentation)
         => parseInt(controlKeyRepresentation)
             .Match(
-                controlKeyValue => Parse(eidWithoutKey, controlKeyValue),
+                controlKeyValue => Validate(eidWithoutKey, controlKeyValue),
                 () => new ParsingError("incorrect control key"));
 
-    private static Either<ParsingError, ControlKey> Parse(EIDWithoutKey eidWithoutKey, int potentialControlKeyValue)
-        => potentialControlKeyValue != Checksum(eidWithoutKey)
-            ? new ParsingError("incorrect control key")
-            : new ControlKey(potentialControlKeyValue);
+    private static Either<ParsingError, ControlKey> Validate(EIDWithoutKey eidWithoutKey, int potentialControlKeyValue)
+        => potentialControlKeyValue == Checksum(eidWithoutKey)
+            ? new ControlKey(potentialControlKeyValue)
+            : new ParsingError("incorrect control key");
 
     private static int Checksum(EIDWithoutKey eidWithoutKeyValue)
         => ControlKeyComplement - eidWithoutKeyValue.GetValue() % ControlKeyComplement;

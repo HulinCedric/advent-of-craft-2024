@@ -24,6 +24,6 @@ public record EID(Sex Sex, Year Year, SerialNumber SerialNumber)
             from year in Year.Parse(input[1..3])
             from serialNumber in SerialNumber.Parse(input[3..6])
             let eidWithoutKey = new EIDWithoutKey(sex, year, serialNumber)
-            from controlKey in ControlKey.Parse(eidWithoutKey, input[6..8])
+            from controlKey in ControlKey.Validate(eidWithoutKey, input[6..8])
             select new EID(sex, year, serialNumber);
 }
