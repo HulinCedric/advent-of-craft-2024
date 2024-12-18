@@ -6,17 +6,23 @@ Feature: Rock Paper Scissors Game
         When they play
         Then the result should be Player 1 because rock crushes scissors
 
+    Scenario: Player 1 wins with Rock over Lizard
+        Given Player 1 chooses 🪨
+        And Player 2 chooses 🦎
+        When they play
+        Then the result should be Player 1 because rock crushes lizard
+
     Scenario: Player 1 wins with Paper over Rock
         Given Player 1 chooses 📄
         And Player 2 chooses 🪨
         When they play
         Then the result should be Player 1 because paper covers rock
 
-    Scenario: Player 1 wins with Rock over Lizard
-        Given Player 1 chooses 🪨
-        And Player 2 chooses 🦎
+    Scenario: Player 1 wins with Paper over Spock
+        Given Player 1 chooses 📄
+        And Player 2 chooses 🖖
         When they play
-        Then the result should be Player 1 because rock crushes lizard
+        Then the result should be Player 1 because paper disproves spock
 
     Scenario: Player 1 wins with Spock over Scissors️
         Given Player 1 chooses 🖖

@@ -6,7 +6,7 @@ public enum Choice
     Paper,
     Scissors,
     Lizard,
-    Spoke
+    Spock
 }
 
 public enum Winner
@@ -39,8 +39,9 @@ public static class RockPaperScissors
             (Choice.Rock, Choice.Scissors) => "rock crushes scissors",
             (Choice.Rock, Choice.Lizard) => "rock crushes lizard",
             (Choice.Paper, Choice.Rock) => "paper covers rock",
+            (Choice.Paper, Choice.Spock) => "paper disproves spock",
             (Choice.Scissors, Choice.Paper) => "scissors cuts paper",
-            (Choice.Spoke, Choice.Scissors) => "spock smashes scissors",
+            (Choice.Spock, Choice.Scissors) => "spock smashes scissors",
             _ => null
         };
 }
