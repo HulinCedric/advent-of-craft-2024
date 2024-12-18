@@ -45,6 +45,7 @@ public static class RockPaperScissors
             (Choice.Lizard, Choice.Spock) => "lizard poisons spock",
             (Choice.Lizard, Choice.Paper) => "lizard eats paper",
             (Choice.Spock, Choice.Scissors) => "spock smashes scissors",
+            (Choice.Spock, Choice.Rock) => "spock vaporizes rock",
             _ => null
         };
 }
