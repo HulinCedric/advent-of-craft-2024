@@ -21,19 +21,17 @@ public record Result(Winner Winner, string Reason);
 public static class RockPaperScissors
 {
     public static Result? Play(Choice player1, Choice player2)
-    {
-        if (player1 == player2) return new Result(Winner.Draw, "same choice");
+        => player1 == player2
+            ? new Result(Winner.Draw, "same choice")
+            : Evaluate(player1, player2, Winner.Player1) ??
+              Evaluate(player2, player1, Winner.Player2);
 
-        if (EvaluateWinner(player1, player2) is { } player1WinReason)
-            return new Result(Winner.Player1, player1WinReason);
+    private static Result? Evaluate(Choice player1, Choice player2, Winner winner)
+        => Reason(player1, player2) is { } reason
+            ? new Result(winner, reason)
+            : null;
 
-        if (EvaluateWinner(player2, player1) is { } player2WinReason)
-            return new Result(Winner.Player2, player2WinReason);
-
-        return new Result(Winner.Draw, "no winner");
-    }
-
-    private static string? EvaluateWinner(Choice player1, Choice player2)
+    private static string? Reason(Choice player1, Choice player2)
         => (player1, player2) switch
         {
             (Choice.Rock, Choice.Scissors) => "rock crushes scissors",
