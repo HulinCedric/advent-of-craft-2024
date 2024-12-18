@@ -2,30 +2,14 @@ using LanguageExt;
 
 namespace EID;
 
-public record EID
+public record EID(Sex Sex, Year Year, SerialNumber SerialNumber)
 {
     private const int ValidLength = 8;
 
-    private readonly ControlKey _controlKey;
+    public override string ToString() => $"{Sex}{Year}{SerialNumber}{Key()}";
 
-    private readonly EIDWithoutKey _eidWithoutKey;
+    private ControlKey Key() => ControlKey.KeyFor(new EIDWithoutKey(Sex, Year, SerialNumber));
 
-    public EID(Sex sex, Year year, SerialNumber serialNumber) : this(new EIDWithoutKey(sex, year, serialNumber))
-    {
-    }
-
-    private EID(EIDWithoutKey eidWithoutKey) : this(eidWithoutKey, ControlKey.KeyFor(eidWithoutKey))
-    {
-    }
-
-    private EID(EIDWithoutKey eidWithoutKey, ControlKey controlKey)
-    {
-        _eidWithoutKey = eidWithoutKey;
-        _controlKey = controlKey;
-    }
-
-    public override string ToString() => $"{_eidWithoutKey}{_controlKey}";
-    
     private static Either<ParsingError, Unit> ValidateLength(string input)
         => input.Length switch
         {
@@ -41,5 +25,5 @@ public record EID
             from serialNumber in SerialNumber.Parse(input[3..6])
             let eidWithoutKey = new EIDWithoutKey(sex, year, serialNumber)
             from controlKey in ControlKey.Parse(eidWithoutKey, input[6..8])
-            select new EID(eidWithoutKey, controlKey);
+            select new EID(sex, year, serialNumber);
 }

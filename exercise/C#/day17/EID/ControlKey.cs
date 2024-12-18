@@ -3,7 +3,7 @@ using static LanguageExt.Prelude;
 
 namespace EID;
 
-public record ControlKey
+internal record ControlKey
 {
     private const int ControlKeyComplement = 97;
 
