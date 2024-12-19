@@ -8,20 +8,14 @@ public class ReindeerDistanceBenchmark
     [Params(1, 10, 30, 50)] public int NumberOfReindeers;
 
     [Benchmark]
-    public ulong Recursively()
-    {
-        return SantaTravelCalculator.CalculateTotalDistanceRecursively(NumberOfReindeers);
-    }
-    
-    [Benchmark]
-    public ulong Iterative()
-    {
-        return SantaTravelCalculator.CalculateTotalDistanceIterative(NumberOfReindeers);
-    }
+    public ulong Recursively() => SantaTravelCalculator.CalculateTotalDistanceRecursively(NumberOfReindeers);
 
     [Benchmark]
-    public ulong Bitwise()
-    {
-        return SantaTravelCalculator.CalculateTotalDistanceBitwise(NumberOfReindeers);
-    }
+    public ulong Iteratively() => SantaTravelCalculator.CalculateTotalDistanceIteratively(NumberOfReindeers);
+
+    [Benchmark]
+    public ulong Math() => SantaTravelCalculator.CalculateTotalDistanceMath(NumberOfReindeers);
+
+    [Benchmark]
+    public ulong Bitwise() => SantaTravelCalculator.CalculateTotalDistanceBitwise(NumberOfReindeers);
 }

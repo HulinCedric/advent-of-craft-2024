@@ -3,8 +3,9 @@
 public static class SantaTravelCalculator
 {
     public static ulong CalculateTotalDistanceBitwise(int numberOfReindeers) => (1UL << numberOfReindeers) - 1;
+    public static ulong CalculateTotalDistanceMath(int numberOfReindeers) => (ulong) Math.Pow(2, numberOfReindeers) - 1;
     
-    public static ulong CalculateTotalDistanceIterative(int numberOfReindeers)
+    public static ulong CalculateTotalDistanceIteratively(int numberOfReindeers)
     {
         ulong distance = 0;
         for (var i = 0; i < numberOfReindeers; i++)
