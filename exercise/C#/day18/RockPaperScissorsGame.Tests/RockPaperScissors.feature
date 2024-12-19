@@ -1,83 +1,33 @@
 Feature: Rock Paper Scissors Game
 
-    Scenario: Player 1 wins with <choiceOfPlayer1> over <choiceOfPlayer2>
-        Given Player 1 chooses <choiceOfPlayer1>
-        And Player 2 chooses <choiceOfPlayer2>
+    Scenario: <winner> wins with <player1_choice> over <player2_choice>
+        Given Player 1 chooses <player1_choice>
+        And Player 2 chooses <player2_choice>
         When they play
-        Then the result should be Player 1 because <reason>
+        Then the result should be <winner> because <reason>
 
     Examples:
-      | choiceOfPlayer1 | choiceOfPlayer2 | reason                      |
-      | 🪨              | ✂️              | rock crushes scissors       |
-      | 🪨              | 🦎              | rock crushes lizard         |
-      | 📄              | 🪨              | paper covers rock           |
-      | 📄              | 🖖              | paper disproves spock       |
-      | ✂️              | 📄              | scissors cuts paper         |
-      | ✂️              | 🦎              | scissors decapitates lizard |
-      | 🦎              | 🖖              | lizard poisons spock        |
-      | 🦎              | 📄              | lizard eats paper           |
-      | 🖖              | ✂️              | spock smashes scissors      |
-      | 🖖              | 🪨              | spock vaporizes rock        |
-
-    Scenario: Player 2 wins with Rock over Scissors
-        Given Player 1 chooses ✂️
-        And Player 2 chooses 🪨
-        When they play
-        Then the result should be Player 2 because rock crushes scissors
-
-    Scenario: Player 2 wins with Rock over Lizard
-        Given Player 1 chooses 🦎
-        And Player 2 chooses 🪨
-        When they play
-        Then the result should be Player 2 because rock crushes lizard
-
-    Scenario: Player 2 wins with Paper over Rock
-        Given Player 1 chooses 🪨
-        And Player 2 chooses 📄
-        When they play
-        Then the result should be Player 2 because paper covers rock
-
-    Scenario: Player 2 wins with Paper over Spock
-        Given Player 1 chooses 🖖
-        And Player 2 chooses 📄
-        When they play
-        Then the result should be Player 2 because paper disproves spock
-
-    Scenario: Player 2 wins with Scissors️ over Paper
-        Given Player 1 chooses 📄
-        And Player 2 chooses ✂️
-        When they play
-        Then the result should be Player 2 because scissors cuts paper
-
-    Scenario: Player 2 wins with Scissors️ over Lizard
-        Given Player 1 chooses 🦎
-        And Player 2 chooses ✂️
-        When they play
-        Then the result should be Player 2 because scissors decapitates lizard
-
-    Scenario: Player 2 wins with Lizard over Spock
-        Given Player 1 chooses 🖖
-        And Player 2 chooses 🦎
-        When they play
-        Then the result should be Player 2 because lizard poisons spock
-
-    Scenario: Player 2 wins with Lizard over Paper
-        Given Player 1 chooses 📄
-        And Player 2 chooses 🦎
-        When they play
-        Then the result should be Player 2 because lizard eats paper
-
-    Scenario: Player 2 wins with Spock over Scissors️
-        Given Player 1 chooses ✂️
-        And Player 2 chooses 🖖
-        When they play
-        Then the result should be Player 2 because spock smashes scissors
-
-    Scenario: Player 2 wins with Spock over Rock
-        Given Player 1 chooses 🪨
-        And Player 2 chooses 🖖
-        When they play
-        Then the result should be Player 2 because spock vaporizes rock
+      | player1_choice | player2_choice | winner   | reason                      |
+      | 🪨             | ✂️             | Player 1 | rock crushes scissors       |
+      | 🪨             | 🦎             | Player 1 | rock crushes lizard         |
+      | 📄             | 🪨             | Player 1 | paper covers rock           |
+      | 📄             | 🖖             | Player 1 | paper disproves spock       |
+      | ✂️             | 📄             | Player 1 | scissors cuts paper         |
+      | ✂️             | 🦎             | Player 1 | scissors decapitates lizard |
+      | 🦎             | 🖖             | Player 1 | lizard poisons spock        |
+      | 🦎             | 📄             | Player 1 | lizard eats paper           |
+      | 🖖             | ✂️             | Player 1 | spock smashes scissors      |
+      | 🖖             | 🪨             | Player 1 | spock vaporizes rock        |
+      | ✂️             | 🪨             | Player 2 | rock crushes scissors       |
+      | 🦎             | 🪨             | Player 2 | rock crushes lizard         |
+      | 🪨             | 📄             | Player 2 | paper covers rock           |
+      | 🖖             | 📄             | Player 2 | paper disproves spock       |
+      | 📄             | ✂️             | Player 2 | scissors cuts paper         |
+      | 🦎             | ✂️             | Player 2 | scissors decapitates lizard |
+      | 🖖             | 🦎             | Player 2 | lizard poisons spock        |
+      | 📄             | 🦎             | Player 2 | lizard eats paper           |
+      | ✂️             | 🖖             | Player 2 | spock smashes scissors      |
+      | 🪨             | 🖖             | Player 2 | spock vaporizes rock        |
 
     Scenario Outline: Draw
         Given Player 1 chooses <choice>
