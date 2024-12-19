@@ -2,7 +2,7 @@
 {
 public static class SantaTravelCalculator
 {
-    public static int CalculateTotalDistanceRecursively(int numberOfReindeers)
+    public static ulong CalculateTotalDistanceRecursively(int numberOfReindeers)
     {
         if (numberOfReindeers == 1) return 1;
         checked
