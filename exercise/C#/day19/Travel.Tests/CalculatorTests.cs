@@ -16,7 +16,7 @@ namespace Travel.Tests
         [InlineData(32, 4_294_967_295)]
         [InlineData(50, 1_125_899_906_842_623)]
         public void Should_Calculate_The_DistanceFor(int numberOfReindeers, ulong expectedDistance)
-            => CalculateTotalDistance(numberOfReindeers)
+            => CalculateTotalDistanceBitwise(numberOfReindeers)
                 .Should()
                 .Be(expectedDistance);
     }
