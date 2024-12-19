@@ -2,13 +2,14 @@
 {
 public static class SantaTravelCalculator
 {
-    public static ulong CalculateTotalDistanceRecursively(int numberOfReindeers)
+    public static ulong CalculateTotalDistance(int numberOfReindeers)
     {
-        if (numberOfReindeers == 1) return 1;
-        checked
+        ulong distance = 0;
+        for (int i = 0; i < numberOfReindeers; i++)
         {
-            return 2 * CalculateTotalDistanceRecursively(numberOfReindeers - 1) + 1;
+            distance = checked(2 * distance + 1);
         }
+        return distance;
     }
 }
 }
