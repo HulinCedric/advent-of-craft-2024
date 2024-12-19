@@ -39,15 +39,18 @@ public static class RockPaperScissors
     public static Result Play(Choice player1, Choice player2)
         => (player1, player2) switch
         {
-            _ when player1 == player2 => new Result(Winner.Draw, "same choice"),
-            _ when WhatBeatsWhat.ContainsKey(KeyFor(player1, player2)) => new Result(
-                Winner.Player1,
-                WhatBeatsWhat[KeyFor(player1, player2)]),
-            _ when WhatBeatsWhat.ContainsKey(KeyFor(player2, player1)) => new Result(
-                Winner.Player2,
-                WhatBeatsWhat[KeyFor(player2, player1)]),
+            _ when IsEqual(player1, player2) => new Result(Winner.Draw, "same choice"),
+            _ when IsWinner(player1, player2) => new Result(Winner.Player1, Reason(player1, player2)),
+            _ when IsWinner(player2, player1) => new Result(Winner.Player2, Reason(player2, player1)),
             _ => new Result(Winner.Draw, "unknown reason")
         };
+
+
+    private static bool IsEqual(Choice choice1, Choice choice2) => choice1 == choice2;
+
+    private static bool IsWinner(Choice choice1, Choice choice2) => WhatBeatsWhat.ContainsKey(KeyFor(choice1, choice2));
+
+    private static string Reason(Choice choice1, Choice choice2) => WhatBeatsWhat[KeyFor(choice1, choice2)];
 
     private static string KeyFor(Choice choice1, Choice choice2) => $"{choice1}-{choice2}";
 }
