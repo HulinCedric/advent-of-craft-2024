@@ -36,17 +36,16 @@ public static class RockPaperScissors
         (KeyFor(Choice.Spock, Choice.Rock), "spock vaporizes rock")
     ]);
 
-    public static Result Play(Choice player1, Choice player2)
+    public static Either<string, Result> Play(Choice player1, Choice player2)
         => (player1, player2) switch
         {
-            _ when IsEqual(player1, player2) => new Result(Winner.Draw, "same choice"),
+            _ when IsADraw(player1, player2) => new Result(Winner.Draw, "same choice"),
             _ when IsWinner(player1, player2) => new Result(Winner.Player1, Reason(player1, player2)),
             _ when IsWinner(player2, player1) => new Result(Winner.Player2, Reason(player2, player1)),
-            _ => new Result(Winner.Draw, "unknown reason")
+            _ => "no rules for these choices"
         };
-
-
-    private static bool IsEqual(Choice choice1, Choice choice2) => choice1 == choice2;
+    
+    private static bool IsADraw(Choice choice1, Choice choice2) => choice1 == choice2;
 
     private static bool IsWinner(Choice choice1, Choice choice2) => WhatBeatsWhat.ContainsKey(KeyFor(choice1, choice2));
 
