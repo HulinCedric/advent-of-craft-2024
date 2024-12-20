@@ -15,6 +15,22 @@ public class ReindeerContractTests
     }
 
     [Fact]
+    public async Task UnauthorizedWithoutApiKeyOnGet()
+    {
+        _client.DefaultRequestHeaders.Clear();
+        await _client.GetAsync("reindeer/40F9D24D-D3E0-4596-ADC5-B4936FF84B19").Verify();
+    }
+    
+    
+    [Fact]
+    public async Task UnauthorizedWithoutApiKeyOnPost()
+    {
+        _client.DefaultRequestHeaders.Clear();
+        var request = new ReindeerToCreateRequest("Vixes", ReindeerColor.Black);
+        await _client.PostAsync("reindeer", JsonContent.Create(request)).Verify();
+    }
+
+    [Fact]
     public async Task ShouldGetReindeer()
         => await _client.GetAsync("reindeer/40F9D24D-D3E0-4596-ADC5-B4936FF84B19").Verify();
 

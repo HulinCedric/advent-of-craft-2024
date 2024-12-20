@@ -1,0 +1,19 @@
+﻿{
+  Request: {
+    Method: POST,
+    Uri: http://localhost/reindeer,
+    Content: {
+      Headers: {
+        Content-Length: 26,
+        Content-Type: application/json; charset=utf-8
+      },
+      Value: 
+    }
+  },
+  Response: {
+    Status: 401 Unauthorized,
+    Content: {
+      Headers: {}
+    }
+  }
+}
