@@ -21,7 +21,6 @@ public class ReindeerContractTests
         await _client.GetAsync("reindeer/40F9D24D-D3E0-4596-ADC5-B4936FF84B19").Verify();
     }
     
-    
     [Fact]
     public async Task UnauthorizedWithoutApiKeyOnPost()
     {
