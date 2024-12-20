@@ -1,5 +1,5 @@
 ﻿{
-  Request: http://localhost/reindeer/40F9D24D-D3E0-4596-ADC5-B4936FF84B19,
+  Request: http://localhost/reindeer/Guid_1,
   Response: {
     Status: 200 OK,
     Content: {

@@ -1,5 +1,6 @@
 using System.Net.Http.Json;
 using Reindeer.Web.Service;
+using static Reindeer.Web.Tests.ReindeerApiContractVerifyExtensions;
 
 namespace Reindeer.Web.Tests;
 
@@ -18,12 +19,7 @@ public class ReindeerContractTests
     {
         var response = await _client.GetAsync("reindeer/40F9D24D-D3E0-4596-ADC5-B4936FF84B19");
 
-        await Verify(
-            new
-            {
-                Request = response.RequestMessage,
-                Response = response
-            });
+        await VerifyApiContract(response);
     }
 
     [Fact]
@@ -32,13 +28,7 @@ public class ReindeerContractTests
         var nonExistingReindeer = Guid.NewGuid().ToString();
         var response = await _client.GetAsync($"reindeer/{nonExistingReindeer}");
 
-        await Verify(
-                new
-                {
-                    Request = response.RequestMessage,
-                    Response = response
-                })
-            .ScrubInlineGuids();
+        await VerifyApiContract(response);
     }
 
     [Fact]
@@ -47,11 +37,6 @@ public class ReindeerContractTests
         var request = new ReindeerToCreateRequest("Petar", ReindeerColor.Purple);
         var response = await _client.PostAsync("reindeer", JsonContent.Create(request));
 
-        await Verify(
-            new
-            {
-                Request = response.RequestMessage,
-                Response = response
-            });
+        await VerifyApiContract(response);
     }
 }
