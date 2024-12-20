@@ -1,5 +1,10 @@
 ﻿{
-  Request: http://localhost/reindeer/Guid_1,
+  Request: {
+    Uri: http://localhost/reindeer/Guid_1,
+    Headers: {
+      API_KEY: Guid_2
+    }
+  },
   Response: {
     Status: 200 OK,
     Content: {

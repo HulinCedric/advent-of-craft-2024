@@ -2,6 +2,9 @@
   Request: {
     Method: POST,
     Uri: http://localhost/reindeer,
+    Headers: {
+      API_KEY: Guid_1
+    },
     Content: {
       Headers: {
         Content-Length: 26,

@@ -11,6 +11,7 @@ public class ReindeerContractTests
     {
         var webApplication = new ReindeerWebApplicationFactory();
         _client = webApplication.CreateClient();
+        _client.DefaultRequestHeaders.Add("API_KEY", Guid.NewGuid().ToString());
     }
 
     [Fact]
