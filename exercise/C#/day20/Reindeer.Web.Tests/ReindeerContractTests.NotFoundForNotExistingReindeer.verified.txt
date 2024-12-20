@@ -1,9 +1,12 @@
 ﻿{
-  Status: 404 Not Found,
-  Content: {
-    Headers: {
-      Content-Type: application/json; charset=utf-8
-    },
-    Value: 0
+  Request: http://localhost/reindeer/Guid_1,
+  Response: {
+    Status: 404 Not Found,
+    Content: {
+      Headers: {
+        Content-Type: application/json; charset=utf-8
+      },
+      Value: 0
+    }
   }
 }

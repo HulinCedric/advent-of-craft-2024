@@ -1,42 +1,57 @@
 using System.Net.Http.Json;
 using Reindeer.Web.Service;
 
-namespace Reindeer.Web.Tests
+namespace Reindeer.Web.Tests;
+
+public class ReindeerContractTests
 {
-    public class ReindeerContractTests
+    private readonly HttpClient _client;
+
+    public ReindeerContractTests()
     {
-        private readonly HttpClient _client;
+        var webApplication = new ReindeerWebApplicationFactory();
+        _client = webApplication.CreateClient();
+    }
 
-        public ReindeerContractTests()
-        {
-            var webApplication = new ReindeerWebApplicationFactory();
-            _client = webApplication.CreateClient();
-        }
+    [Fact]
+    public async Task ShouldGetReindeer()
+    {
+        var response = await _client.GetAsync("reindeer/40F9D24D-D3E0-4596-ADC5-B4936FF84B19");
 
-        [Fact]
-        public async Task ShouldGetReindeer()
-        {
-            var response = await _client.GetAsync("reindeer/40F9D24D-D3E0-4596-ADC5-B4936FF84B19");
+        await Verify(
+            new
+            {
+                Request = response.RequestMessage,
+                Response = response
+            });
+    }
 
-            await Verify(response);
-        }
+    [Fact]
+    public async Task NotFoundForNotExistingReindeer()
+    {
+        var nonExistingReindeer = Guid.NewGuid().ToString();
+        var response = await _client.GetAsync($"reindeer/{nonExistingReindeer}");
 
-        [Fact]
-        public async Task NotFoundForNotExistingReindeer()
-        {
-            var nonExistingReindeer = Guid.NewGuid().ToString();
-            var response = await _client.GetAsync($"reindeer/{nonExistingReindeer}");
+        await Verify(
+                new
+                {
+                    Request = response.RequestMessage,
+                    Response = response
+                })
+            .ScrubInlineGuids();
+    }
 
-            await Verify(response);
-        }
+    [Fact]
+    public async Task ConflictWhenTryingToCreateExistingOne()
+    {
+        var request = new ReindeerToCreateRequest("Petar", ReindeerColor.Purple);
+        var response = await _client.PostAsync("reindeer", JsonContent.Create(request));
 
-        [Fact]
-        public async Task ConflictWhenTryingToCreateExistingOne()
-        {
-            var request = new ReindeerToCreateRequest("Petar", ReindeerColor.Purple);
-            var response = await _client.PostAsync("reindeer", JsonContent.Create(request));
-
-            await Verify(response);
-        }
+        await Verify(
+            new
+            {
+                Request = response.RequestMessage,
+                Response = response
+            });
     }
 }

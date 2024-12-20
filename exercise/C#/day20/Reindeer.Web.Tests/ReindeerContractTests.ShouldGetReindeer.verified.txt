@@ -1,13 +1,16 @@
 ﻿{
-  Status: 200 OK,
-  Content: {
-    Headers: {
-      Content-Type: application/json; charset=utf-8
-    },
-    Value: {
-      id: Guid_1,
-      name: Petar,
-      color: 1
+  Request: http://localhost/reindeer/40F9D24D-D3E0-4596-ADC5-B4936FF84B19,
+  Response: {
+    Status: 200 OK,
+    Content: {
+      Headers: {
+        Content-Type: application/json; charset=utf-8
+      },
+      Value: {
+        id: Guid_1,
+        name: Petar,
+        color: 1
+      }
     }
   }
 }

@@ -1,9 +1,22 @@
 ﻿{
-  Status: 409 Conflict,
-  Content: {
-    Headers: {
-      Content-Type: application/json; charset=utf-8
-    },
-    Value: 1
+  Request: {
+    Method: POST,
+    Uri: http://localhost/reindeer,
+    Content: {
+      Headers: {
+        Content-Length: 26,
+        Content-Type: application/json; charset=utf-8
+      },
+      Value: 
+    }
+  },
+  Response: {
+    Status: 409 Conflict,
+    Content: {
+      Headers: {
+        Content-Type: application/json; charset=utf-8
+      },
+      Value: 1
+    }
   }
 }
