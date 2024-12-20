@@ -1,6 +1,5 @@
 using System.Net.Http.Json;
 using Reindeer.Web.Service;
-using static Reindeer.Web.Tests.ReindeerApiContractVerifyExtensions;
 
 namespace Reindeer.Web.Tests;
 
@@ -16,27 +15,19 @@ public class ReindeerContractTests
 
     [Fact]
     public async Task ShouldGetReindeer()
-    {
-        var response = await _client.GetAsync("reindeer/40F9D24D-D3E0-4596-ADC5-B4936FF84B19");
-
-        await VerifyApiContract(response);
-    }
+        => await _client.GetAsync("reindeer/40F9D24D-D3E0-4596-ADC5-B4936FF84B19").Verify();
 
     [Fact]
     public async Task NotFoundForNotExistingReindeer()
     {
         var nonExistingReindeer = Guid.NewGuid().ToString();
-        var response = await _client.GetAsync($"reindeer/{nonExistingReindeer}");
-
-        await VerifyApiContract(response);
+        await _client.GetAsync($"reindeer/{nonExistingReindeer}").Verify();
     }
 
     [Fact]
     public async Task ConflictWhenTryingToCreateExistingOne()
     {
         var request = new ReindeerToCreateRequest("Petar", ReindeerColor.Purple);
-        var response = await _client.PostAsync("reindeer", JsonContent.Create(request));
-
-        await VerifyApiContract(response);
+        await _client.PostAsync("reindeer", JsonContent.Create(request)).Verify();
     }
 }

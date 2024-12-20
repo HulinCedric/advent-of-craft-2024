@@ -4,11 +4,14 @@ namespace Reindeer.Web.Tests;
 
 public static class ReindeerApiContractVerifyExtensions
 {
-    public static SettingsTask VerifyApiContract(
-        HttpResponseMessage response,
+    public static async Task Verify(
+        this Task<HttpResponseMessage> call,
         VerifySettings? settings = null,
         [CallerFilePath] string sourceFile = "")
-        => Verify(
+    {
+        var response = await call;
+
+        await Verifier.Verify(
                 new
                 {
                     Request = response.RequestMessage,
@@ -17,4 +20,5 @@ public static class ReindeerApiContractVerifyExtensions
                 settings,
                 sourceFile)
             .ScrubInlineGuids();
+    }
 }
