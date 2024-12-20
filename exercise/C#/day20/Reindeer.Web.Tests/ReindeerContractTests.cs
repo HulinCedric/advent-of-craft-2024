@@ -25,6 +25,13 @@ public class ReindeerContractTests
     }
 
     [Fact]
+    public async Task ShouldCreateReindeer()
+    {
+        var request = new ReindeerToCreateRequest("Vixes", ReindeerColor.Black);
+        await _client.PostAsync("reindeer", JsonContent.Create(request)).Verify();
+    }
+
+    [Fact]
     public async Task ConflictWhenTryingToCreateExistingOne()
     {
         var request = new ReindeerToCreateRequest("Petar", ReindeerColor.Purple);
