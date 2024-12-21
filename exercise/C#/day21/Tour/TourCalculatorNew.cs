@@ -8,7 +8,6 @@ public class TourCalculatorNew(List<Step> steps)
 {
     private readonly Seq<Step> _steps = steps.ToSeq();
 
-    private double _deliveryTime = 0;
     private bool calculated = false;
 
     public Either<string, string> Calculate()
@@ -18,19 +17,21 @@ public class TourCalculatorNew(List<Step> steps)
             return Left("No locations !!!");
         }
 
+        double deliveryTime = 0;
+
         var result = new StringBuilder();
 
         foreach (var s in _steps.OrderBy(x => x.Time))
         {
             if (!calculated)
             {
-                _deliveryTime += s.DeliveryTime;
+                deliveryTime += s.DeliveryTime;
                 result.AppendLine(s.ToString());
             }
         }
 
         string hhMmSs = @"hh\:mm\:ss";
-        string str = TimeSpan.FromSeconds(_deliveryTime).ToString(hhMmSs);
+        string str = TimeSpan.FromSeconds(deliveryTime).ToString(hhMmSs);
         result.AppendLine($"Delivery time | {str}");
         calculated = true;
 
