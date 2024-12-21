@@ -1,0 +1,24 @@
+﻿{
+  Request: {
+    Method: POST,
+    Uri: http://localhost/reindeer,
+    Headers: {
+      Transfer-Encoding: chunked
+    },
+    Content: {
+      Headers: {
+        Content-Type: application/json; charset=utf-8
+      },
+      Value: {
+        name: Vixes,
+        color: 1
+      }
+    }
+  },
+  Response: {
+    Status: 401 Unauthorized,
+    Content: {
+      Headers: {}
+    }
+  }
+}

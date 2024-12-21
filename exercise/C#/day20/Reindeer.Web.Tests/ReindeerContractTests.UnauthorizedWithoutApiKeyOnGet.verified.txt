@@ -1,0 +1,9 @@
+﻿{
+  Request: http://localhost/reindeer/Guid_1,
+  Response: {
+    Status: 401 Unauthorized,
+    Content: {
+      Headers: {}
+    }
+  }
+}
