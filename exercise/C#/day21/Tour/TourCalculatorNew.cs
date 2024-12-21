@@ -15,18 +15,18 @@ public class TourCalculatorNew(List<Step> steps)
             return Left("No locations !!!");
         }
 
-        double deliveryTime = 0;
 
         var result = new StringBuilder();
-
+        
         foreach (var s in _steps.OrderBy(x => x.Time))
         {
-            deliveryTime += s.DeliveryTime;
             result.AppendLine(s.ToString());
         }
+        
+        var tourDeliveryTime = _steps.Select(s=>s.DeliveryTime).Sum();
 
         string hhMmSs = @"hh\:mm\:ss";
-        string str = TimeSpan.FromSeconds(deliveryTime).ToString(hhMmSs);
+        string str = TimeSpan.FromSeconds(tourDeliveryTime).ToString(hhMmSs);
         result.AppendLine($"Delivery time | {str}");
 
         return Right(result.ToString());
