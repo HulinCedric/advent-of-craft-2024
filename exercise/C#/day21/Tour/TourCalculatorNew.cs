@@ -23,11 +23,9 @@ public class TourCalculatorNew(List<Step> steps)
     {
         var tourDeliveryTime = _steps.Sum(s => s.DeliveryTime);
 
-        DeliveryTime deliveryTime = new DeliveryTime(tourDeliveryTime);
-        
-        var str = deliveryTime.ToString();
-        var toutDeliveryTimeRepresentation = $"Delivery time | {str}";
-        return toutDeliveryTimeRepresentation;
+        var deliveryTime = new DeliveryTime(tourDeliveryTime);
+
+        return $"Delivery time | {deliveryTime}";
     }
 }
 
