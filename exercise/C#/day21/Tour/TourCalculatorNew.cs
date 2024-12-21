@@ -6,7 +6,7 @@ namespace Tour;
 
 public class TourCalculatorNew
 {
-    public List<Step> Steps { get; set; }
+    private readonly Seq<Step> _steps;
 
     public bool Calculated
     {
@@ -23,12 +23,12 @@ public class TourCalculatorNew
 
     public TourCalculatorNew(List<Step> steps)
     {
-        Steps = steps;
+        _steps = steps.ToSeq();
     }
 
     public Either<string, string> Calculate()
     {
-        if (Steps.IsNull() || Steps.Count == 0)
+        if (_steps.IsNull() || _steps.Count == 0)
         {
             return Left("No locations !!!");
         }
@@ -36,7 +36,7 @@ public class TourCalculatorNew
         {
             var result = new StringBuilder();
 
-            foreach (var s in Steps.OrderBy(x => x.Time))
+            foreach (var s in _steps.OrderBy(x => x.Time))
             {
                 if (!calculated)
                 {
