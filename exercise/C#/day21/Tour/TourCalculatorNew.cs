@@ -24,13 +24,13 @@ public class TourCalculatorNew(List<Step> steps)
         {
             if (!calculated)
             {
-                this._deliveryTime += s.DeliveryTime;
+                _deliveryTime += s.DeliveryTime;
                 result.AppendLine(s.ToString());
             }
         }
 
         string hhMmSs = @"hh\:mm\:ss";
-        string str = TimeSpan.FromSeconds(this._deliveryTime).ToString(hhMmSs);
+        string str = TimeSpan.FromSeconds(_deliveryTime).ToString(hhMmSs);
         result.AppendLine($"Delivery time | {str}");
         calculated = true;
 
