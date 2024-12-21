@@ -1,6 +1,6 @@
 using System.Collections.Concurrent;
 
-namespace Reindeer.Web.Tests;
+namespace Reindeer.Web.Tests.Common;
 
 public class ReindeerRecordingHandler : DelegatingHandler
 {

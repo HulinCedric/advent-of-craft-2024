@@ -1,6 +1,6 @@
 using System.Net.Http.Json;
 using Reindeer.Web.Service;
-using VerifyTests.Http;
+using Reindeer.Web.Tests.Common;
 
 namespace Reindeer.Web.Tests;
 
