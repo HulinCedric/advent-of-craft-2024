@@ -26,12 +26,3 @@ public class TourCalculatorNew(List<Step> steps)
 
     private string DeliveryTimes() => $"Delivery time | {TourDeliveryTime.From(_steps)}";
 }
-
-internal record TourDeliveryTime(int TimeInSeconds)
-{
-    private const string Format = @"hh\:mm\:ss";
-
-    public override string ToString() => TimeSpan.FromSeconds(TimeInSeconds).ToString(Format);
-
-    internal static TourDeliveryTime From(IEnumerable<Step> steps) => new(steps.Sum(s => s.DeliveryTime));
-}
