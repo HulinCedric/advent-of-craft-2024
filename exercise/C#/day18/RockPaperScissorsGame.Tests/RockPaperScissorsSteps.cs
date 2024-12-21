@@ -1,4 +1,6 @@
 using FluentAssertions;
+using FluentAssertions.LanguageExt;
+using LanguageExt;
 using TechTalk.SpecFlow;
 
 namespace RockPaperScissorsGame.Tests
@@ -6,7 +8,7 @@ namespace RockPaperScissorsGame.Tests
     [Binding]
     public class RockPaperScissorsSteps
     {
-        private Result? _result;
+        private Either<string, Result> _result;
         private Choice _player1Choice;
         private Choice _player2Choice;
 
@@ -25,10 +27,11 @@ namespace RockPaperScissorsGame.Tests
         [Then(@"the result should be (.*) because (.*)")]
         public void ThenTheResultShouldBeBecause(string expectedWinner, string expectedReason)
         {
-            _result!.Winner.Should().Be(
-                ParseWinner(expectedWinner)
-            );
-            _result.Reason.Should().Be(expectedReason);
+            _result.Should().BeRight(result =>
+            {
+                result.Winner.Should().Be(ParseWinner(expectedWinner));
+                result.Reason.Should().Be(expectedReason);
+            });
         }
 
         private static Choice ParseChoice(string choice)
@@ -37,6 +40,8 @@ namespace RockPaperScissorsGame.Tests
                 "🪨" => Choice.Rock,
                 "📄" => Choice.Paper,
                 "✂️" => Choice.Scissors,
+                "🦎" => Choice.Lizard,
+                "🖖" => Choice.Spock,
                 _ => throw new ArgumentException("Invalid choice")
             };
 
