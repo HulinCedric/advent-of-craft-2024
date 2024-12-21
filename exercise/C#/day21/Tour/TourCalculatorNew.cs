@@ -9,14 +9,9 @@ public class TourCalculatorNew(List<Step> steps)
     private readonly Seq<Step> _steps = steps.ToSeq();
 
     public Either<string, string> Calculate()
-    {
-        if (_steps.IsNull() || _steps.Count == 0)
-        {
-            return Left("No locations !!!");
-        }
-
-        return Right($"{TourDetails()}{TourDeliveryTime()}{Environment.NewLine}");
-    }
+        => _steps.IsNull() || _steps.Count == 0
+            ? Left("No locations !!!")
+            : Right($"{TourDetails()}{TourDeliveryTime()}{Environment.NewLine}");
 
     private string TourDetails()
         => _steps.OrderBy(x => x.Time)
