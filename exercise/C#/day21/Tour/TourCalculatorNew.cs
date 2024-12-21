@@ -21,10 +21,10 @@ public class TourCalculatorNew(List<Step> steps)
 
     private string TourDeliveryTime()
     {
-        var tourDeliveryTime = _steps.Select(s => s.DeliveryTime).Sum();
+        var tourDeliveryTime = _steps.Sum(s => s.DeliveryTime);
 
-        string hhMmSs = @"hh\:mm\:ss";
-        string str = TimeSpan.FromSeconds(tourDeliveryTime).ToString(hhMmSs);
+        var hhMmSs = @"hh\:mm\:ss";
+        var str = TimeSpan.FromSeconds(tourDeliveryTime).ToString(hhMmSs);
         var toutDeliveryTimeRepresentation = $"Delivery time | {str}";
         return toutDeliveryTimeRepresentation;
     }
