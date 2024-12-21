@@ -47,11 +47,5 @@ public class TourCalculatorNew(List<Step> steps)
         return Right(result.ToString());
     }
 
-    private string fLine(Step step, double x)
-    {
-        if (step == null)
-            throw new InvalidOperationException();
-        else
-            return $"{step.Time} : {step.Label} | {step.DeliveryTime} sec";
-    }
+    private string fLine(Step step, double x) => $"{step.Time} : {step.Label} | {step.DeliveryTime} sec";
 }
