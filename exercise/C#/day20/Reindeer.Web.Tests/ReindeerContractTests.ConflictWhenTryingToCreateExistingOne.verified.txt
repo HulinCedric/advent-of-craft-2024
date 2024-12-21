@@ -1,0 +1,28 @@
+﻿{
+  Request: {
+    Method: POST,
+    Uri: http://localhost/reindeer,
+    Headers: {
+      API_KEY: Guid_1,
+      Transfer-Encoding: chunked
+    },
+    Content: {
+      Headers: {
+        Content-Type: application/json; charset=utf-8
+      },
+      Value: {
+        name: Petar,
+        color: 2
+      }
+    }
+  },
+  Response: {
+    Status: 409 Conflict,
+    Content: {
+      Headers: {
+        Content-Type: application/json; charset=utf-8
+      },
+      Value: 1
+    }
+  }
+}
