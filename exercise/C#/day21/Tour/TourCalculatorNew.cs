@@ -35,7 +35,7 @@ public class TourCalculatorNew(List<Step> steps)
             if (!calculated)
             {
                 this._deliveryTime += s.DeliveryTime;
-                result.AppendLine(s.fLine());
+                result.AppendLine(s.ToString());
             }
         }
 
