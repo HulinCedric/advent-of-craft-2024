@@ -4,7 +4,7 @@ namespace Reindeer.Web.Tests.Common;
 
 public class ReindeerRecordingHandler : DelegatingHandler
 {
-    public readonly ConcurrentQueue<ReindeerLoggedSend> Sends = new();
+    private readonly ConcurrentQueue<ReindeerLoggedSend> _sends = new();
 
     protected override async Task<HttpResponseMessage> SendAsync(
         HttpRequestMessage request,
@@ -12,8 +12,10 @@ public class ReindeerRecordingHandler : DelegatingHandler
     {
         var response = await base.SendAsync(request, cancellationToken);
 
-        Sends.Enqueue(new ReindeerLoggedSend(request, response));
+        _sends.Enqueue(new ReindeerLoggedSend(request, response));
 
         return response;
     }
+    
+    public IReadOnlyList<ReindeerLoggedSend> Logs() => _sends.ToList().AsReadOnly();
 }

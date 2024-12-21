@@ -10,7 +10,7 @@ public static class ReindeerApiContractVerifyExtensions
         [CallerFilePath] string sourceFile = "")
     {
         await Verifier.Verify(
-                webApplication.Recording.Sends.FirstOrDefault(),
+                webApplication.Logs().FirstOrDefault(),
                 settings,
                 sourceFile)
             .ScrubInlineGuids();
