@@ -9,28 +9,29 @@ public class TourCalculatorNew(List<Step> steps)
 
     public Either<string, string> Calculate()
         => HasNotLocations()
-            ? Left("No locations !!!")
-            : Right($"{TourDetails()}{TourDeliveryTime()}{Environment.NewLine}");
+            ? ToNoLocationsFailure()
+            : ToCalculationSuccess();
+
+    private Either<string, string> ToCalculationSuccess()
+        => Right($"{TourDetails()}{DeliveryTimes()}{Environment.NewLine}");
+
+    private static Either<string, string> ToNoLocationsFailure() => Left("No locations !!!");
 
     private bool HasNotLocations() => _steps.IsNull() || _steps.Count == 0;
 
     private string TourDetails()
-        => _steps.OrderBy(x => x.Time)
-            .Aggregate(string.Empty, (acc, s1) => acc + s1 + Environment.NewLine);
+        => _steps
+            .OrderBy(x => x.Time)
+            .Aggregate(string.Empty, (tour, step) => $"{tour}{step}{Environment.NewLine}");
 
-    private string TourDeliveryTime()
-    {
-        var tourDeliveryTime = _steps.Sum(s => s.DeliveryTime);
-
-        var deliveryTime = new DeliveryTime(tourDeliveryTime);
-
-        return $"Delivery time | {deliveryTime}";
-    }
+    private string DeliveryTimes() => $"Delivery time | {TourDeliveryTime.From(_steps)}";
 }
 
-internal record DeliveryTime(int TimeInSeconds)
+internal record TourDeliveryTime(int TimeInSeconds)
 {
     private const string Format = @"hh\:mm\:ss";
 
     public override string ToString() => TimeSpan.FromSeconds(TimeInSeconds).ToString(Format);
+
+    internal static TourDeliveryTime From(IEnumerable<Step> steps) => new(steps.Sum(s => s.DeliveryTime));
 }
