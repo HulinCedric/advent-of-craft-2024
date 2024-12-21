@@ -24,9 +24,10 @@ public class TourCalculatorNew(List<Step> steps)
 
         string hhMmSs = @"hh\:mm\:ss";
         string str = TimeSpan.FromSeconds(tourDeliveryTime).ToString(hhMmSs);
-       
+        var toutDeliveryTimeRepresentation = $"Delivery time | {str}";
+
         result.Append(tourStepDetails);
-        result.AppendLine($"Delivery time | {str}");
+        result.AppendLine(toutDeliveryTimeRepresentation);
 
         return Right(result.ToString());
     }
