@@ -8,7 +8,7 @@ public class TourCalculatorNew(List<Step> steps)
     private readonly Seq<Step> _steps = steps.ToSeq();
 
     public Either<string, string> Calculate()
-        => HasNotLocations()
+        => HasNoLocations()
             ? ToNoLocationsFailure()
             : ToCalculationSuccess();
 
@@ -17,7 +17,7 @@ public class TourCalculatorNew(List<Step> steps)
 
     private static Either<string, string> ToNoLocationsFailure() => Left("No locations !!!");
 
-    private bool HasNotLocations() => _steps.IsNull() || _steps.Count == 0;
+    private bool HasNoLocations() => _steps.IsNull() || _steps.Count == 0;
 
     private string TourDetails()
         => _steps
