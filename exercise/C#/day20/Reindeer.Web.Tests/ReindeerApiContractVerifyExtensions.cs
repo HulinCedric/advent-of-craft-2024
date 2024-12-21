@@ -12,13 +12,10 @@ public static class ReindeerApiContractVerifyExtensions
         var response = await call;
 
         await Verifier.Verify(
-                new
-                {
-                    Request = response.RequestMessage,
-                    Response = response
-                },
+                new ReindeerApiContract(response.RequestMessage, response),
                 settings,
                 sourceFile)
             .ScrubInlineGuids();
     }
 }
+public record ReindeerApiContract(HttpRequestMessage? Request, HttpResponseMessage Response);
