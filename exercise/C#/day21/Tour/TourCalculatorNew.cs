@@ -25,12 +25,18 @@ public class TourCalculatorNew(List<Step> steps)
 
         DeliveryTime deliveryTime = new DeliveryTime(tourDeliveryTime);
         
-        var hhMmSs = @"hh\:mm\:ss";
-        var fromSeconds = TimeSpan.FromSeconds(deliveryTime.TimeInSeconds);
-        var str = fromSeconds.ToString(hhMmSs);
+        var str = deliveryTime.ToString();
         var toutDeliveryTimeRepresentation = $"Delivery time | {str}";
         return toutDeliveryTimeRepresentation;
     }
 }
 
-internal record DeliveryTime(int TimeInSeconds);
+internal record DeliveryTime(int TimeInSeconds)
+{
+    public override string ToString()
+    {
+        var hhMmSs = @"hh\:mm\:ss";
+        var fromSeconds = TimeSpan.FromSeconds(TimeInSeconds);
+        return fromSeconds.ToString(hhMmSs);
+    }
+}
