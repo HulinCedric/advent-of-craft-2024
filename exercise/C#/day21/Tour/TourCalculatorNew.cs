@@ -27,26 +27,24 @@ public class TourCalculatorNew(List<Step> steps)
         {
             return Left("No locations !!!");
         }
-        else
+
+        var result = new StringBuilder();
+
+        foreach (var s in _steps.OrderBy(x => x.Time))
         {
-            var result = new StringBuilder();
-
-            foreach (var s in _steps.OrderBy(x => x.Time))
+            if (!calculated)
             {
-                if (!calculated)
-                {
-                    this._deliveryTime += s.DeliveryTime;
-                    result.AppendLine(fLine(s, _deliveryTime));
-                }
+                this._deliveryTime += s.DeliveryTime;
+                result.AppendLine(fLine(s, _deliveryTime));
             }
-
-            string hhMmSs = @"hh\:mm\:ss";
-            string str = TimeSpan.FromSeconds(this._deliveryTime).ToString(hhMmSs);
-            result.AppendLine($"Delivery time | {str}");
-            calculated = true;
-
-            return Right(result.ToString());
         }
+
+        string hhMmSs = @"hh\:mm\:ss";
+        string str = TimeSpan.FromSeconds(this._deliveryTime).ToString(hhMmSs);
+        result.AppendLine($"Delivery time | {str}");
+        calculated = true;
+
+        return Right(result.ToString());
     }
 
     private string fLine(Step step, double x)
