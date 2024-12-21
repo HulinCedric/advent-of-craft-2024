@@ -1,15 +1,21 @@
 namespace ToyProduction.Domain
 {
-    public class Toy(string name, State state)
+    public partial class Toy
     {
-        public string Name { get; } = name;
-        public State State { get; set; } = state;
-    }
+        private IState _state;
 
-    public enum State
-    {
-        Unassigned,
-        InProduction,
-        Completed
+        public Toy(string name)
+        {
+            Name = name;
+            _state = new UnassignedState();
+        }
+
+        public string Name { get; }
+
+        public void AssignToElf() => _state.AssignToElf(this);
+
+        private void ChangeState(IState state) => _state = state;
+
+        public bool IsInProduction() => _state is InProductionState;
     }
 }
