@@ -1,5 +1,4 @@
-﻿using System.Text;
-using LanguageExt;
+﻿using LanguageExt;
 using static LanguageExt.Prelude;
 
 namespace Tour;
@@ -33,9 +32,5 @@ internal record DeliveryTime(int TimeInSeconds)
 {
     private const string Format = @"hh\:mm\:ss";
 
-    public override string ToString()
-    {
-        var fromSeconds = TimeSpan.FromSeconds(TimeInSeconds);
-        return fromSeconds.ToString(Format);
-    }
+    public override string ToString() => TimeSpan.FromSeconds(TimeInSeconds).ToString(Format);
 }
