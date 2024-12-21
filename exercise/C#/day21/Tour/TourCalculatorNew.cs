@@ -14,21 +14,29 @@ public class TourCalculatorNew(List<Step> steps)
         {
             return Left("No locations !!!");
         }
-        
+
         var result = new StringBuilder();
 
-        var tourStepDetails = _steps.OrderBy(x => x.Time)
-            .Aggregate(string.Empty, (acc, s) => acc + s + Environment.NewLine);
-        
+        var tourStepDetails = TourDetails();
+        var tourDeliveryTime = TourDeliveryTime();
+
+        result.Append(tourStepDetails);
+        result.AppendLine(tourDeliveryTime);
+
+        return Right(result.ToString());
+    }
+
+    private string TourDetails()
+        => _steps.OrderBy(x => x.Time)
+            .Aggregate(string.Empty, (acc, s1) => acc + s1 + Environment.NewLine);
+
+    private string TourDeliveryTime()
+    {
         var tourDeliveryTime = _steps.Select(s => s.DeliveryTime).Sum();
 
         string hhMmSs = @"hh\:mm\:ss";
         string str = TimeSpan.FromSeconds(tourDeliveryTime).ToString(hhMmSs);
         var toutDeliveryTimeRepresentation = $"Delivery time | {str}";
-
-        result.Append(tourStepDetails);
-        result.AppendLine(toutDeliveryTimeRepresentation);
-
-        return Right(result.ToString());
+        return toutDeliveryTimeRepresentation;
     }
 }
