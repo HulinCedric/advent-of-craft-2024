@@ -15,15 +15,7 @@ public class TourCalculatorNew(List<Step> steps)
             return Left("No locations !!!");
         }
 
-        var result = new StringBuilder();
-
-        var tourStepDetails = TourDetails();
-        var tourDeliveryTime = TourDeliveryTime();
-
-        result.Append(tourStepDetails);
-        result.AppendLine(tourDeliveryTime);
-
-        return Right(result.ToString());
+        return Right($"{TourDetails()}{TourDeliveryTime()}{Environment.NewLine}");
     }
 
     private string TourDetails()
