@@ -8,16 +8,6 @@ public class TourCalculatorNew(List<Step> steps)
 {
     private readonly Seq<Step> _steps = steps.ToSeq();
 
-    public bool Calculated
-    {
-        get { return calculated; }
-    }
-
-    public double DeliveryTime
-    {
-        get { return _deliveryTime; }
-    }
-
     private double _deliveryTime = 0;
     private bool calculated = false;
 
