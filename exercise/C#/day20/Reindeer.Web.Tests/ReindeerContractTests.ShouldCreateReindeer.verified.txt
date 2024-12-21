@@ -3,14 +3,17 @@
     Method: POST,
     Uri: http://localhost/reindeer,
     Headers: {
-      API_KEY: Guid_1
+      API_KEY: Guid_1,
+      Transfer-Encoding: chunked
     },
     Content: {
       Headers: {
-        Content-Length: 26,
         Content-Type: application/json; charset=utf-8
       },
-      Value: 
+      Value: {
+        name: Vixes,
+        color: 1
+      }
     }
   },
   Response: {
