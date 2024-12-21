@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 
-namespace Reindeer.Web.Tests;
+namespace Reindeer.Web.Tests.Common;
 
 public static class ReindeerModuleInitializer
 {

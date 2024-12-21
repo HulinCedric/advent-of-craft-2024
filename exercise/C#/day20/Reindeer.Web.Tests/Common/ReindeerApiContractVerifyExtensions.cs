@@ -1,6 +1,6 @@
 using System.Runtime.CompilerServices;
 
-namespace Reindeer.Web.Tests;
+namespace Reindeer.Web.Tests.Common;
 
 public static class ReindeerApiContractVerifyExtensions
 {
@@ -18,4 +18,3 @@ public static class ReindeerApiContractVerifyExtensions
             .ScrubInlineGuids();
     }
 }
-public record ReindeerApiContract(HttpRequestMessage? Request, HttpResponseMessage Response);
