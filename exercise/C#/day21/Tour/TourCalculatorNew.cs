@@ -31,10 +31,11 @@ public class TourCalculatorNew(List<Step> steps)
 
 internal record DeliveryTime(int TimeInSeconds)
 {
+    private const string Format = @"hh\:mm\:ss";
+
     public override string ToString()
     {
-        var hhMmSs = @"hh\:mm\:ss";
         var fromSeconds = TimeSpan.FromSeconds(TimeInSeconds);
-        return fromSeconds.ToString(hhMmSs);
+        return fromSeconds.ToString(Format);
     }
 }
