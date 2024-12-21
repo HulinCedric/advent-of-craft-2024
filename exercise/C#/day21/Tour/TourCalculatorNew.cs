@@ -35,7 +35,7 @@ public class TourCalculatorNew(List<Step> steps)
             if (!calculated)
             {
                 this._deliveryTime += s.DeliveryTime;
-                result.AppendLine(fLine(s));
+                result.AppendLine(s.fLine());
             }
         }
 
@@ -46,6 +46,4 @@ public class TourCalculatorNew(List<Step> steps)
 
         return Right(result.ToString());
     }
-
-    private string fLine(Step step) => $"{step.Time} : {step.Label} | {step.DeliveryTime} sec";
 }
