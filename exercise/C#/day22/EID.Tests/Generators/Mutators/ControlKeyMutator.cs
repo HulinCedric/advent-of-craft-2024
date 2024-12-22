@@ -17,8 +17,8 @@ internal record ControlKeyMutator() : EIDMutator(
 
     private static Gen<string> GenerateDifferentControlKey(EID eid)
         => Gen.Choose(0, 97)
-            .Where(x => x != eid.Key())
-            .Select(x => $"{x:d2}");
+            .Select(x => $"{x:d2}")
+            .Where(x=> x != eid.ToString()[6..8]);
 
     private static Gen<string> GenerateInvalidKeyString()
         => Arb.Default.String()
