@@ -7,8 +7,8 @@ internal record SexMutator() : EIDMutator(
     MutateWithInvalidSex)
 {
     private static Gen<string> MutateWithInvalidSex(EID eid)
-        => from invalidSexNumber in GenerateInvalidSex()
-            select $"{invalidSexNumber}{eid.ToString()[1..8]}";
+        => GenerateInvalidSex()
+            .Select(invalidSexNumber => $"{invalidSexNumber}{eid.ToString()[1..8]}");
 
     private static Gen<string> GenerateInvalidSex()
         => Gen.OneOf(

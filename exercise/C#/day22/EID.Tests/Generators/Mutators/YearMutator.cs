@@ -7,8 +7,8 @@ internal record YearMutator() : EIDMutator(
     MutateWithInvalidYear)
 {
     private static Gen<string> MutateWithInvalidYear(EID eid)
-        => from invalidYear in GenerateInvalidYear()
-            select $"{eid.ToString()[..1]}{invalidYear}{eid.ToString()[3..8]}";
+        => GenerateInvalidYear()
+            .Select(invalidYear => $"{eid.ToString()[..1]}{invalidYear}{eid.ToString()[3..8]}");
 
     private static Gen<string> GenerateInvalidYear()
         => Arb.Default.String()
