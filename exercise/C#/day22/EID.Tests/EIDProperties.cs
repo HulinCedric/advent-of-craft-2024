@@ -1,3 +1,4 @@
+using EID.Tests.Generators;
 using FsCheck;
 
 namespace EID.Tests
