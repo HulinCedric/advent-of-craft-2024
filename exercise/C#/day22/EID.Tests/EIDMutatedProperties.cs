@@ -20,13 +20,17 @@ public class EIDMutatedProperties
 
     private static class MutatorGenerator
     {
-        private static readonly Mutator AMutator = new(
-            "A mutator",
-            eid => Gen.Elements("Implement this first mutator"));
+        private static readonly Mutator SexMutator = new(
+            "Sex mutator",
+            eid =>
+                Arb.Default.PositiveInt()
+                    .Filter(i => i.Item > 3)
+                    .Generator
+                    .Select(invalidSex => invalidSex + eid.ToString()[1..8]));
 
         [SuppressMessage("FSCheck", "UnusedMember.Local", Justification = "Used by FSCheck")]
         public static Arbitrary<Mutator> Mutator()
-            => Gen.Elements(AMutator)
+            => Gen.Elements(SexMutator)
                 .ToArbitrary();
     }
 }
