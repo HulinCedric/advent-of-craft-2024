@@ -4,9 +4,9 @@ namespace EID.Tests.Generators.Mutators;
 
 internal record ControlKeyMutator() : EIDMutator(
     "Control key mutator",
-    MutateWithInvalidSerialNumber)
+    MutateWithInvalidControlKey)
 {
-    private static Gen<string> MutateWithInvalidSerialNumber(EID eid)
+    private static Gen<string> MutateWithInvalidControlKey(EID eid)
         => GenerateInvalidKey(eid)
             .Select(invalidKey => $"{eid.ToString()[..6]}{invalidKey}");
 
