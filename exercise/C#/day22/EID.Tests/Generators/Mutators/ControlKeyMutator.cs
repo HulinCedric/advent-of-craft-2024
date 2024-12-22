@@ -8,11 +8,22 @@ internal record ControlKeyMutator() : EIDMutator(
 {
     private static Gen<string> MutateWithInvalidSerialNumber(EID eid)
         => from invalidKey in GenerateInvalidKey(eid)
-            select $"{eid.ToString()[..6]}{invalidKey:D2}";
+            select $"{eid.ToString()[..6]}{invalidKey}";
 
-    private static Gen<int> GenerateInvalidKey(EID eid)
+    private static Gen<string> GenerateInvalidKey(EID eid)
+        => Gen.OneOf(
+            GenerateDifferentControlKey(eid),
+            GenerateInvalidKeyString());
+    
+    private static Gen<string> GenerateDifferentControlKey(EID eid)
         => Gen.Choose(0, 97)
-            .Where(x => x != eid.Key());
+            .Where(x => x != eid.Key())
+            .Select(x => x.ToString("D2"));
 
+    private static Gen<string> GenerateInvalidKeyString()
+        => Arb.Default.String()
+            .Generator
+            .Where(s => s is { Length: 2 } && !int.TryParse(s, out _));
+    
     internal static EIDMutator Create() => new ControlKeyMutator();
 }
