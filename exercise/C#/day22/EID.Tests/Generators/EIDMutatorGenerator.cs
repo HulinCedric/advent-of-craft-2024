@@ -8,6 +8,8 @@ internal static class EIDMutatorGenerator
 {
     [SuppressMessage("FSCheck", "UnusedMember.Local", Justification = "Used by FSCheck")]
     public static Arbitrary<EIDMutator> Mutator()
-        => Gen.Elements(SexMutator.Create())
+        => Gen.Elements(
+                SexMutator.Create(),
+                YearMutator.Create())
             .ToArbitrary();
 }
