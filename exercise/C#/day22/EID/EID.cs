@@ -24,9 +24,17 @@ namespace EID
             _year = (Year) 1;
             _serialNumber = (SerialNumber) 1;
         }
+        
+        private static Either<ParsingError, Unit> ValidateLength(string input)
+            => input.Length switch
+            {
+                < ValidLength => new ParsingError("too short"),
+                _ => Unit.Default
+            };
 
         public static Either<ParsingError, EID> Parse(string potentialEID)
-            => (from sex in SexParser.Parse(potentialEID[0])
+            => (from _ in ValidateLength(potentialEID)
+                    from sex in SexParser.Parse(potentialEID[0])
                     from year in Year.Parse(potentialEID[1..3])
                     from serialNumber in SerialNumber.Parse(potentialEID[3..6])
                     select new {EID = new EID(sex, year, serialNumber), Key = potentialEID[6..8]})
