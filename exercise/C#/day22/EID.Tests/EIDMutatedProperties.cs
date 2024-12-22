@@ -9,8 +9,12 @@ public class EIDMutatedProperties
 {
     [Property(Arbitrary = [typeof(EIDGenerator), typeof(EIDMutatorGenerator)])]
     public Property InvalidEIDCanNeverBeParsed(EID eid, EIDMutator eidMutator)
-        => EID.Parse(eidMutator.Apply(eid))
+    {
+        var mutatedEid = eidMutator.Apply(eid);
+        return EID.Parse(mutatedEid)
             .IsLeft
             .ToProperty()
+            .Label($"Mutated EID: {mutatedEid}")
             .Classify(true, eidMutator.Name);
+    }
 }
