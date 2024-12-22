@@ -6,10 +6,10 @@ namespace Tour;
 
 public static class StepsTextFormatter
 {
-    public static Either<string, string> Calculate(Seq<Step> steps)
+    public static Either<SantaError, string> Calculate(Seq<Step> steps)
         => steps.IsEmpty
-            ? Left("No locations !!!")
-            : Right($"{StatementFor(steps)}{FormatTotal(steps)}{NewLine}");
+            ? new SantaError("No locations !!!")
+            : $"{StatementFor(steps)}{FormatTotal(steps)}{NewLine}";
 
     private static string StatementFor(Seq<Step> steps)
         => steps.OrderBy(step => step.Time)
@@ -17,3 +17,5 @@ public static class StepsTextFormatter
 
     private static string FormatTotal(Seq<Step> steps) => $"Delivery time | {TourDeliveryTime.From(steps)}";
 }
+
+public record SantaError(string Message);
