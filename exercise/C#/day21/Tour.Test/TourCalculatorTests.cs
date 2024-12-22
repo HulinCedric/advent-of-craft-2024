@@ -7,5 +7,5 @@ public class TourCalculatorTests
 {
     [Property(Arbitrary = [typeof(StepGenerator)])]
     public Property Calculation_properties(List<Step> steps)
-        => (new TourCalculatorNew(steps).Calculate() == new TourCalculator(steps).Calculate()).ToProperty();
+        => (StepsTextFormatter.Calculate(steps.ToSeq()) == new TourCalculator(steps).Calculate()).ToProperty();
 }
