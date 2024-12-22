@@ -11,5 +11,5 @@ public class TourCalculatorTests
         => (ToV1Result(steps.ToSeq()) == new TourCalculator(steps).Calculate()).ToProperty();
     
     private static Either<string, string> ToV1Result(Seq<Step> steps)
-        => StepsTextFormatter.Calculate(steps).MapLeft(err => err.Message);
+        => StepsTextFormatter.Format(steps).MapLeft(err => err.Message);
 }

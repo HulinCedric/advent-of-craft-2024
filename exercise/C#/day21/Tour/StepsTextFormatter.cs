@@ -6,7 +6,7 @@ namespace Tour;
 
 public static class StepsTextFormatter
 {
-    public static Either<SantaError, string> Calculate(Seq<Step> steps)
+    public static Either<SantaError, string> Format(Seq<Step> steps)
         => steps.IsEmpty
             ? new SantaError("No locations !!!")
             : $"{StatementFor(steps)}{FormatTotal(steps)}{NewLine}";
