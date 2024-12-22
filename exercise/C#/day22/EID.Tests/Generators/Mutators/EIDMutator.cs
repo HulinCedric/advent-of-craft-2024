@@ -1,6 +1,6 @@
 using FsCheck;
 
-namespace EID.Tests.Generators;
+namespace EID.Tests.Generators.Mutators;
 
 public record EIDMutator(string Name, Func<EID, Gen<string>> Mutate)
 {
