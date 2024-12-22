@@ -4,6 +4,7 @@ using static LanguageExt.Prelude;
 
 namespace Tour
 {
+    [Obsolete("Please use StepsTextFormatter instead of this class")]
     public class TourCalculator
     {
         public List<Step> Steps { get; set; }
