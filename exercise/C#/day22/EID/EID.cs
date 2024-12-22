@@ -40,7 +40,7 @@ namespace EID
 
         private string StringWithoutKey() => $"{(int) _sex}{_year}{_serialNumber}";
 
-        private int Key()
+        public int Key()
             => StringWithoutKey()
                 .ToInt()
                 .Map(x => 97 - x % 97)

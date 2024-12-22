@@ -11,6 +11,7 @@ internal static class EIDMutatorGenerator
         => Gen.Elements(
                 SexMutator.Create(),
                 YearMutator.Create(),
-                SerialNumberMutator.Create())
+                SerialNumberMutator.Create(),
+                ControlKeyMutator.Create())
             .ToArbitrary();
 }
