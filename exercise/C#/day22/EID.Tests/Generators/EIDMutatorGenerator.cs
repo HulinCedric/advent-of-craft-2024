@@ -10,6 +10,7 @@ internal static class EIDMutatorGenerator
     public static Arbitrary<EIDMutator> Mutator()
         => Gen.Elements(
                 SexMutator.Create(),
-                YearMutator.Create())
+                YearMutator.Create(),
+                SerialNumberMutator.Create())
             .ToArbitrary();
 }
