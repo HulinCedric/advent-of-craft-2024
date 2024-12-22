@@ -29,6 +29,7 @@ namespace EID
             => input.Length switch
             {
                 < ValidLength => new ParsingError("too short"),
+                > ValidLength => new ParsingError("too long"),
                 _ => Unit.Default
             };
 
