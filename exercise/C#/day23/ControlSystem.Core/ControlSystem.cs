@@ -1,3 +1,5 @@
+using ControlSystem.External;
+
 namespace ControlSystem.Core
 {
     public class System
@@ -11,7 +13,10 @@ namespace ControlSystem.Core
         public System()
         {
             _dashboard = new Dashboard();
-            _sleigh = new Sleigh(_dashboard);
+            var magicStable = new MagicStable();
+            var christmasTown = new ChristmasTown();
+            var powerUnitFactory = new PowerUnitFactory(magicStable, christmasTown);
+            _sleigh = new Sleigh(_dashboard, powerUnitFactory);
         }
 
         public void StartSystem()

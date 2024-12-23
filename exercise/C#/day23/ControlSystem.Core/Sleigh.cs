@@ -1,36 +1,20 @@
-using ControlSystem.External;
-
 namespace ControlSystem.Core;
 
 public class Sleigh
 {
     private const int XmasSpirit = 40;
     private readonly Dashboard _dashboard;
-    private readonly MagicStable _magicStable = new MagicStable();
     private readonly List<ReindeerPowerUnit> _reindeerPowerUnits;
     private float _controlMagicPower = 0;
-    private readonly ChristmasTown _christmasTown = new ChristmasTown();
 
-    public Sleigh(Dashboard dashboard)
+    public Sleigh(Dashboard dashboard, PowerUnitFactory powerUnitFactory)
     {
         _dashboard = dashboard;
-        _reindeerPowerUnits = BringAllReindeers();
+        _reindeerPowerUnits = powerUnitFactory.BringAllReindeers();
         Action = SleighAction.Parked;
     }
 
     public SleighAction Action { get; private set; }
-
-    private List<ReindeerPowerUnit> BringAllReindeers()
-        => _magicStable.GetAllReindeers()
-            .OrderBy(r => r.Sick)
-            .ThenByDescending(r => r.GetMagicPower())
-            .Select(AttachPowerUnit)
-            .ToList();
-
-    public ReindeerPowerUnit AttachPowerUnit(Reindeer reindeer)
-    {
-        return new ReindeerPowerUnit(reindeer, _christmasTown.DistributeMostPowerfulAmplifier());
-    }
 
     public void Ascend()
     {
