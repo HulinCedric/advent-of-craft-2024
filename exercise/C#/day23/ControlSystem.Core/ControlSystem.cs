@@ -21,7 +21,7 @@ namespace ControlSystem.Core
 
         private List<ReindeerPowerUnit> BringAllReindeers()
             => _magicStable.GetAllReindeers()
-                .OrderBy(r => r.NeedsRest())
+                .OrderBy(r => r.Sick)
                 .ThenByDescending(r => r.GetMagicPower())
                 .Select(AttachPowerUnit)
                 .ToList();
