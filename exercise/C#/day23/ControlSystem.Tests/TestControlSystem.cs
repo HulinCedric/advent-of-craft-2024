@@ -6,23 +6,31 @@ namespace ControlSystem.Tests
 {
     public class TestControlSystem : IDisposable
     {
-        private readonly StringWriter _output;
+        private readonly StringWriter _dashboardDisplay;
         private readonly TextWriter _originalOutput;
         private readonly Core.System _controlSystem = new();
 
         public TestControlSystem()
         {
-            _output = new StringWriter();
+            _dashboardDisplay = new StringWriter();
             _originalOutput = Console.Out;
-            Console.SetOut(_output);
+            Console.SetOut(_dashboardDisplay);
         }
 
         [Fact]
-        public void TestStart()
+        public void Should_start_the_sleigh_engine_and_sets_the_status_to_ON()
         {
             _controlSystem.StartSystem();
+
             _controlSystem.Status.Should().Be(SleighEngineStatus.On);
-            _output.ToString().Trim().Should().Be($"Starting the sleigh...{NewLine}System ready.");
+        }
+        
+        [Fact]
+        public void Should_display_system_start_on_dashboard()
+        {
+            _controlSystem.StartSystem();
+            
+            _dashboardDisplay.ToString().Trim().Should().Be($"Starting the sleigh...{NewLine}System ready.");
         }
 
         [Fact]
@@ -31,7 +39,7 @@ namespace ControlSystem.Tests
             _controlSystem.StartSystem();
             _controlSystem.Invoking(cs => cs.Ascend()).Should().NotThrow<ReindeersNeedRestException>();
             _controlSystem.Action.Should().Be(SleighAction.Flying);
-            _output.ToString().Trim().Should().Be($"Starting the sleigh...{NewLine}System ready.{NewLine}Ascending...");
+            _dashboardDisplay.ToString().Trim().Should().Be($"Starting the sleigh...{NewLine}System ready.{NewLine}Ascending...");
         }
         
         [Fact]
@@ -41,7 +49,7 @@ namespace ControlSystem.Tests
             _controlSystem.Ascend();
             _controlSystem.Invoking(cs => cs.Descend()).Should().NotThrow<SleighNotStartedException>();
             _controlSystem.Action.Should().Be(SleighAction.Hovering);
-            _output.ToString().Trim().Should().Be($"Starting the sleigh...{NewLine}System ready.{NewLine}Ascending...{NewLine}Descending...");
+            _dashboardDisplay.ToString().Trim().Should().Be($"Starting the sleigh...{NewLine}System ready.{NewLine}Ascending...{NewLine}Descending...");
         }
 
         [Fact]
@@ -55,7 +63,7 @@ namespace ControlSystem.Tests
         public void Dispose()
         {
             Console.SetOut(_originalOutput);
-            _output.Dispose();
+            _dashboardDisplay.Dispose();
         }
     }
 }
