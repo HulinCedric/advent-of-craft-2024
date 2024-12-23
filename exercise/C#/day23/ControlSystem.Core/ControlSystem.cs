@@ -8,8 +8,8 @@ namespace ControlSystem.Core
         private readonly Dashboard _dashboard;
         private readonly MagicStable _magicStable = new MagicStable();
         private readonly List<ReindeerPowerUnit> _reindeerPowerUnits;
-        public SleighEngineStatus Status { get; set; }
-        public SleighAction Action { get; set; }
+        public SleighEngineStatus Status { get; private set; }
+        public SleighAction Action { get; private set; }
         private float _controlMagicPower = 0;
         private readonly ChristmasTown _christmasTown = new ChristmasTown();
 
