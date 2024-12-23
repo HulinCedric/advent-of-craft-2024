@@ -23,8 +23,10 @@ namespace ControlSystem.Core
 
         public ReindeerPowerUnit AttachPowerUnit(Reindeer reindeer)
         {
-            return new ReindeerPowerUnit(reindeer, new MagicPowerAmplifier(AmplifierType.Basic));
+            return new ReindeerPowerUnit(reindeer, GetMagicPowerAmplifier());
         }
+
+        private static MagicPowerAmplifier GetMagicPowerAmplifier() => new(AmplifierType.Basic);
 
         public void StartSystem()
         {
