@@ -7,9 +7,9 @@ namespace ControlSystem.Core
         public Reindeer Reindeer { get; }
         private readonly MagicPowerAmplifier _amplifier;
 
-        public ReindeerPowerUnit(Reindeer reindeer)
+        public ReindeerPowerUnit(Reindeer reindeer, MagicPowerAmplifier magicPowerAmplifier)
         {
-            _amplifier = new MagicPowerAmplifier(AmplifierType.Basic);
+            _amplifier = magicPowerAmplifier;
             Reindeer = reindeer;
         }
 
