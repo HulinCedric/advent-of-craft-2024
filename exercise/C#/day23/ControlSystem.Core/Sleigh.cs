@@ -7,7 +7,7 @@ public class Sleigh
     private const int XmasSpirit = 40;
     private readonly Dashboard _dashboard;
     private readonly Seq<ReindeerPowerUnit> _reindeerPowerUnits;
-    private float _controlMagicPower = 0;
+    private float _controlMagicPower;
 
     public Sleigh(Dashboard dashboard, PowerUnitFactory powerUnitFactory)
     {
@@ -25,13 +25,12 @@ public class Sleigh
             _controlMagicPower += reindeerPowerUnit.HarnessMagicPower();
         }
 
-        if (CheckReindeerStatus())
-        {
-            _dashboard.DisplayStatus("Ascending...");
-            Action = SleighAction.Flying;
-            _controlMagicPower = 0;
-        }
-        else throw new ReindeersNeedRestException();
+        if (!CheckReindeerStatus())
+            throw new ReindeersNeedRestException();
+
+        _dashboard.DisplayStatus("Ascending...");
+        Action = SleighAction.Flying;
+        _controlMagicPower = 0;
     }
 
     public void Descend()
@@ -52,8 +51,5 @@ public class Sleigh
         Action = SleighAction.Parked;
     }
 
-    private bool CheckReindeerStatus()
-    {
-        return _controlMagicPower >= XmasSpirit;
-    }
+    private bool CheckReindeerStatus() => _controlMagicPower >= XmasSpirit;
 }
