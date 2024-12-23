@@ -11,10 +11,17 @@ namespace ControlSystem.Core
         public SleighEngineStatus Status { get; set; }
         public SleighAction Action { get; set; }
         private float _controlMagicPower = 0;
+        private readonly Stack<MagicPowerAmplifier> _christmasTownAmplifiers;
 
         public System()
         {
             _dashboard = new Dashboard();
+            
+            _christmasTownAmplifiers = new Stack<MagicPowerAmplifier>();
+            _christmasTownAmplifiers.Push(new MagicPowerAmplifier(AmplifierType.Divine));
+            _christmasTownAmplifiers.Push(new MagicPowerAmplifier(AmplifierType.Blessed));
+            _christmasTownAmplifiers.Push(new MagicPowerAmplifier(AmplifierType.Blessed));
+            
             _reindeerPowerUnits = BringAllReindeers();
         }
 
@@ -26,7 +33,10 @@ namespace ControlSystem.Core
             return new ReindeerPowerUnit(reindeer, GetMagicPowerAmplifier());
         }
 
-        private static MagicPowerAmplifier GetMagicPowerAmplifier() => new(AmplifierType.Basic);
+        private MagicPowerAmplifier GetMagicPowerAmplifier() 
+            => _christmasTownAmplifiers.TryPop(out var amplifier) 
+                ? amplifier 
+                : new MagicPowerAmplifier(AmplifierType.Basic);
 
         public void StartSystem()
         {
