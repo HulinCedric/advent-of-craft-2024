@@ -15,6 +15,7 @@ public class Sleigh
     {
         _dashboard = dashboard;
         _reindeerPowerUnits = BringAllReindeers();
+        Action = SleighAction.Parked;
     }
 
     public SleighAction Action { get; private set; }

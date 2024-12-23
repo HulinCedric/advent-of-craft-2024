@@ -18,6 +18,12 @@ namespace ControlSystem.Tests
         }
 
         [Fact]
+        public void Should_be_OFF_by_default()
+        {
+            _controlSystem.Status.Should().Be(SleighEngineStatus.Off);
+        }
+        
+        [Fact]
         public void Should_start_the_sleigh_engine_and_sets_the_status_to_ON()
         {
             _controlSystem.StartSystem();
@@ -31,6 +37,14 @@ namespace ControlSystem.Tests
             _controlSystem.StartSystem();
             
             _dashboardDisplay.ToString().Trim().Should().Be($"Starting the sleigh...{NewLine}System ready.");
+        }
+        
+        [Fact]
+        public void Should_have_the_sleigh_in_parked_at_startup()
+        {
+            _controlSystem.StartSystem();
+            
+            _controlSystem.Action.Should().Be(SleighAction.Parked);
         }
 
         [Fact]
