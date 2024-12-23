@@ -13,7 +13,8 @@ internal record SerialNumberMutator() : EIDMutator(
     private static Gen<string> GenerateInvalidSerialNumber()
         => Gen.OneOf(
             GenerateInvalidSerialNumberString(),
-            GenerateInvalidSerialNumberValue());
+            GenerateInvalidSerialNumberValue(),
+            GenerateInvalidSerialNumberSpace());
 
     private static Gen<string> GenerateInvalidSerialNumberString()
         => Arb.Default.String()
@@ -21,6 +22,8 @@ internal record SerialNumberMutator() : EIDMutator(
             .Where(x => x is { Length: 3 } && !int.TryParse(x, out _));
 
     private static Gen<string> GenerateInvalidSerialNumberValue() => Gen.Elements(0).Select(x => $"{x:d3}");
+    
+    private static Gen<string> GenerateInvalidSerialNumberSpace() => Gen.Choose(0, 99).Select(x => $"{x,2}");
 
     internal static EIDMutator Create() => new SerialNumberMutator();
 }
