@@ -11,22 +11,16 @@ namespace ControlSystem.Core
         public SleighEngineStatus Status { get; set; }
         public SleighAction Action { get; set; }
         private float _controlMagicPower = 0;
-        private readonly Stack<MagicPowerAmplifier> _christmasTownAmplifiers;
+        private readonly ChristmasTown _christmasTown = new ChristmasTown();
 
         public System()
         {
             _dashboard = new Dashboard();
-            
-            _christmasTownAmplifiers = new Stack<MagicPowerAmplifier>();
-            _christmasTownAmplifiers.Push(new MagicPowerAmplifier(AmplifierType.Divine));
-            _christmasTownAmplifiers.Push(new MagicPowerAmplifier(AmplifierType.Blessed));
-            _christmasTownAmplifiers.Push(new MagicPowerAmplifier(AmplifierType.Blessed));
-            
             _reindeerPowerUnits = BringAllReindeers();
         }
 
-        private List<ReindeerPowerUnit> BringAllReindeers() =>
-            _magicStable.GetAllReindeers()
+        private List<ReindeerPowerUnit> BringAllReindeers()
+            => _magicStable.GetAllReindeers()
                 .OrderBy(r => r.NeedsRest())
                 .ThenByDescending(r => r.GetMagicPower())
                 .Select(AttachPowerUnit)
@@ -34,13 +28,8 @@ namespace ControlSystem.Core
 
         public ReindeerPowerUnit AttachPowerUnit(Reindeer reindeer)
         {
-            return new ReindeerPowerUnit(reindeer, GetMagicPowerAmplifier());
+            return new ReindeerPowerUnit(reindeer, _christmasTown.DistributeMostPowerfulAmplifier());
         }
-
-        private MagicPowerAmplifier GetMagicPowerAmplifier() 
-            => _christmasTownAmplifiers.TryPop(out var amplifier) 
-                ? amplifier 
-                : new MagicPowerAmplifier(AmplifierType.Basic);
 
         public void StartSystem()
         {
