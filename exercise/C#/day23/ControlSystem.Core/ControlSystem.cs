@@ -26,7 +26,11 @@ namespace ControlSystem.Core
         }
 
         private List<ReindeerPowerUnit> BringAllReindeers() =>
-            _magicStable.GetAllReindeers().Select(AttachPowerUnit).ToList();
+            _magicStable.GetAllReindeers()
+                .OrderBy(r => r.NeedsRest())
+                .ThenByDescending(r => r.GetMagicPower())
+                .Select(AttachPowerUnit)
+                .ToList();
 
         public ReindeerPowerUnit AttachPowerUnit(Reindeer reindeer)
         {
