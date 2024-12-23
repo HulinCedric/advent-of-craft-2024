@@ -5,10 +5,11 @@ namespace ControlSystem.Core
     public class ReindeerPowerUnit
     {
         public Reindeer Reindeer { get; }
-        private readonly MagicPowerAmplifier _amplifier = new(AmplifierType.Basic);
+        private readonly MagicPowerAmplifier _amplifier;
 
         public ReindeerPowerUnit(Reindeer reindeer)
         {
+            _amplifier = new MagicPowerAmplifier(AmplifierType.Basic);
             Reindeer = reindeer;
         }
 
