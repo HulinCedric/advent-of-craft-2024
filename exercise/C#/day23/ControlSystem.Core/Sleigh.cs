@@ -1,10 +1,12 @@
+using LanguageExt;
+
 namespace ControlSystem.Core;
 
 public class Sleigh
 {
     private const int XmasSpirit = 40;
     private readonly Dashboard _dashboard;
-    private readonly List<ReindeerPowerUnit> _reindeerPowerUnits;
+    private readonly Seq<ReindeerPowerUnit> _reindeerPowerUnits;
     private float _controlMagicPower = 0;
 
     public Sleigh(Dashboard dashboard, PowerUnitFactory powerUnitFactory)

@@ -1,4 +1,5 @@
 using ControlSystem.External;
+using LanguageExt;
 
 namespace ControlSystem.Core;
 
@@ -14,12 +15,12 @@ public class PowerUnitFactory
         _christmasTown = christmasTown;
     }
 
-    internal List<ReindeerPowerUnit> BringAllReindeers()
+    internal Seq<ReindeerPowerUnit> BringAllReindeers()
         => _magicStable.GetAllReindeers()
             .OrderBy(r => r.Sick)
             .ThenByDescending(r => r.GetMagicPower())
             .Select<Reindeer, ReindeerPowerUnit>(reindeer => AttachPowerUnit(reindeer, _christmasTown))
-            .ToList();
+            .ToSeq();
 
     public ReindeerPowerUnit AttachPowerUnit(Reindeer reindeer, ChristmasTown christmasTown)
         => new(reindeer, christmasTown.DistributeMostPowerfulAmplifier());
