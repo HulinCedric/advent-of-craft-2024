@@ -11,7 +11,12 @@ namespace Delivery.Domain
 
         private Toy(Func<DateTime> timeProvider, string name, StockUnit stock)
             : base(timeProvider)
-            => RaiseEvent(new ToyCreatedEvent(Guid.NewGuid(), timeProvider(), name, stock));
+        {
+            Id = Guid.NewGuid();
+            Name = name;
+            _stock = stock;
+            RaiseEvent(new ToyCreatedEvent(Id, timeProvider(), name, stock));
+        }
 
         public static Either<Error, Toy> Create(Func<DateTime> timeProvider, string name, int stock) => stock < 0
             ? Left(Error.AnError(""))
@@ -23,9 +28,7 @@ namespace Delivery.Domain
 
         private void Apply(ToyCreatedEvent from)
         {
-            Id = from.Id;
-            Name = from.Name;
-            _stock = from.Stock;
+           
         }
 
         public Either<Error, Toy> GetStock()
