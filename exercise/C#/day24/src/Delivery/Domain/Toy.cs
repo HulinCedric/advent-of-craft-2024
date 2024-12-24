@@ -10,16 +10,18 @@ namespace Delivery.Domain
         private StockUnit _stock;
 
         private Toy(Func<DateTime> timeProvider, string name, StockUnit stock)
-            : base(timeProvider) => RaiseEvent(new ToyCreatedEvent(Guid.NewGuid(), timeProvider(), name, stock));
+            : base(timeProvider)
+            => RaiseEvent(new ToyCreatedEvent(Guid.NewGuid(), timeProvider(), name, stock));
 
         public static Either<Error, Toy> Create(Func<DateTime> timeProvider, string name, int stock)
         {
-            return stock >= 0 ? 
-                stock > 0 
-                    ? Right(new Toy(timeProvider, name, new StockUnit(stock))) 
-                    : Right(new Toy(timeProvider, name, new StockUnit(stock))) 
+            return stock >= 0
+                ? stock > 0
+                    ? stock == 0
+                        ? Right(new Toy(timeProvider, name, new StockUnit(stock)))
+                        : Right(new Toy(timeProvider, name, new StockUnit(stock)))
+                    : Right(new Toy(timeProvider, name, new StockUnit(stock)))
                 : Left(Error.AnError(""));
-            
         }
 
         private void Apply(ToyCreatedEvent @event)
@@ -31,7 +33,6 @@ namespace Delivery.Domain
 
         public Either<Error, Toy> GetStock()
         {
-            
             if (!_stock.IsSupplied()) return Left(new Error($"No more {Name} in stock"));
             RaiseEvent(new StockReducedEvent(Id, Time(), Name!, _stock.Decrease()));
             return this;
