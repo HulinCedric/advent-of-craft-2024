@@ -1,9 +1,19 @@
 using Microsoft.AspNetCore.Mvc;
+using Reindeer.Web.Security;
 using Reindeer.Web.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services
+    .AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = "ApiKeyScheme";
+        options.DefaultChallengeScheme = "ApiKeyScheme";
+    })
+    .AddScheme<ReindeerApiKeyAuthenticationOptions, ReindeerApiKeyAuthenticationHandler>("ApiKeyScheme", _ => { });
+builder.Services.AddAuthorization();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -19,6 +29,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.MapPost("/reindeer", ([FromBody] ReindeerToCreateRequest request, ReindeerService service)
         => service.Create(request.ToDomain())
             .Match(
@@ -26,6 +39,7 @@ app.MapPost("/reindeer", ([FromBody] ReindeerToCreateRequest request, ReindeerSe
                 Results.Conflict
             ))
     .WithName("PostReindeer")
+    .RequireAuthorization()
     .WithOpenApi();
 
 app.MapGet("/reindeer/{id:guid}", (Guid id, ReindeerService service)
@@ -35,6 +49,7 @@ app.MapGet("/reindeer/{id:guid}", (Guid id, ReindeerService service)
                 Results.NotFound
             ))
     .WithName("GetReindeer")
+    .RequireAuthorization()
     .WithOpenApi();
 
 app.Run();
