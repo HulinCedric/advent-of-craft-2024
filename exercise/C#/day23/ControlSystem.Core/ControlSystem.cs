@@ -4,30 +4,39 @@ namespace ControlSystem.Core
 {
     public class System
     {
-        public SleighEngineStatus Status { get; private set; }
+        private const int XmasSpirit = 40;
+        public SleighEngineStatus Status => _sleigh.Status;
         public SleighAction Action => _sleigh.Action;
 
         private readonly Sleigh _sleigh;
         private readonly Dashboard _dashboard;
+        private readonly HarnessedReindeers _harnessedReindeers;
 
         public System()
         {
             _dashboard = new Dashboard();
-            var harnessedReindeers = HarnessedReindeersFactory.CreateFrom(new MagicStable(), new ChristmasTown()).Create();
-            _sleigh = new Sleigh(_dashboard, harnessedReindeers);
+            _harnessedReindeers = HarnessedReindeersFactory.CreateFrom(new MagicStable(), new ChristmasTown()).Create();
+            _sleigh = new Sleigh();
         }
 
         public void StartSystem()
         {
             _dashboard.DisplayStatus("Starting the sleigh...");
-            Status = SleighEngineStatus.On;
+            _sleigh.TurnOn();
             _dashboard.DisplayStatus("System ready.");
         }
 
         public void Ascend()
         {
-            if (Status == SleighEngineStatus.On)
+            if (_sleigh.Status == SleighEngineStatus.On)
             {
+                if (!_harnessedReindeers.HasEnoughPowerToReach(XmasSpirit))
+                    throw new ReindeersNeedRestException();
+        
+                _harnessedReindeers.HarnessAllPower();
+
+                _dashboard.DisplayStatus("Ascending...");
+             
                 _sleigh.Ascend();
             }
             else throw new SleighNotStartedException();
@@ -35,8 +44,10 @@ namespace ControlSystem.Core
 
         public void Descend()
         {
-            if (Status == SleighEngineStatus.On)
+            if (_sleigh.Status == SleighEngineStatus.On)
             {
+                _dashboard.DisplayStatus("Descending...");
+             
                 _sleigh.Descend();
             }
             else throw new SleighNotStartedException();
@@ -44,8 +55,12 @@ namespace ControlSystem.Core
 
         public void Park()
         {
-            if (Status == SleighEngineStatus.On)
+            if (_sleigh.Status == SleighEngineStatus.On)
             {
+                _harnessedReindeers.RestReindeers();
+
+                _dashboard.DisplayStatus("Parking...");
+
                 _sleigh.Park();
             }
             else throw new SleighNotStartedException();
@@ -54,7 +69,7 @@ namespace ControlSystem.Core
         public void StopSystem()
         {
             _dashboard.DisplayStatus("Stopping the sleigh...");
-            Status = SleighEngineStatus.Off;
+            _sleigh.TurnOff();
             _dashboard.DisplayStatus("System shutdown.");
         }
     }
