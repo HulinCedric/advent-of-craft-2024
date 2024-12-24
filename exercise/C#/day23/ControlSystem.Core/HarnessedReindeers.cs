@@ -3,16 +3,21 @@ using LanguageExt;
 
 namespace ControlSystem.Core;
 
-public class PowerUnitFactory
+public class HarnessedReindeers
 {
     private readonly ChristmasTown _christmasTown;
     private readonly MagicStable _magicStable;
 
 
-    public PowerUnitFactory(MagicStable magicStable, ChristmasTown christmasTown)
+    private HarnessedReindeers(MagicStable magicStable, ChristmasTown christmasTown)
     {
         _magicStable = magicStable;
         _christmasTown = christmasTown;
+    }
+
+    public static HarnessedReindeers CreateFrom(MagicStable magicStable, ChristmasTown christmasTown)
+    {
+        return new HarnessedReindeers(magicStable, christmasTown);
     }
 
     internal Seq<ReindeerPowerUnit> BringAllReindeers()

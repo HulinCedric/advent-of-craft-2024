@@ -9,10 +9,10 @@ public class Sleigh
     private readonly Seq<ReindeerPowerUnit> _reindeerPowerUnits;
     private float _controlMagicPower;
 
-    public Sleigh(Dashboard dashboard, PowerUnitFactory powerUnitFactory)
+    public Sleigh(Dashboard dashboard, HarnessedReindeers harnessedReindeers)
     {
         _dashboard = dashboard;
-        _reindeerPowerUnits = powerUnitFactory.BringAllReindeers();
+        _reindeerPowerUnits = harnessedReindeers.BringAllReindeers();
         Action = SleighAction.Parked;
     }
 
