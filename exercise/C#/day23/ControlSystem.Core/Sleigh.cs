@@ -17,8 +17,10 @@ public class Sleigh
 
     public void Ascend()
     {
-        if (CannotAscendWith(_harnessedReindeers.HarnessMagicPower()))
+        if (CannotAscendWith(_harnessedReindeers.CheckHarnessMagicPower()))
             throw new ReindeersNeedRestException();
+        
+        _harnessedReindeers.HarnessMagicPower();
 
         _dashboard.DisplayStatus("Ascending...");
         Action = SleighAction.Flying;
