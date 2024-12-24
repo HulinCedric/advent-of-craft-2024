@@ -1,4 +1,4 @@
 namespace Delivery.UseCases
 {
-    public record DeliverToy(string ChildName, string DesiredToy);
+    public record DeliverToy(string DesiredToy);
 }

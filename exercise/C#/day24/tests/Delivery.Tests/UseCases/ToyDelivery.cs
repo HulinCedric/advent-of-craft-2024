@@ -8,7 +8,6 @@ using FluentAssertions.LanguageExt;
 using LanguageExt;
 using Xunit;
 using static Delivery.Domain.Core.Error;
-using static Faker.Name;
 
 namespace Delivery.Tests.UseCases
 {
@@ -35,7 +34,7 @@ namespace Delivery.Tests.UseCases
                 ForASuppliedToy()
                     .Let(toy =>
                     {
-                        var command = new DeliverToy(FullName(), toy.Name!);
+                        var command = new DeliverToy(toy.Name!);
 
                         _useCase.Handle(command)
                             .Should()
@@ -56,7 +55,7 @@ namespace Delivery.Tests.UseCases
             {
                 const string notBuiltToy = "Not a Bike";
 
-                _useCase.Handle(new DeliverToy(FullName(), notBuiltToy))
+                _useCase.Handle(new DeliverToy(notBuiltToy))
                     .Should()
                     .Be(AnError("Oops we have a problem... we have not build the toy: Not a Bike"));
 
@@ -68,7 +67,7 @@ namespace Delivery.Tests.UseCases
                 => ForASuppliedToy(0)
                     .Let(toy =>
                     {
-                        _useCase.Handle(new DeliverToy(FullName(), toy.Name!))
+                        _useCase.Handle(new DeliverToy(toy.Name!))
                             .Should()
                             .Be(AnError($"No more {toy.Name} in stock"));
 
