@@ -14,6 +14,6 @@ namespace Delivery.Domain
                 : AnError("");
 
         public bool ToyExists() => Value > 0;
-        public StockUnit Decrease() => new(Value - 1);
+        public StockUnit Increase() => new(Value - 1);
     }
 }
