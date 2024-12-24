@@ -4,8 +4,8 @@ namespace ControlSystem.Core;
 
 public class HarnessedReindeersFactory
 {
-    private readonly List<Reindeer> _reindeers;
     private readonly ChristmasTown _christmasTown;
+    private readonly List<Reindeer> _reindeers;
 
     private HarnessedReindeersFactory(List<Reindeer> reindeers, ChristmasTown christmasTown)
     {
@@ -18,13 +18,20 @@ public class HarnessedReindeersFactory
         ChristmasTown christmasTown)
         => new(magicStable.GetAllReindeers(), christmasTown);
 
-    private static ReindeerPowerUnit AttachPowerUnit(Reindeer reindeer, ChristmasTown christmasTown)
-        => new(reindeer, christmasTown.DistributeMostPowerfulAmplifier());
+    private ReindeerPowerUnit AttachPowerUnit(Reindeer mostPowerfulReindeer)
+        => new(mostPowerfulReindeer, _christmasTown.DistributeMostPowerfulAmplifier());
 
     public HarnessedReindeers Create()
         => new(
-            _reindeers.OrderBy(r => r.Sick)
-                .ThenByDescending(r => r.GetMagicPower())
-                .Select<Reindeer, ReindeerPowerUnit>(reindeer => AttachPowerUnit(reindeer, _christmasTown))
+            AllReindeerByMagicalPower()
+                .Select(AttachPowerUnit)
                 .ToSeq());
+
+    private IOrderedEnumerable<Reindeer> AllReindeerByMagicalPower()
+        => _reindeers
+            // GetMagicPower contains an issue
+            // it should return 0 if the reindeer needs rest
+            // so we need to check if the reindeer is sick
+            .OrderBy(r => r.Sick)
+            .ThenByDescending(r => r.GetMagicPower());
 }
