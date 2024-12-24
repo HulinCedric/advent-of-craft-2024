@@ -1,6 +1,7 @@
 using Delivery.Domain;
 using Delivery.Domain.Core;
 using LanguageExt;
+using LanguageExt.UnsafeValueAccess;
 using static Delivery.Domain.Core.Error;
 
 namespace Delivery.UseCases
@@ -9,11 +10,11 @@ namespace Delivery.UseCases
     {
         public Either<Error, Unit> Handle(DeliverToy deliverToy)
         {
-            return repository
-                .PostToy(deliverToy.DesiredToy)
-                .ToEither(() => ErrorFor(deliverToy))
-                .Bind(ReduceStock)
-                .Map(_ => Unit.Default);
+            var postToy = repository
+                .PostToy(deliverToy.DesiredToy);
+            if (postToy is null)
+                return ErrorFor(deliverToy);
+            return ReduceStock(postToy).Map(_ => Unit.Default);
         }
 
         private Either<Error, Toy> ReduceStock(Toy toy)
