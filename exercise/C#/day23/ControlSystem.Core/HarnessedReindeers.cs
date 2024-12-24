@@ -20,7 +20,7 @@ public class HarnessedReindeers
     private static ReindeerPowerUnit AttachPowerUnit(Reindeer reindeer, ChristmasTown christmasTown)
         => new(reindeer, christmasTown.DistributeMostPowerfulAmplifier());
 
-    public void HarnessMagicPower()
+    public void HarnessAllPower()
     {
         foreach (var reindeer in _reindeers)
         {
@@ -28,7 +28,7 @@ public class HarnessedReindeers
         }
     }
 
-    public float CheckHarnessMagicPower() => _reindeers.Sum(r => r.CheckMagicPower());
+    public bool HasEnoughPowerToReach(int powerNeeded) => _reindeers.Sum(r => r.CheckMagicPower()) >= powerNeeded;
 
     public void RestReindeers()
     {

@@ -17,10 +17,10 @@ public class Sleigh
 
     public void Ascend()
     {
-        if (CannotAscendWith(_harnessedReindeers.CheckHarnessMagicPower()))
+        if (!_harnessedReindeers.HasEnoughPowerToReach(XmasSpirit))
             throw new ReindeersNeedRestException();
         
-        _harnessedReindeers.HarnessMagicPower();
+        _harnessedReindeers.HarnessAllPower();
 
         _dashboard.DisplayStatus("Ascending...");
         Action = SleighAction.Flying;
@@ -38,6 +38,4 @@ public class Sleigh
         _harnessedReindeers.RestReindeers();
         Action = SleighAction.Parked;
     }
-
-    private static bool CannotAscendWith(float magicPower) => magicPower < XmasSpirit;
 }
