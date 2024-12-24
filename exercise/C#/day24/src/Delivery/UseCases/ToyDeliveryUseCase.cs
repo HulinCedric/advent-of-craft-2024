@@ -10,7 +10,7 @@ namespace Delivery.UseCases
         public Either<Error, Unit> Handle(DeliverToy deliverToy)
         {
             var postToy = repository
-                .PostToy(deliverToy.DesiredToy);
+                .PostToy(deliverToy.Id);
             if (postToy is null)
                 return ErrorFor(deliverToy);
             return ReduceStock(postToy).Map(_ => Unit.Default);
@@ -22,6 +22,6 @@ namespace Delivery.UseCases
                 .Let(_ => repository.Save(toy));
 
         private static Error ErrorFor(DeliverToy deliverToy)
-            => AnError($"Oops we have a problem... we have not build the toy: {deliverToy.DesiredToy}");
+            => AnError($"Oops we have a problem... we have not build the toy: {deliverToy.Id}");
     }
 }
