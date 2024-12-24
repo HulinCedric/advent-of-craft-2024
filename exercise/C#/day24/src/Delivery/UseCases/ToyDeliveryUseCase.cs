@@ -13,11 +13,11 @@ namespace Delivery.UseCases
                 .PostToy(deliverToy.Id);
             if (postToy is null)
                 return ErrorFor(deliverToy);
-            return ReduceStock(postToy).Map(_ => Unit.Default);
+            return RaisedEvent(postToy).Map(_ => Unit.Default);
         }
 
         
-        private Either<Error, Toy> ReduceStock(Toy toy)
+        private Either<Error, Toy> RaisedEvent(Toy toy)
             => toy.GetStock()
                 .Let(_ => repository.Save(toy));
 
