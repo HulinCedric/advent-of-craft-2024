@@ -9,11 +9,11 @@ namespace Delivery.UseCases
     {
         public Either<Error, Unit> Handle(DeliverToy deliverToy)
         {
-            var postToy = repository
+            var stock = repository
                 .PostToy(deliverToy.Id);
-            if (postToy is null)
+            if (stock is null)
                 return ErrorFor(deliverToy);
-            return RaisedEvent(postToy).Map(_ => Unit.Default);
+            return RaisedEvent(stock).Map(_ => Unit.Default);
         }
 
         
