@@ -10,7 +10,7 @@ namespace Delivery.UseCases
         public Either<Error, Unit> Handle(DeliverToy deliverToy)
         {
             return repository
-                .FindByName(deliverToy.DesiredToy)
+                .PostToy(deliverToy.DesiredToy)
                 .ToEither(() => ErrorFor(deliverToy))
                 .Bind(ReduceStock)
                 .Map(_ => Unit.Default);

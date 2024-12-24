@@ -10,7 +10,7 @@ namespace Delivery.Tests.Doubles
         private Map<Guid, Toy> _toys;
         private Seq<IEvent> _raisedEvents;
 
-        public Option<Toy> FindByName(string toyName)
+        public Option<Toy> PostToy(string toyName)
             => _toys.Filter(toy => toy.Name == toyName)
                 .Values
                 .ToOption();

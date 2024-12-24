@@ -5,6 +5,6 @@ namespace Delivery.Domain
 {
     public interface IToyRepository : IRepository<Toy>
     {
-        Option<Toy> FindByName(string toyName);
+        Option<Toy> PostToy(string toyName);
     }
 }
