@@ -24,8 +24,9 @@ namespace Delivery.Domain
             _stock = @event.Stock;
         }
 
-        public Either<Error, Toy> ReduceStock()
+        public Either<Error, Toy> GetStock()
         {
+            
             if (!_stock.IsSupplied()) return Left(new Error($"No more {Name} in stock"));
             RaiseEvent(new StockReducedEvent(Id, Time(), Name!, _stock.Decrease()));
             return this;

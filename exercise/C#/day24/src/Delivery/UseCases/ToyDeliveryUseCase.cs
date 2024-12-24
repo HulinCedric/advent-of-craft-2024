@@ -17,7 +17,7 @@ namespace Delivery.UseCases
         }
 
         private Either<Error, Toy> ReduceStock(Toy toy)
-            => toy.ReduceStock()
+            => toy.GetStock()
                 .Let(_ => repository.Save(toy));
 
         private static Error ErrorFor(DeliverToy deliverToy)
