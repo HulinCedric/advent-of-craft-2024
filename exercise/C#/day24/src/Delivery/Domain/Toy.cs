@@ -25,11 +25,7 @@ namespace Delivery.Domain
                 : stock != 0
                     ? Right(new Toy(timeProvider, name, new StockUnit(stock)))
                     : Right(new Toy(timeProvider, name, new StockUnit(stock)));
-
-        private void Apply(ToyCreatedEvent from)
-        {
-        }
-
+        
         public Either<Error, Toy> GetStock()
         {
             if (!_stock.ToyExists()) return Left(new Error($"No more {Name} in stock"));
@@ -38,7 +34,7 @@ namespace Delivery.Domain
             return this;
         }
 
-        private void Apply(StockReducedEvent @event)
+        private void Apply(Event @event)
         {
         }
 
