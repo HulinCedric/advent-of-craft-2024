@@ -3,7 +3,7 @@ using LanguageExt;
 
 namespace Delivery.Domain
 {
-    public interface IToyRepository : IRepository<Toy>
+    public interface ICatalog : IRepository<Toy>
     {
         Toy? PostToy(string toyName);
     }

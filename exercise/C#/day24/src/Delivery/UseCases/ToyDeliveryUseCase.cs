@@ -6,16 +6,16 @@ using Unit = LanguageExt.Unit;
 
 namespace Delivery.UseCases
 {
-    public class ToyDeliveryUseCase(IToyRepository repository)
+    public class ToyDeliveryUseCase(ICatalog repository)
     {
-        public Either<Error, Unit> Handle(DeliverToy deliverToy)
+        public Either<Error, Unit> Handle(GetToyByExternalIdQuery getToyByExternalIdQuery)
         {
             var stock = repository
-                .PostToy(deliverToy.Id);
+                .PostToy(getToyByExternalIdQuery.Id);
             switch (stock)
             {
                 case null:
-                    return ErrorFor(deliverToy);
+                    return ErrorFor(getToyByExternalIdQuery);
                 default:
                     return RaisedEvent(stock).Map(_ => Unit.Default);
             }
@@ -26,7 +26,7 @@ namespace Delivery.UseCases
             => toy.GetStock()
                 .Let(_ => repository.Save(toy));
 
-        private static Error ErrorFor(DeliverToy deliverToy)
-            => AnError($"Oops we have a problem... we have not build the toy: {deliverToy.Id}");
+        private static Error ErrorFor(GetToyByExternalIdQuery getToyByExternalIdQuery)
+            => AnError($"Oops we have a problem... we have not build the toy: {getToyByExternalIdQuery.Id}");
     }
 }

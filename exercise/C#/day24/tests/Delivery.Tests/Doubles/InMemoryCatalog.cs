@@ -5,7 +5,7 @@ using static LanguageExt.Option<Delivery.Domain.Toy>;
 
 namespace Delivery.Tests.Doubles
 {
-    public class InMemoryToyRepository : IToyRepository
+    public class InMemoryCatalog : ICatalog
     {
         private Map<Guid, Toy> _toys;
         private Seq<IEvent> _raisedEvents;
