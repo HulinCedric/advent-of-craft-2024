@@ -31,11 +31,14 @@ namespace Delivery.Domain
         public Either<Error, Toy> GetStock()
         {
             if (!_stock.IsSupplied()) return Left(new Error($"No more {Name} in stock"));
-            RaiseEvent(new StockReducedEvent(Id, Time(), Name!, _stock.Decrease()));
+            _stock = _stock.Decrease();
+            RaiseEvent(new StockReducedEvent(Id, Time(), Name!, _stock));
             return this;
         }
 
-        private void Apply(StockReducedEvent @event) => _stock = @event.NewStock;
+        private void Apply(StockReducedEvent @event)
+        {
+        }
 
         protected override void RegisterRoutes()
         {
