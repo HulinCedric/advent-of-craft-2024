@@ -15,7 +15,7 @@ namespace Delivery.Domain
             Id = Guid.NewGuid();
             Name = name;
             _stock = stock;
-            RaiseEvent(new ToyCreatedEvent(Id, timeProvider(), name, stock));
+            RaiseEvent(new ToyCreatedEvent(Id, timeProvider()));
         }
 
         public static Either<Error, Toy> Create(Func<DateTime> timeProvider, string name, int stock) => stock < 0
