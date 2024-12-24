@@ -1,20 +1,16 @@
-using LanguageExt;
-
 namespace ControlSystem.Core;
 
 public class Sleigh
 {
     private const int XmasSpirit = 40;
     private readonly Dashboard _dashboard;
-    private readonly Seq<ReindeerPowerUnit> _reindeerPowerUnits;
-    private float _controlMagicPower;
     private readonly HarnessedReindeers _harnessedReindeers;
+    private float _controlMagicPower;
 
     public Sleigh(Dashboard dashboard, HarnessedReindeers harnessedReindeers)
     {
         _dashboard = dashboard;
         _harnessedReindeers = harnessedReindeers;
-        _reindeerPowerUnits = _harnessedReindeers.BringAllReindeers();
         Action = SleighAction.Parked;
     }
 
@@ -22,10 +18,7 @@ public class Sleigh
 
     public void Ascend()
     {
-        foreach (var reindeerPowerUnit in _reindeerPowerUnits)
-        {
-            _controlMagicPower += reindeerPowerUnit.HarnessMagicPower();
-        }
+        _controlMagicPower += _harnessedReindeers.HarnessMagicPower();
 
         if (!CheckReindeerStatus())
             throw new ReindeersNeedRestException();
@@ -44,12 +37,7 @@ public class Sleigh
     public void Park()
     {
         _dashboard.DisplayStatus("Parking...");
-
-        foreach (var reindeerPowerUnit in _reindeerPowerUnits)
-        {
-            reindeerPowerUnit.Reindeer.TimesHarnessing = 0;
-        }
-
+        _harnessedReindeers.RestReindeers();
         Action = SleighAction.Parked;
     }
 

@@ -5,28 +5,28 @@ namespace ControlSystem.Core;
 
 public class HarnessedReindeers
 {
-    private readonly ChristmasTown _christmasTown;
-    private readonly MagicStable _magicStable;
+    private readonly Seq<ReindeerPowerUnit> _reindeers;
 
-
-    private HarnessedReindeers(MagicStable magicStable, ChristmasTown christmasTown)
-    {
-        _magicStable = magicStable;
-        _christmasTown = christmasTown;
-    }
+    private HarnessedReindeers(Seq<ReindeerPowerUnit> reindeers) => _reindeers = reindeers;
 
     public static HarnessedReindeers CreateFrom(MagicStable magicStable, ChristmasTown christmasTown)
-    {
-        return new HarnessedReindeers(magicStable, christmasTown);
-    }
+        => new(
+            magicStable.GetAllReindeers()
+                .OrderBy(r => r.Sick)
+                .ThenByDescending(r => r.GetMagicPower())
+                .Select<Reindeer, ReindeerPowerUnit>(reindeer => AttachPowerUnit(reindeer, christmasTown))
+                .ToSeq());
 
-    internal Seq<ReindeerPowerUnit> BringAllReindeers()
-        => _magicStable.GetAllReindeers()
-            .OrderBy(r => r.Sick)
-            .ThenByDescending(r => r.GetMagicPower())
-            .Select<Reindeer, ReindeerPowerUnit>(reindeer => AttachPowerUnit(reindeer, _christmasTown))
-            .ToSeq();
-
-    public ReindeerPowerUnit AttachPowerUnit(Reindeer reindeer, ChristmasTown christmasTown)
+    private static ReindeerPowerUnit AttachPowerUnit(Reindeer reindeer, ChristmasTown christmasTown)
         => new(reindeer, christmasTown.DistributeMostPowerfulAmplifier());
+
+    public float HarnessMagicPower() => _reindeers.Sum(r => r.HarnessMagicPower());
+
+    public void RestReindeers()
+    {
+        foreach (var reindeer in _reindeers)
+        {
+            reindeer.Reindeer.TimesHarnessing = 0;
+        }
+    }
 }
