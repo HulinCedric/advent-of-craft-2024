@@ -11,6 +11,7 @@ namespace ControlSystem.Core
         public SleighEngineStatus Status { get; set; }
         public SleighAction Action { get; set; }
         private float _controlMagicPower = 0;
+        private readonly ChristmasTown _christmasTown = new ChristmasTown();
 
         public System()
         {
@@ -18,12 +19,16 @@ namespace ControlSystem.Core
             _reindeerPowerUnits = BringAllReindeers();
         }
 
-        private List<ReindeerPowerUnit> BringAllReindeers() =>
-            _magicStable.GetAllReindeers().Select(AttachPowerUnit).ToList();
+        private List<ReindeerPowerUnit> BringAllReindeers()
+            => _magicStable.GetAllReindeers()
+                .OrderBy(r => r.Sick)
+                .ThenByDescending(r => r.GetMagicPower())
+                .Select(AttachPowerUnit)
+                .ToList();
 
         public ReindeerPowerUnit AttachPowerUnit(Reindeer reindeer)
         {
-            return new ReindeerPowerUnit(reindeer);
+            return new ReindeerPowerUnit(reindeer, _christmasTown.DistributeMostPowerfulAmplifier());
         }
 
         public void StartSystem()
