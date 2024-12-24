@@ -21,11 +21,11 @@ namespace Delivery.Domain
                     ? Right(new Toy(timeProvider, name, new StockUnit(stock)))
                     : Right(new Toy(timeProvider, name, new StockUnit(stock)));
 
-        private void Apply(ToyCreatedEvent @event)
+        private void Apply(ToyCreatedEvent from)
         {
-            Id = @event.Id;
-            Name = @event.Name;
-            _stock = @event.Stock;
+            Id = from.Id;
+            Name = from.Name;
+            _stock = from.Stock;
         }
 
         public Either<Error, Toy> GetStock()
