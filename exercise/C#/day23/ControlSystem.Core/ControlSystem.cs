@@ -13,7 +13,7 @@ namespace ControlSystem.Core
         public System()
         {
             _dashboard = new Dashboard();
-            var harnessedReindeers = HarnessedReindeers.CreateFrom(new MagicStable(), new ChristmasTown());
+            var harnessedReindeers = HarnessedReindeersFactory.CreateFrom(new MagicStable(), new ChristmasTown()).Create();
             _sleigh = new Sleigh(_dashboard, harnessedReindeers);
         }
 
