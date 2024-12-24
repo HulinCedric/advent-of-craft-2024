@@ -28,7 +28,6 @@ namespace Delivery.Domain
 
         private void Apply(ToyCreatedEvent from)
         {
-           
         }
 
         public Either<Error, Toy> GetStock()
