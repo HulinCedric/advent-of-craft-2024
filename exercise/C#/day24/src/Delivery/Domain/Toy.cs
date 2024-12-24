@@ -13,8 +13,9 @@ namespace Delivery.Domain
             : base(timeProvider) => RaiseEvent(new ToyCreatedEvent(Guid.NewGuid(), timeProvider(), name, stock));
 
         public static Either<Error, Toy> Create(Func<DateTime> timeProvider, string name, int stock)
-            => StockUnit
-                .From(stock)
+            => ((Either<Error, StockUnit>)(stock >= 0
+                    ? new StockUnit(stock)
+                    : Error.AnError("")))
                 .Map(s => new Toy(timeProvider, name, s));
 
         private void Apply(ToyCreatedEvent @event)
