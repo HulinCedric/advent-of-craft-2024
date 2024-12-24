@@ -28,42 +28,39 @@ namespace ControlSystem.Core
 
         public void Ascend()
         {
-            if (_sleigh.Status == SleighEngineStatus.On)
-            {
-                if (!_harnessedReindeers.HasEnoughPowerToReach(XmasSpirit))
-                    throw new ReindeersNeedRestException();
-        
-                _harnessedReindeers.HarnessAllPower();
+            if (_sleigh.Status == SleighEngineStatus.Off)
+                throw new SleighNotStartedException();
+            
+            if (!_harnessedReindeers.HasEnoughPowerToReach(XmasSpirit))
+                throw new ReindeersNeedRestException();
 
-                _dashboard.DisplayStatus("Ascending...");
-             
-                _sleigh.Ascend();
-            }
-            else throw new SleighNotStartedException();
+            _harnessedReindeers.HarnessAllPower();
+
+            _dashboard.DisplayStatus("Ascending...");
+
+            _sleigh.Ascend();
         }
 
         public void Descend()
         {
-            if (_sleigh.Status == SleighEngineStatus.On)
-            {
-                _dashboard.DisplayStatus("Descending...");
-             
-                _sleigh.Descend();
-            }
-            else throw new SleighNotStartedException();
+            if (_sleigh.Status == SleighEngineStatus.Off)
+                throw new SleighNotStartedException();
+            
+            _dashboard.DisplayStatus("Descending...");
+
+            _sleigh.Descend();
         }
 
         public void Park()
         {
-            if (_sleigh.Status == SleighEngineStatus.On)
-            {
-                _harnessedReindeers.RestReindeers();
+            if (_sleigh.Status == SleighEngineStatus.Off)
+                throw new SleighNotStartedException();
+            
+            _harnessedReindeers.RestReindeers();
 
-                _dashboard.DisplayStatus("Parking...");
+            _dashboard.DisplayStatus("Parking...");
 
-                _sleigh.Park();
-            }
-            else throw new SleighNotStartedException();
+            _sleigh.Park();
         }
 
         public void StopSystem()
