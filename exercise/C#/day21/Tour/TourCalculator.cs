@@ -4,8 +4,7 @@ using static LanguageExt.Prelude;
 
 namespace Tour
 {
-    public record Step(TimeOnly Time, string Label, int DeliveryTime);
-
+    [Obsolete("Please use StepsTextFormatter instead of this class")]
     public class TourCalculator
     {
         public List<Step> Steps { get; set; }
