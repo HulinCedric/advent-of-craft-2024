@@ -16,6 +16,7 @@ namespace Delivery.UseCases
             return ReduceStock(postToy).Map(_ => Unit.Default);
         }
 
+        
         private Either<Error, Toy> ReduceStock(Toy toy)
             => toy.GetStock()
                 .Let(_ => repository.Save(toy));
