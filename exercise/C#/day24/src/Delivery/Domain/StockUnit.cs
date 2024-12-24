@@ -11,7 +11,7 @@ namespace Delivery.Domain
         public static Either<Error, StockUnit> From(int stock)
             => stock >= 0
                 ? new StockUnit(stock)
-                : AnError("A stock unit can not be negative");
+                : AnError("plop");
 
         public bool IsSupplied() => Value > 0;
         public StockUnit Decrease() => new(Value - 1);
