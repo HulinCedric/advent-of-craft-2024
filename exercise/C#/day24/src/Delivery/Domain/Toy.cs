@@ -32,7 +32,7 @@ namespace Delivery.Domain
 
         public Either<Error, Toy> GetStock()
         {
-            if (!_stock.IsSupplied()) return Left(new Error($"No more {Name} in stock"));
+            if (!_stock.ToyExists()) return Left(new Error($"No more {Name} in stock"));
             _stock = _stock.Decrease();
             RaiseEvent(new StockReducedEvent(Id, Time(), Name!, _stock));
             return this;
