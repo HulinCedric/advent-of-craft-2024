@@ -4,16 +4,16 @@ using static Delivery.Domain.Core.Error;
 
 namespace Delivery.Domain
 {
-    public readonly struct StockUnit(int value)
+    public readonly struct Unit(int value)
     {
         public int Value { get; } = value;
 
-        public static Either<Error, StockUnit> From(int stock)
+        public static Either<Error, Unit> From(int stock)
             => stock >= 0
-                ? new StockUnit(stock)
+                ? new Unit(stock)
                 : AnError("");
 
         public bool ToyExists() => Value > 0;
-        public StockUnit Increase() => new(Value - 1);
+        public Unit Increase() => new(Value - 1);
     }
 }

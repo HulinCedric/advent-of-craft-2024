@@ -8,6 +8,7 @@ using FluentAssertions.LanguageExt;
 using LanguageExt;
 using Xunit;
 using static Delivery.Domain.Core.Error;
+using Unit = LanguageExt.Unit;
 
 namespace Delivery.Tests.UseCases
 {

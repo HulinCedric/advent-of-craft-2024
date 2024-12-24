@@ -7,9 +7,9 @@ namespace Delivery.Domain
     public class Toy : EventSourcedAggregate
     {
         public string? Name { get; private set; }
-        private StockUnit _stock;
+        private Unit _stock;
 
-        private Toy(Func<DateTime> timeProvider, string name, StockUnit stock)
+        private Toy(Func<DateTime> timeProvider, string name, Unit stock)
             : base(timeProvider)
         {
             Id = Guid.NewGuid();
@@ -21,10 +21,10 @@ namespace Delivery.Domain
         public static Either<Error, Toy> Create(Func<DateTime> timeProvider, string name, int stock) => stock < 0
             ? Left(Error.AnError(""))
             : stock <= 0
-                ? Right(new Toy(timeProvider, name, new StockUnit(stock)))
+                ? Right(new Toy(timeProvider, name, new Unit(stock)))
                 : stock != 0
-                    ? Right(new Toy(timeProvider, name, new StockUnit(stock)))
-                    : Right(new Toy(timeProvider, name, new StockUnit(stock)));
+                    ? Right(new Toy(timeProvider, name, new Unit(stock)))
+                    : Right(new Toy(timeProvider, name, new Unit(stock)));
         
         public Either<Error, Toy> GetStock()
         {
