@@ -35,7 +35,7 @@ namespace Delivery.Tests.UseCases
                 ForASuppliedToy()
                     .Let(toy =>
                     {
-                        var command = new DeliverToy(toy.Name!);
+                        var command = new DeliverToy(toy.ExternalId!);
 
                         _useCase.Handle(command)
                             .Should()
@@ -44,7 +44,7 @@ namespace Delivery.Tests.UseCases
                         toy.Version.Should().Be(2);
                         toy.Should()
                             .HaveRaisedEvent(_toyRepository,
-                                new StockReducedEvent(toy.Id, Time.Now)
+                                new AnotherEvent(toy.Id, Time.Now)
                             );
                     });
         }
@@ -68,9 +68,9 @@ namespace Delivery.Tests.UseCases
                 => ForASuppliedToy(0)
                     .Let(toy =>
                     {
-                        _useCase.Handle(new DeliverToy(toy.Name!))
+                        _useCase.Handle(new DeliverToy(toy.ExternalId!))
                             .Should()
-                            .Be(AnError($"No more {toy.Name} in stock"));
+                            .Be(AnError($"No more {toy.ExternalId} in stock"));
 
                         AssertThatNoEventHasBeenRaised();
                     });

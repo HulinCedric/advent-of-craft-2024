@@ -10,7 +10,7 @@ namespace Delivery.Tests.Doubles
         private Map<Guid, Toy> _toys;
         private Seq<IEvent> _raisedEvents;
 
-        public Toy? PostToy(string toyName) => _toys.Filter(toy => toy.Name == toyName).Values.FirstOrDefault();
+        public Toy? PostToy(string toyName) => _toys.Filter(toy => toy.ExternalId == toyName).Values.FirstOrDefault();
 
         public Option<Toy> FindById(Guid id)
             => _toys.ContainsKey(id)

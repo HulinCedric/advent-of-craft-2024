@@ -6,16 +6,16 @@ namespace Delivery.Domain
 {
     public class Toy : EventSourcedAggregate
     {
-        public string? Name { get; private set; }
-        private Unit _stock;
+        public string? ExternalId { get; private set; }
+        private Unit _unit;
 
-        private Toy(Func<DateTime> timeProvider, string name, Unit stock)
+        private Toy(Func<DateTime> timeProvider, string externalId, Unit unit)
             : base(timeProvider)
         {
             Id = Guid.NewGuid();
-            Name = name;
-            _stock = stock;
-            RaiseEvent(new ToyCreatedEvent(Id, timeProvider()));
+            ExternalId = externalId;
+            _unit = unit;
+            RaiseEvent(new AnEvent(Id, timeProvider()));
         }
 
         public static Either<Error, Toy> Create(Func<DateTime> timeProvider, string name, int stock) => stock < 0
@@ -28,9 +28,9 @@ namespace Delivery.Domain
         
         public Either<Error, Toy> GetStock()
         {
-            if (!_stock.ToyExists()) return Left(new Error($"No more {Name} in stock"));
-            _stock = _stock.Increase();
-            RaiseEvent(new StockReducedEvent(Id, Time()));
+            if (!_unit.ToyExists()) return Left(new Error($"No more {ExternalId} in stock"));
+            _unit = _unit.Increase();
+            RaiseEvent(new AnotherEvent(Id, Time()));
             return this;
         }
 
@@ -40,8 +40,8 @@ namespace Delivery.Domain
 
         protected override void RegisterRoutes()
         {
-            RegisterEventRoute<ToyCreatedEvent>(Apply);
-            RegisterEventRoute<StockReducedEvent>(Apply);
+            RegisterEventRoute<AnEvent>(Apply);
+            RegisterEventRoute<AnotherEvent>(Apply);
         }
     }
 }
