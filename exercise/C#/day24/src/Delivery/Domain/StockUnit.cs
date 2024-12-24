@@ -13,7 +13,7 @@ namespace Delivery.Domain
                 ? new StockUnit(stock)
                 : AnError("");
 
-        public bool IsSupplied() => Value >= 0;
+        public bool IsSupplied() => Value > 0;
         public StockUnit Decrease() => new(Value - 1);
     }
 }
