@@ -1,7 +1,6 @@
 using Delivery.Domain;
 using Delivery.Domain.Core;
 using LanguageExt;
-using LanguageExt.UnsafeValueAccess;
 using static Delivery.Domain.Core.Error;
 
 namespace Delivery.UseCases
