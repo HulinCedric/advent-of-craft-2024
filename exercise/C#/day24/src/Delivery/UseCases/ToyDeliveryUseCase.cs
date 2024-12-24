@@ -11,9 +11,13 @@ namespace Delivery.UseCases
         {
             var stock = repository
                 .PostToy(deliverToy.Id);
-            if (stock is null)
-                return ErrorFor(deliverToy);
-            return RaisedEvent(stock).Map(_ => Unit.Default);
+            switch (stock)
+            {
+                case null:
+                    return ErrorFor(deliverToy);
+                default:
+                    return RaisedEvent(stock).Map(_ => Unit.Default);
+            }
         }
 
         
