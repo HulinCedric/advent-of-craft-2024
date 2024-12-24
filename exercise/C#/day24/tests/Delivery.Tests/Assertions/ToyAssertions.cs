@@ -10,7 +10,7 @@ namespace Delivery.Tests.Assertions
     {
         protected override string Identifier => "toy";
 
-        public void HaveRaisedEvent<TEvent>(InMemoryToyRepository repository, TEvent expectedEvent)
+        public void HaveRaisedEvent<TEvent>(InMemoryCatalog repository, TEvent expectedEvent)
             where TEvent : class, IEvent
             => Execute.Assertion
                 .ForCondition(repository.RaisedEvents().Last.Equals(expectedEvent))

@@ -6,37 +6,42 @@ namespace Delivery.Domain
 {
     public class Toy : EventSourcedAggregate
     {
-        public string? Name { get; private set; }
-        private StockUnit _stock;
+        public string? ExternalId { get; private set; }
+        private Unit _unit;
 
-        private Toy(Func<DateTime> timeProvider, string name, StockUnit stock)
-            : base(timeProvider) => RaiseEvent(new ToyCreatedEvent(Guid.NewGuid(), timeProvider(), name, stock));
-
-        public static Either<Error, Toy> Create(Func<DateTime> timeProvider, string name, int stock)
-            => StockUnit
-                .From(stock)
-                .Map(s => new Toy(timeProvider, name, s));
-
-        private void Apply(ToyCreatedEvent @event)
+        private Toy(Func<DateTime> timeProvider, string externalId, Unit unit)
+            : base(timeProvider)
         {
-            Id = @event.Id;
-            Name = @event.Name;
-            _stock = @event.Stock;
+            Id = Guid.NewGuid();
+            ExternalId = externalId;
+            _unit = unit;
+            RaiseEvent(new AnEvent(Id, timeProvider()));
         }
 
-        public Either<Error, Toy> ReduceStock()
+        public static Either<Error, Toy> Create(Func<DateTime> timeProvider, string externalId, int unit) => unit < 0
+            ? Left(Error.AnError(""))
+            : unit <= 0
+                ? Right(new Toy(timeProvider, externalId, new Unit(unit)))
+                : unit != 0
+                    ? Right(new Toy(timeProvider, externalId, new Unit(unit)))
+                    : Right(new Toy(timeProvider, externalId, new Unit(unit)));
+        
+        public Either<Error, Toy> GetStock()
         {
-            if (!_stock.IsSupplied()) return Left(new Error($"No more {Name} in stock"));
-            RaiseEvent(new StockReducedEvent(Id, Time(), Name!, _stock.Decrease()));
+            if (!_unit.ToyExists()) return Left(new Error($"No more {ExternalId} in stock"));
+            _unit = _unit.Increase();
+            RaiseEvent(new AnotherEvent(Id, Time()));
             return this;
         }
 
-        private void Apply(StockReducedEvent @event) => _stock = @event.NewStock;
+        private void Apply(Event @event)
+        {
+        }
 
         protected override void RegisterRoutes()
         {
-            RegisterEventRoute<ToyCreatedEvent>(Apply);
-            RegisterEventRoute<StockReducedEvent>(Apply);
+            RegisterEventRoute<AnEvent>(Apply);
+            RegisterEventRoute<AnotherEvent>(Apply);
         }
     }
 }
