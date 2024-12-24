@@ -15,11 +15,6 @@ namespace Delivery.Domain
         public static Either<Error, Toy> Create(Func<DateTime> timeProvider, string name, int stock)
         {
             return stock >= 0 ? Right(new Toy(timeProvider, name, new StockUnit(stock))) : Left(Error.AnError(""));
-                
-                ((Either<Error, StockUnit>)(stock >= 0
-                    ? new StockUnit(stock)
-                    : Error.AnError("")))
-                .Map(s => new Toy(timeProvider, name, s));
         }
 
         private void Apply(ToyCreatedEvent @event)
