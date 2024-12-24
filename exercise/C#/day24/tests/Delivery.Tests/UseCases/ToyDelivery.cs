@@ -44,9 +44,7 @@ namespace Delivery.Tests.UseCases
                         toy.Version.Should().Be(2);
                         toy.Should()
                             .HaveRaisedEvent(_toyRepository,
-                                new StockReducedEvent(toy.Id, Time.Now,
-                                    command.DesiredToy,
-                                    StockUnit.From(0).RightUnsafe())
+                                new StockReducedEvent(toy.Id, Time.Now)
                             );
                     });
         }

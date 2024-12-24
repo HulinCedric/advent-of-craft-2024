@@ -34,7 +34,7 @@ namespace Delivery.Domain
         {
             if (!_stock.ToyExists()) return Left(new Error($"No more {Name} in stock"));
             _stock = _stock.Increase();
-            RaiseEvent(new StockReducedEvent(Id, Time(), Name!, _stock));
+            RaiseEvent(new StockReducedEvent(Id, Time()));
             return this;
         }
 
