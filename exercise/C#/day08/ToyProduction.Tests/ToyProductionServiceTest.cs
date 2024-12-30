@@ -15,13 +15,13 @@ public class ToyProductionServiceTest
     {
         var repository = new InMemoryToyRepository();
         var service = new ToyProductionService(repository);
-        repository.Save(new Toy(ToyName, State.Unassigned));
+        repository.Save(new Toy(ToyName));
 
         service.AssignToyToElf(ToyName);
 
         repository.FindByName(ToyName)!
-            .State
+            .IsInProduction()
             .Should()
-            .Be(State.InProduction);
+            .BeTrue();
     }
 }
