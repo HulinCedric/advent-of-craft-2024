@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using FsCheck;
 
-namespace EID.Tests
+namespace EID.Tests.Generators
 {
     public static class EIDGenerator
     {
