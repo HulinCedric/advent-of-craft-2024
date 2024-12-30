@@ -1,37 +1,33 @@
-﻿namespace Delivery
+﻿namespace Delivery;
+
+using CalculationStrategy = Func<char, int>;
+
+public static class Building
 {
-    public static class Building
-    {
-        public static int WhichFloor(string instructions)
+    private const char OpeningBracket = '(';
+    private const char ClosingBracket = ')';
+    private const string Elf = "🧝";
+
+    public static int WhichFloor(string instructions) => instructions.Sum(DetermineCalculationStrategy(instructions));
+
+    private static CalculationStrategy DetermineCalculationStrategy(string instructions)
+        => instructions.Contains(Elf)
+            ? ElfCalculationStrategy()
+            : StandardCalculationStrategy();
+
+    private static CalculationStrategy StandardCalculationStrategy()
+        => instruction => instruction switch
         {
-            List<Tuple<char, int>> val = [];
+            OpeningBracket => 1,
+            ClosingBracket => -1,
+            _ => 0
+        };
 
-            for (int i = 0; i < instructions.Length; i++)
-            {
-                var c = instructions[i];
-
-                if (instructions.Contains("🧝"))
-                {
-                    int j;
-                    if (c == ')') j = 3;
-                    else j = -2;
-
-                    val.Add(new Tuple<char, int>(c, j));
-                }
-                else if (!instructions.Contains("🧝"))
-                {
-                    val.Add(new Tuple<char, int>(c, c == '(' ? 1 : -1));
-                }
-                else val.Add(new Tuple<char, int>(c, c == '(' ? 42 : -2));
-            }
-
-            int result = 0;
-            foreach (var kp in val)
-            {
-                result += kp.Item2;
-            }
-
-            return result;
-        }
-    }
+    private static CalculationStrategy ElfCalculationStrategy()
+        => instruction => instruction switch
+        {
+            OpeningBracket => -2,
+            ClosingBracket => 3,
+            _ => 0
+        };
 }
