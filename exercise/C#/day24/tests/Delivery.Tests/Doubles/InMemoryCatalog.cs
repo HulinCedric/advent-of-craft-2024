@@ -5,15 +5,12 @@ using static LanguageExt.Option<Delivery.Domain.Toy>;
 
 namespace Delivery.Tests.Doubles
 {
-    public class InMemoryToyRepository : IToyRepository
+    public class InMemoryCatalog : ICatalog
     {
         private Map<Guid, Toy> _toys;
         private Seq<IEvent> _raisedEvents;
 
-        public Option<Toy> FindByName(string toyName)
-            => _toys.Filter(toy => toy.Name == toyName)
-                .Values
-                .ToOption();
+        public Toy? PostToy(string toyName) => _toys.Filter(toy => toy.ExternalId == toyName).Values.FirstOrDefault();
 
         public Option<Toy> FindById(Guid id)
             => _toys.ContainsKey(id)

@@ -8,25 +8,25 @@ using FluentAssertions.LanguageExt;
 using LanguageExt;
 using Xunit;
 using static Delivery.Domain.Core.Error;
-using static Faker.Name;
+using Unit = LanguageExt.Unit;
 
 namespace Delivery.Tests.UseCases
 {
     public class ToyDelivery
     {
-        private readonly InMemoryToyRepository _toyRepository;
+        private readonly InMemoryCatalog _catalog;
         private readonly ToyDeliveryUseCase _useCase;
 
         protected ToyDelivery()
         {
-            _toyRepository = new InMemoryToyRepository();
-            _useCase = new ToyDeliveryUseCase(_toyRepository);
+            _catalog = new InMemoryCatalog();
+            _useCase = new ToyDeliveryUseCase(_catalog);
         }
 
         private Toy ForASuppliedToy(int stock = 1)
             => ToyBuilder.ToysInStock(stock)
                 .Build()
-                .Let(toy => _toyRepository.Save(toy));
+                .Let(toy => _catalog.Save(toy));
 
         public class SuccessFully_When : ToyDelivery
         {
@@ -35,7 +35,7 @@ namespace Delivery.Tests.UseCases
                 ForASuppliedToy()
                     .Let(toy =>
                     {
-                        var command = new DeliverToy(FullName(), toy.Name!);
+                        var command = new GetToyByExternalIdQuery(toy.ExternalId!);
 
                         _useCase.Handle(command)
                             .Should()
@@ -43,10 +43,8 @@ namespace Delivery.Tests.UseCases
 
                         toy.Version.Should().Be(2);
                         toy.Should()
-                            .HaveRaisedEvent(_toyRepository,
-                                new StockReducedEvent(toy.Id, Time.Now,
-                                    command.DesiredToy,
-                                    StockUnit.From(0).RightUnsafe())
+                            .HaveRaisedEvent(_catalog,
+                                new AnotherEvent(toy.Id, Time.Now)
                             );
                     });
         }
@@ -58,7 +56,7 @@ namespace Delivery.Tests.UseCases
             {
                 const string notBuiltToy = "Not a Bike";
 
-                _useCase.Handle(new DeliverToy(FullName(), notBuiltToy))
+                _useCase.Handle(new GetToyByExternalIdQuery(notBuiltToy))
                     .Should()
                     .Be(AnError("Oops we have a problem... we have not build the toy: Not a Bike"));
 
@@ -70,15 +68,15 @@ namespace Delivery.Tests.UseCases
                 => ForASuppliedToy(0)
                     .Let(toy =>
                     {
-                        _useCase.Handle(new DeliverToy(FullName(), toy.Name!))
+                        _useCase.Handle(new GetToyByExternalIdQuery(toy.ExternalId!))
                             .Should()
-                            .Be(AnError($"No more {toy.Name} in stock"));
+                            .Be(AnError($"No more {toy.ExternalId} in stock"));
 
                         AssertThatNoEventHasBeenRaised();
                     });
 
             private void AssertThatNoEventHasBeenRaised()
-                => _toyRepository.RaisedEvents()
+                => _catalog.RaisedEvents()
                     .Should()
                     .BeEmpty();
         }
