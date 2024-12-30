@@ -1,0 +1,73 @@
+﻿{
+  null                                                                                                                         : [
+    {
+      State: IsLeft,
+      Left: No locations !!!
+    }
+  ],
+  []                                                                                                                           : [
+    {
+      State: IsLeft,
+      Left: No locations !!!
+    }
+  ],
+  Step { Time = 08-00, Label = Start, DeliveryTime = 300 }                                                                     : [
+    {
+      State: IsRight,
+      Right:
+08:00 : Start | 300 sec
+Delivery time | 00:05:00
+
+    }
+  ],
+  Step { Time = 09-00, Label = Checkpoint 1, DeliveryTime = 600 },Step { Time = 08-00, Label = Start, DeliveryTime = 300 }     : [
+    {
+      State: IsRight,
+      Right:
+08:00 : Start | 300 sec
+09:00 : Checkpoint 1 | 600 sec
+Delivery time | 00:15:00
+
+    }
+  ],
+  Step { Time = 08-00, Label = Start, DeliveryTime = 300 },Step { Time = 09-00, Label = Checkpoint 1, DeliveryTime = 600 }     : [
+    {
+      State: IsRight,
+      Right:
+08:00 : Start | 300 sec
+09:00 : Checkpoint 1 | 600 sec
+Delivery time | 00:15:00
+
+    }
+  ],
+  Step { Time = 08-00, Label = Start, DeliveryTime = 300 },Step { Time = 08-00, Label = Checkpoint 1, DeliveryTime = 600 }     : [
+    {
+      State: IsRight,
+      Right:
+08:00 : Start | 300 sec
+08:00 : Checkpoint 1 | 600 sec
+Delivery time | 00:15:00
+
+    }
+  ],
+  Step { Time = 08-00, Label = Start, DeliveryTime = 300 },Step { Time = 09-00, Label = Start, DeliveryTime = 600 }            : [
+    {
+      State: IsRight,
+      Right:
+08:00 : Start | 300 sec
+09:00 : Start | 600 sec
+Delivery time | 00:15:00
+
+    }
+  ],
+  Step { Time = 08-00, Label = Start, DeliveryTime = 0 },Step { Time = 09-00, Label = Checkpoint 1, DeliveryTime = 2147483647 }: [
+    {
+      State: IsRight,
+      Right:
+08:00 : Start | 0 sec
+09:00 : Checkpoint 1 | 2147483647 sec
+Delivery time | 03:14:07
+
+    }
+  ]
+}
