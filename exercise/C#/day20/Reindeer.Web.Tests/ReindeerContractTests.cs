@@ -1,43 +1,66 @@
-using System.Net;
 using System.Net.Http.Json;
-using FluentAssertions;
 using Reindeer.Web.Service;
+using Reindeer.Web.Tests.Common;
 
-namespace Reindeer.Web.Tests
+namespace Reindeer.Web.Tests;
+
+public class ReindeerContractTests
 {
-    public class ReindeerContractTests
+    private readonly HttpClient _client;
+    private readonly ReindeerWebApplicationFactory _webApplication;
+
+    public ReindeerContractTests()
     {
-        private readonly HttpClient _client;
+        _webApplication = new ReindeerWebApplicationFactory();
+        _client = _webApplication.CreateClient();
+        _client.DefaultRequestHeaders.Add("API_KEY", Guid.NewGuid().ToString());
+    }
 
-        public ReindeerContractTests()
-        {
-            var webApplication = new ReindeerWebApplicationFactory();
-            _client = webApplication.CreateClient();
-        }
+    [Fact]
+    public async Task UnauthorizedWithoutApiKeyOnGet()
+    {
+        _client.DefaultRequestHeaders.Clear();
+        await _client.GetAsync("reindeer/40F9D24D-D3E0-4596-ADC5-B4936FF84B19");
+        await _webApplication.Verify();
+    }
 
-        [Fact]
-        public async Task ShouldGetReindeer()
-        {
-            var response = await _client.GetAsync("reindeer/40F9D24D-D3E0-4596-ADC5-B4936FF84B19");
-            response.StatusCode.Should().Be(HttpStatusCode.OK);
-        }
-        
-        [Fact]
-        public async Task NotFoundForNotExistingReindeer()
-        {
-            var nonExistingReindeer = Guid.NewGuid().ToString();
-            var response = await _client.GetAsync($"reindeer/{nonExistingReindeer}");
+    [Fact]
+    public async Task UnauthorizedWithoutApiKeyOnPost()
+    {
+        _client.DefaultRequestHeaders.Clear();
+        var request = new ReindeerToCreateRequest("Vixes", ReindeerColor.Black);
+        await _client.PostAsync("reindeer", JsonContent.Create(request));
+        await _webApplication.Verify();
+    }
 
-            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
-        }
-        
-        [Fact]
-        public async Task ConflictWhenTryingToCreateExistingOne()
-        {
-            var request = new ReindeerToCreateRequest("Petar", ReindeerColor.Purple);
-            var response = await _client.PostAsync("reindeer", JsonContent.Create(request));
+    [Fact]
+    public async Task ShouldGetReindeer()
+    {
+        await _client.GetAsync("reindeer/40F9D24D-D3E0-4596-ADC5-B4936FF84B19");
+        await _webApplication.Verify();
+    }
 
-            response.StatusCode.Should().Be(HttpStatusCode.Conflict);
-        }
+    [Fact]
+    public async Task NotFoundForNotExistingReindeer()
+    {
+        var nonExistingReindeer = Guid.NewGuid().ToString();
+        await _client.GetAsync($"reindeer/{nonExistingReindeer}");
+        await _webApplication.Verify();
+    }
+
+    [Fact]
+    public async Task ShouldCreateReindeer()
+    {
+        var request = new ReindeerToCreateRequest("Vixes", ReindeerColor.Black);
+        await _client.PostAsync("reindeer", JsonContent.Create(request));
+        await _webApplication.Verify();
+    }
+
+    [Fact]
+    public async Task ConflictWhenTryingToCreateExistingOne()
+    {
+        var request = new ReindeerToCreateRequest("Petar", ReindeerColor.Purple);
+        await _client.PostAsync("reindeer", JsonContent.Create(request));
+        await _webApplication.Verify();
     }
 }
