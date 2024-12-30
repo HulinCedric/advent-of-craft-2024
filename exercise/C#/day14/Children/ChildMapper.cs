@@ -1,3 +1,4 @@
+using System.Globalization;
 using Children.Db2;
 using Children.DTOs;
 using Riok.Mapperly.Abstractions;
@@ -7,6 +8,9 @@ namespace Children
     [Mapper]
     public partial class ChildMapper
     {
+        [UserMapping(Default = true)]
+        private static DateOnly MapDate(string date) => DateOnly.ParseExact(date, "dd/MM/yyyy");
+        
         [MapProperty(nameof(X5T78.N_1), nameof(Child.FirstName))]
         [MapProperty(nameof(X5T78.N_2), nameof(Child.MiddleName))]
         [MapProperty(nameof(X5T78.N_3), nameof(Child.LastName))]
