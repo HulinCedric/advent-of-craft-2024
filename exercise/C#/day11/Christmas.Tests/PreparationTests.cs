@@ -1,3 +1,4 @@
+using Bogus;
 using FluentAssertions;
 using Xunit;
 using static Christmas.ToyType;
@@ -13,12 +14,12 @@ namespace Christmas.Tests
         [InlineData(49, "Elves will prepare the gifts.")]
         [InlineData(50, "Santa will prepare the gifts.")]
         public void PrepareGifts(int numberOfGifts, string expected)
-            => Preparation.PrepareGifts(numberOfGifts);
+            => Preparation.PrepareGifts(numberOfGifts).Should().Be(expected);
 
         [Theory]
-        [InlineData(1, "Baby")]
-        [InlineData(3, "Toddler")]
-        [InlineData(6, "Child")]
+        [InlineData(2, "Baby")]
+        [InlineData(5, "Toddler")]
+        [InlineData(12, "Child")]
         [InlineData(13, "Teen")]
         public void CategorizeGift(int age, string expectedCategory)
             => Preparation.CategorizeGift(age)
@@ -36,5 +37,21 @@ namespace Christmas.Tests
             => Preparation.EnsureToyBalance(toyType, toysCount, totalToys)
                 .Should()
                 .Be(expected);
+
+        [Fact]
+        public void ToyBalanceIsFalseForUnExistingToyType()
+            => Preparation.EnsureToyBalance(UnExistingToyType(), RandomInt(), RandomInt())
+                .Should()
+                .BeFalse();
+
+        [Fact]
+        public void ToyBalanceIsFalseForZeroTotalToys()
+            => Preparation.EnsureToyBalance(RandomToyType(), RandomInt(), 0)
+                .Should()
+                .BeFalse();
+
+        private static ToyType RandomToyType() => new Randomizer().Enum<ToyType>();
+        private static ToyType UnExistingToyType() => (ToyType)new Randomizer().Int(4, int.MaxValue);
+        private static int RandomInt() => new Randomizer().Int();
     }
 }
